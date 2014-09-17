@@ -15,12 +15,12 @@ namespace constants
 class ut_maze_test : public ::testing::Test
 {
 public:
-	maze uut;
+	std::shared_ptr<maze_interface> uut;
 
 	ut_maze_test()
 	{
 		maze_generator mazeGen;
-		uut = mazeGen.GenerateMaze(constants::size_x, constants::size_y, constants::maze_type);
+		uut = mazeGen.generate_maze(constants::size_x, constants::size_y, constants::maze_type);
 
 		//std::ifstream data("maze.dat");
 		//if (data.open()) {
@@ -32,29 +32,29 @@ public:
 
 TEST_F(ut_maze_test, maze_sizes)
 {
-	EXPECT_EQ(uut.getXSize(), constants::size_x);
-	EXPECT_EQ(uut.getYSize(), constants::size_y);
+	EXPECT_EQ(uut->get_size_x(), constants::size_x);
+	EXPECT_EQ(uut->get_size_y(), constants::size_y);
 }
 
 TEST_F(ut_maze_test, test_maze_edges)
 {
-	for (int i = 0; i < uut.getXSize(); i++)
+	for (int i = 0; i < uut->get_size_x(); i++)
 	{
 		//location from topest row
-		const location & loc1 = uut.get_location(i, 0);
+		boost::optional<location> loc = uut->get_location(i, 0);
 		if (i == 0)
-			EXPECT_TRUE(loc1.left);
-		if (i == uut.getXSize() - 1)
-			EXPECT_TRUE(loc1.right);
-		EXPECT_TRUE(loc1.up);
+			EXPECT_TRUE(loc->is_wall(WEST_DIR));
+		if (i == uut->get_size_y() - 1)
+			EXPECT_TRUE(loc->is_wall(EAST_DIR));
+		EXPECT_TRUE(loc->is_wall(NORTH_DIR));
 
 		//location from lowest row
-		const location & loc2 = uut.get_location(i, uut.getYSize() - 1);
+		loc = uut->get_location(i, uut->get_size_y() - 1);
 		if (i == 0)
-			EXPECT_TRUE(loc2.left);
-		if (i == uut.getXSize() - 1)
-			EXPECT_TRUE(loc2.right);
-		EXPECT_TRUE(loc2.down);
+			EXPECT_TRUE(loc->is_wall(WEST_DIR));
+		if (i == uut->get_size_y() - 1)
+			EXPECT_TRUE(loc->is_wall(EAST_DIR));
+		EXPECT_TRUE(loc->is_wall(SOUTH_DIR));
 	}
 }
 

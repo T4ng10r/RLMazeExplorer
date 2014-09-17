@@ -1,21 +1,16 @@
-#ifndef _MAZE_GENERATOR_INCLUDE_
-#define _MAZE_GENERATOR_INCLUDE_
+#pragma once 
 
-#include "maze.h"
+#include <Maze/maze_interface.h>
 #include "maze_settings.h"
 #include <memory>
 
-class CMazeGeneratorPrivate;
+//class maze_generator_private;
 
-class maze_generator
+class maze_generator 
 {
 public:
-    maze_generator();
-    ~maze_generator();
-    const maze & GenerateMaze(const maze_settings & xMazeSettings);
-    const maze & GenerateMaze(unsigned int size_x, unsigned int size_y, EMazeTypes maze_type);	//generuje labirynt
-    //void MakeNotPerfect();
-private:
-	std::unique_ptr<CMazeGeneratorPrivate> pimpl;
+	std::shared_ptr<maze_interface> generate_maze(const maze_settings & xMazeSettings);
+	std::shared_ptr<maze_interface> generate_maze(unsigned int size_x, unsigned int size_y, EMazeTypes maze_type);
+protected:
+	//std::unique_ptr<maze_generator_private> pimpl;
 };
-#endif

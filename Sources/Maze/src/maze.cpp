@@ -1,69 +1,26 @@
 #include "maze.h"
-#include "maze_settings.h"
-//#include <Experiment/EnviromentVariables.h>
 #include <Tools/loggers.h>
 
 maze::maze():size_x(0),size_y(0),maze_type(E_MT_NONE) {}
-bool maze::get_location(int X,int Y, bool &up, bool &down, bool &right, bool &left) const
+int maze::get_size_x() const
 {
-    if (X >= size_x  || Y >= size_y )
-        return false;
-
-    const location & location = get_location(X,Y);
-    up = location.up;
-    down = location.down;
-    right = location.right;
-    left = location.left;
-    return true;
-}
-const location & maze::get_location(int X,int Y) const
-{
-    if (X >= size_x || Y >= size_x )
-        return empty_location;
-    return m_vvMapa[X][Y];
-}
-bool maze::get_location(int X,int Y,location & location) const
-{
-    if (X >= size_x || Y >= size_x )
-        return false;
-
-    location = get_location(X,Y);
-    //location = m_vvMapa[X][Y];
-    return true;
-}
-bool maze::get_location(QPoint pos,location & location) const
-{
-    if (pos.x() >= size_x || pos.y() >= size_x )
-        return false;
-
-    location = get_location(pos.x(),pos.y());
-    //location = m_vvMapa[X][Y];
-    return true;
-}
-bool maze::get_location(QPoint pos, bool &up, bool &down, bool &right, bool &left) const
-{
-    if (pos.x() >= size_x || pos.y() >= size_x )
-        return false;
-
-    return get_location(pos.x(),pos.y(),up,down,right,left);
-    //CLocation location = m_vvMapa[X][Y];
-    //up = location.up;
-    //down = location.down;
-    //right = location.right;
-    //left = location.left;
-    return true;
+	return size_x;
 };
-int maze::getXSize() const
+int maze::get_size_y() const
 {
-    return size_x;
-}
-int maze::getYSize() const
+	return size_y;
+};
+boost::optional<location> maze::get_location(int x, int y) const
 {
-    return size_y;
-}
+	boost::optional<location> result;
+	if (x >= size_x || y >= size_y || x < 0 || y < 0)
+		return result;
+
+	return m_vvMapa[x][y];
+};
+
 void maze::save_maze(std::ofstream stream)
 {
-    bool bUp, bDown, bRight, bLeft;
 	stream << "MAZE_DATA" << std::endl;
 	stream << size_x << " " << size_y << "\n";
     for(int Y=0; Y<size_y; Y++)
@@ -71,17 +28,15 @@ void maze::save_maze(std::ofstream stream)
         for(int X=0; X<size_x; X++)
         {
             int dir=0;
-            if (get_location(X+1, Y+1, bUp, bDown, bRight, bLeft))
-            {
-                if (bUp)
-                    dir|=LOCATION_FRONT;
-                if (bDown)
-                    dir|=LOCATION_BACK;
-                if (bRight)
-                    dir|=LOCATION_RIGHT;
-                if (bLeft)
-                    dir|=LOCATION_LEFT;
-            }
+			boost::optional<location>	location_ = get_location(X+1, Y+1);
+			if (!location_)
+				continue;;
+			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
+			{
+
+				if (dir & (1 << i))
+					location_->set_wall((EDirections)i);
+			}
         }
 		stream << "\n";
     }
@@ -113,19 +68,15 @@ bool maze::load_maze(std::ifstream stream)
         for(int X=0; X<size_x; X++)
         {
             int dir=0;
-            QChar cChar;
 			stream >> dir;
 
             location.reset();
 
-            if (dir&LOCATION_FRONT)
-                location.up=true;
-            if (dir&LOCATION_BACK)
-                location.down=true;
-            if (dir&LOCATION_RIGHT)
-                location.right=true;
-            if (dir&LOCATION_LEFT)
-                location.left=true;
+			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
+			{
+				if (dir & (1 << i))
+					location.set_wall(NORTH_DIR);
+			}
             m_vvMapa[X][Y]=location;
         }
     }
@@ -155,13 +106,13 @@ void maze::SetMazeEdges()
 
     for(index=0; index<X; index++)
     {
-        m_vvMapa[index][0].up=true;
-        m_vvMapa[index][Y-1].down=true;
+        m_vvMapa[index][0].set_wall(NORTH_DIR);
+		m_vvMapa[index][Y - 1].set_wall(SOUTH_DIR);
     }
 
     for(index=0; index<Y; index++)
     {
-        m_vvMapa[0][index].left=true;
-        m_vvMapa[X-1][index].right=true;
+        m_vvMapa[0][index].set_wall(WEST_DIR);
+        m_vvMapa[X-1][index].set_wall(EAST_DIR);
     }
 }

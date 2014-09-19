@@ -51,8 +51,8 @@ public:
     //transfer generation results from m_vLocations into m_MazeData
     void SetLocations();
 
-    void PerformLocationReset();
-    void AllocateLocationTable();
+    void reset_locations();
+    void allocate_locations_table();
     void MakeNotPerfect();
 
     int                         size_x,size_y;
@@ -69,14 +69,14 @@ maze_generator_kruskal_private::maze_generator_kruskal_private() :maze_data(new 
 {
 
 }
-void maze_generator_kruskal_private::PerformLocationReset()
+void maze_generator_kruskal_private::reset_locations()
 {
     //int index1,index2;
     for(int index1=0; index1<size_x; index1++)
         for(int index2=0; index2<size_y; index2++)
             maze_data->m_vvMapa[index1][index2].reset();
 }
-void maze_generator_kruskal_private::AllocateLocationTable()
+void maze_generator_kruskal_private::allocate_locations_table()
 {
 	maze_data->size_x = size_x;
 	maze_data->size_y = size_y;
@@ -325,18 +325,15 @@ void maze_generator_kruskal_private::MakeNotPerfect()
 }
 //////////////////////////////////////////////////////////////////////////
 maze_generator_kruskal::maze_generator_kruskal() : pimpl(new maze_generator_kruskal_private){}
-maze_generator_kruskal::~maze_generator_kruskal()
+maze_generator_kruskal::~maze_generator_kruskal(){}
+std::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & settings)
 {
-
-}
-
-std::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & xMazeSettings)
-{
-    /*pimpl->PerformLocationReset();
-    pimpl->size_x=xMazeSettings.size_x;
-    pimpl->size_y=xMazeSettings.size_y;
-    pimpl->AllocateLocationTable();
-
+	pimpl->size_x = settings.size_x;
+	pimpl->size_y = settings.size_y;
+    pimpl->allocate_locations_table();
+	pimpl->reset_locations();
+	pimpl->maze_data->preset_maze_edges();
+	/*
 	unsigned int index = 0, index1 = 0;
 	unsigned int Wsp_A = 0, Wsp_B = 0;
 	unsigned int IleLaczen = 0;
@@ -344,7 +341,6 @@ std::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze
 	pimpl->ResetGenLocation();
 	//tworzymy tablice z wszystkimi scianami wystepujacymi
 	PrepareEdges();
-	maze_data.SetMazeEdges();
 	//losuje rozmieszczenie krawedzi
 	srand((unsigned)time(NULL));
 	edge temp;

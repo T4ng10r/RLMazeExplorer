@@ -20,7 +20,7 @@ public:
 
 	boost::optional<location> get_location(int X, int Y) const;
 	//////////////////////////////////////////////////////////////////////////
-    void				SetMazeEdges();
+    void				preset_maze_edges();
 public:
 	//first index is column
 	//second index is row

@@ -86,7 +86,7 @@ bool maze::load_maze(std::ifstream stream)
 		printLog(eDebug, eErrorLogLevel, "Loading maze data failed (END_MAZE_DATA tag doesn't exist)");
 		return false;
     }
-    SetMazeEdges();
+    preset_maze_edges();
     return true;
 }
 void maze::operator=(const maze & mazeSource)
@@ -98,7 +98,7 @@ void maze::operator=(const maze & mazeSource)
     maze_type = mazeSource.maze_type;
 }
 //////////////////////////////////////////////////////////////////////////
-void maze::SetMazeEdges()
+void maze::preset_maze_edges()
 {
     unsigned int X,Y,index;
     X=size_x;

@@ -23,7 +23,7 @@ public:
 	}
 	void reset()
 	{
-		directions = std::vector<bool>(4, false);
+		directions = std::vector<bool>(4, true);
 	}
 public:
 	//bit set if their's wall, otherwise it's false

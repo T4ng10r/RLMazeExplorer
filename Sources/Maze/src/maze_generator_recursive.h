@@ -111,7 +111,7 @@ void CMazeGeneratorPrivate::GenerateMaze_Kruskal()
     ResetGenLocation();
     //tworzymy tablice z wszystkimi scianami wystepujacymi
     PrepareEdges();
-    maze_data.SetMazeEdges();
+    maze_data.preset_maze_edges();
     //losuje rozmieszczenie krawedzi
     srand( (unsigned)time( NULL ) );
     edge temp;
@@ -153,7 +153,7 @@ void CMazeGeneratorPrivate::GenerateMaze_Recursive()
     QStack<int>	stack;
 
     ResetGenLocation();
-    maze_data.SetMazeEdges();
+    maze_data.preset_maze_edges();
     PrepareEdges();
     //przygotowujemy i alokujemy pamiec na tablice labiryntu
 
@@ -279,7 +279,7 @@ void CMazeGeneratorPrivate::GenerateMaze_Prim()
     QStack<int>	stack;
 
     ResetGenLocation();
-    maze_data.SetMazeEdges();
+    maze_data.preset_maze_edges();
     PrepareEdges();
     //przygotowujemy i alokujemy pamiec na tablice labiryntu
     srand( (unsigned)time( NULL ) );

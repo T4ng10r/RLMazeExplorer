@@ -58,39 +58,68 @@ TEST_F(ut_maze_test, test_maze_edges)
 	}
 }
 
-/*
-void CMazeTest::testMazeConnections()
+TEST_F(ut_maze_test, test_maze_locations_integrity)
 {
-	unsigned int iNodesCount = m_Maze.getXSize()*m_Maze.getYSize();
-	int iX, iY;;
-	CLocation loc;
+	for (int x = 0; x < uut->get_size_x(); x++)
+		for (int y = 0; y < uut->get_size_y(); y++)
+		{
+			boost::optional<location> test_loc = uut->get_location(x, y);
+			boost::optional<location> neigh_loc;
+			if (x>0)
+			{
+				neigh_loc = uut->get_location(x-1, y);
+				ASSERT_EQ(test_loc->is_wall(WEST_DIR), neigh_loc->is_wall(EAST_DIR));
+			}
+			if (x<(uut->get_size_x()-1))
+			{
+				neigh_loc = uut->get_location(x + 1, y);
+				ASSERT_EQ(test_loc->is_wall(EAST_DIR), neigh_loc->is_wall(WEST_DIR));
+			}
+			if (y>0)
+			{
+				neigh_loc = uut->get_location(x, y-1);
+				ASSERT_EQ(test_loc->is_wall(NORTH_DIR), neigh_loc->is_wall(SOUTH_DIR));
+			}
+			if (y<(uut->get_size_y() - 1))
+			{
+				neigh_loc = uut->get_location(x, y+1);
+				ASSERT_EQ(test_loc->is_wall(SOUTH_DIR), neigh_loc->is_wall(NORTH_DIR));
+			}
+		}
+}
+
+TEST_F(ut_maze_test, test_maze_locations_connections)
+{
+	unsigned int nodes_count = uut->get_size_x()*uut->get_size_y();
+	int x, y;;
+	boost::optional<location> test_loc;
 
 	std::set< std::pair<int, int> > sToBeVisitedCoords;
 	std::set< std::pair<int, int> > sVisitedCoords;
 
-	std::pair<int, int> pCoords;
+	std::pair<int, int> coords;
 	sToBeVisitedCoords.insert(std::make_pair(0, 0));
 	do
 	{
 		std::set< std::pair<int, int> >::iterator iterCoord = sToBeVisitedCoords.begin();
-		pCoords = *iterCoord;
+		coords = *iterCoord;
 		sToBeVisitedCoords.erase(iterCoord);
-		if (sVisitedCoords.count(pCoords))
+		if (sVisitedCoords.count(coords))
 			continue;
 
-		iX = pCoords.first;
-		iY = pCoords.second;
-		QVERIFY(m_Maze.getLocation(iX, iY, loc));
-		if (false == loc.up)
-			sToBeVisitedCoords.insert(std::make_pair(iX, iY - 1));
-		if (false == loc.down)
-			sToBeVisitedCoords.insert(std::make_pair(iX, iY + 1));
-		if (false == loc.left)
-			sToBeVisitedCoords.insert(std::make_pair(iX - 1, iY));
-		if (false == loc.right)
-			sToBeVisitedCoords.insert(std::make_pair(iX + 1, iY));
-		sVisitedCoords.insert(pCoords);
-	} while (sVisitedCoords.size()<iNodesCount && sToBeVisitedCoords.size()>0);
-	QCOMPARE(sVisitedCoords.size(), iNodesCount);
+		x = coords.first;
+		y = coords.second;
+		test_loc = uut->get_location(x, y);
+		ASSERT_TRUE(test_loc);
+		if (!test_loc->is_wall(NORTH_DIR))
+			sToBeVisitedCoords.insert(std::make_pair(x, y - 1));
+		if (!test_loc->is_wall(SOUTH_DIR))
+			sToBeVisitedCoords.insert(std::make_pair(x, y + 1));
+		if (!test_loc->is_wall(WEST_DIR))
+			sToBeVisitedCoords.insert(std::make_pair(x - 1, y));
+		if (!test_loc->is_wall(EAST_DIR))
+			sToBeVisitedCoords.insert(std::make_pair(x + 1, y));
+		sVisitedCoords.insert(coords);
+	} while (sVisitedCoords.size()<nodes_count && sToBeVisitedCoords.size()>0);
+	ASSERT_EQ(sVisitedCoords.size(), nodes_count);
 }
-*/

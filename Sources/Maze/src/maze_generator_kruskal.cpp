@@ -5,6 +5,7 @@
 #include <map>
 #include <Tools/loggers.h>
 #include <boost/format.hpp>
+#include <time.h>       /* time */
 
 struct edge
 {
@@ -55,6 +56,7 @@ public:
 	void generate_edges();
 	void generate_maze();
 	void join_sets(unsigned int loc1, unsigned int loc2);
+	void print_maze_status_debug();
 	void MakeNotPerfect();
 
 public:
@@ -115,7 +117,8 @@ void maze_generator_kruskal_private::generate_edges()
 			edges_sets.push_back(edge_id);
 			//return;
 		}
-		std::random_shuffle(edges_sets.begin(), edges_sets.end());
+	srand(time(NULL));
+	std::random_shuffle(edges_sets.begin(), edges_sets.end());
 }
 void maze_generator_kruskal_private::generate_maze()
 {
@@ -131,23 +134,17 @@ void maze_generator_kruskal_private::generate_maze()
 			int x2 = loc_2_id % size_x;
 			location& loc_1 = maze_data->get_xlocation(x1, loc_1_id / size_x);
 			location& loc_2 = maze_data->get_xlocation(x2, loc_2_id / size_x);
-			std::string log = str(boost::format("Location (%1%,%2%) and (%3%,%4%) are going to be joined") %
-								  (loc_1_id % size_x) % (loc_1_id / size_x) % 
-								  (loc_2_id % size_x) % (loc_2_id / size_x));
 			//jeœlie nie - usuñ scianê z obu lokacji i po³¹cz ich zbiory
 			if (x1 == x2)
 			{
-				log += "by NORTH/SOUTH";
 				//remove up/bottom
 				loc_1.set_passage(SOUTH_DIR);
 				loc_2.set_passage(NORTH_DIR);
 			} else {
-				log += "by EAST/WEST";
 				//remove left/right
 				loc_1.set_passage(EAST_DIR);
 				loc_2.set_passage(WEST_DIR);
 			}
-			printLog(eDebug, eDebugLogLevel, log);
 			join_sets(loc_1_id, loc_2_id);
 		}
 		edges_sets.pop_back();
@@ -155,19 +152,14 @@ void maze_generator_kruskal_private::generate_maze()
 }
 void maze_generator_kruskal_private::join_sets(unsigned int loc1, unsigned int loc2)
 {
-	if (locations_sets[loc1] == loc1)
-	{
-		locations_sets[loc2] = loc1;
-	}
-	else {
-		locations_sets[loc2] = locations_sets[locations_sets[loc2]];
-	}
+	unsigned int old_id = locations_sets[loc2];
+	locations_sets[loc2] = locations_sets[loc1];
 	unsigned int new_id = locations_sets[loc2];
 	//find all entries which point on loc2 and change them to new loc2 target
 	for (location_sets_type::iterator it = locations_sets.begin();
 		 it != locations_sets.end(); it++)
 	{
-		if (it->second == loc2)
+		if (it->second == old_id)
 			it->second = new_id;
 	}
 }
@@ -313,42 +305,5 @@ boost::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const ma
 	pimpl->maze_data->preset_maze_edges();
 	pimpl->generate_edges();
 	pimpl->generate_maze();
-	/*
-	unsigned int index = 0, index1 = 0;
-	unsigned int Wsp_A = 0, Wsp_B = 0;
-	unsigned int IleLaczen = 0;
-
-	//tworzymy tablice z wszystkimi scianami wystepujacymi
-	PrepareEdges();
-	//losuje rozmieszczenie krawedzi
-	srand((unsigned)time(NULL));
-	edge temp;
-	for (index = 0; index < edge_count; index++)
-	{
-		index1 = rand() % (edge_count - 1);
-		temp = edges[index];
-		edges[index] = edges[index1];
-		edges[index1] = temp;
-	}
-
-	//generowanie labiryntu testujemy poszczególne krawedzie
-	for (index = 0; index < edge_count; index++)
-	{
-		//obliczamy wspolrzedna liniow¹ dla lokacji po obu stronach krawedzi
-		Wsp_A = edges[index].WspX1 + edges[index].WspY1*size_x;
-		Wsp_B = edges[index].WspX2 + edges[index].WspY2*size_x;
-		//ustalamy wska¿nik na lokacje bazowa identyfikujaca dany uiSet
-
-		//jeœli wska¿niki na globalny NrZestawy wskazuj¹ na ró¿ne zestawy
-		//to usuñ krawe¿
-		if ((locations[Wsp_A].uiSet) != (locations[Wsp_B].uiSet))
-		{
-			JoinSets(Wsp_A, Wsp_B);
-			edges[index].bActive = false;
-			IleLaczen++;
-		}
-	}
-	SetLocations();*/
-
 	return pimpl->maze_data;
 }

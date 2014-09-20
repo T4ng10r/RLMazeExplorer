@@ -6,8 +6,8 @@
 
 namespace constants
 {
-	const unsigned int size_x(10);
-	const unsigned int size_y(10);
+	const unsigned int size_x(5);
+	const unsigned int size_y(5);
 	const EMazeTypes maze_type(E_MT_KRUSKAL);
 	const std::string maze_file_path("");
 };
@@ -91,7 +91,7 @@ TEST_F(ut_maze_test, test_maze_locations_integrity)
 TEST_F(ut_maze_test, test_maze_locations_connections)
 {
 	unsigned int nodes_count = uut->get_size_x()*uut->get_size_y();
-	int x, y;;
+	int x, y;
 	boost::optional<location> test_loc;
 
 	std::set< std::pair<int, int> > sToBeVisitedCoords;

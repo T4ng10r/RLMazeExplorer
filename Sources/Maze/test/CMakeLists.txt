@@ -19,3 +19,5 @@ target_link_libraries(ut_maze ${QT_LIBRARIES} maze_lib gmock gtest tools_lib)
 qt5_use_modules(ut_maze Core Test)
 
 ADD_TEST(ut_maze ut_maze)
+	add_custom_command(TARGET ut_maze POST_BUILD 
+		COMMAND ${CMAKE_COMMAND} -E copy ${MazeExplorer_SOURCE_DIR}/log4cpp.properties ${CMAKE_CURRENT_BINARY_DIR}/logs/log4cpp.properties)

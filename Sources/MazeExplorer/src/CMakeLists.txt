@@ -24,3 +24,4 @@ qt5_use_modules(MazeExplorer Widgets Core PrintSupport)
 
 	add_custom_command(TARGET MazeExplorer POST_BUILD 
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/log4cpp.properties ${CMAKE_CURRENT_BINARY_DIR}/logs/log4cpp.properties)
+

@@ -9,7 +9,7 @@ SET ( TOOLS_SRC
 	qtTools.cpp
 	loggers.cpp
 	${CMAKE_SOURCE_DIR}/include/Tools/qtTools.h 
-	${CMAKE_SOURCE_DIR}/include/Tools/loggers.h  )
+	${CMAKE_SOURCE_DIR}/include/Tools/loggers.h )
 
 IF (WIN32)
 	SOURCE_GROUP(tools FILES ${TOOLS_SRC})

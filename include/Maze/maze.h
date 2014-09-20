@@ -18,7 +18,8 @@ public:
 	void save_maze(std::ofstream stream);
 	bool load_maze(std::ifstream stream);
 
-	boost::optional<location> get_location(int X, int Y) const;
+	boost::optional<location> get_location(int x, int y) const;
+	location & get_xlocation(int x, int y);
 	//////////////////////////////////////////////////////////////////////////
     void				preset_maze_edges();
 public:

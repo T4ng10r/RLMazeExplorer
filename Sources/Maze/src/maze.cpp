@@ -18,6 +18,10 @@ boost::optional<location> maze::get_location(int x, int y) const
 
 	return m_vvMapa[x][y];
 };
+location & maze::get_xlocation(int x, int y)
+{
+	return m_vvMapa[x][y];
+}
 
 void maze::save_maze(std::ofstream stream)
 {

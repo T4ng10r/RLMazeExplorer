@@ -135,7 +135,7 @@ boost::optional<std::string> get_logger_name(eLoggerType loggerType)
 }
 
 #ifdef USE_LOG4QT
-void printLog_log4qt(boost::optional<std::string> logger_name, eLogLevel debugLevel, const std::string &strMsg)
+void printLog_log4qt(std::string logger_name, eLogLevel debugLevel, const std::string &strMsg)
 {
 	Log4Qt::LogError  stLogError(strMsg);
 	Log4Qt::Logger * ptrLogger(Log4Qt::LogManager::logger(logger_name));
@@ -154,10 +154,10 @@ void printLog_log4qt(boost::optional<std::string> logger_name, eLogLevel debugLe
 #endif
 
 #ifdef USE_LOG4CPP
-void printLog_log4cpp(boost::optional<std::string> logger_name, eLogLevel debugLevel, const std::string &strMsg)
+void printLog_log4cpp(std::string logger_name, eLogLevel debugLevel, const std::string &strMsg)
 {
 	log4cpp::Category * ptrCategory(NULL);
-	ptrCategory = log4cpp::Category::exists(logger_name.get());
+	ptrCategory = log4cpp::Category::exists(logger_name);
 	switch(debugLevel)
 	{
 		case eInfoLogLevel:
@@ -182,9 +182,9 @@ void printLog(eLoggerType loggerType, eLogLevel debugLevel, const std::string &s
 		return;
 
 #ifdef USE_LOG4QT
-	printLog_log4qt(logger_name, debugLevel, strMsg);
+	printLog_log4qt(logger_name.get(), debugLevel, strMsg);
 #elif defined(USE_LOG4CPP)
-	printLog_log4cpp(logger_name, debugLevel, strMsg);
+	printLog_log4cpp(logger_name.get(), debugLevel, strMsg);
 #endif
 
 }

@@ -8,7 +8,8 @@
 #include <Gui/Drawers/CGraphicsMazeLocation.h>
 #include <Data/Experiment/CExperimentSettings.h>
 #include <set>
-#include <Maze/maze.h>
+#include <Maze/maze_interface.h>
+#include <boost/shared_ptr.hpp>
 
 class CMaze;
 
@@ -36,7 +37,7 @@ class CGraphicsMazeScene : public QGraphicsScene
     Q_OBJECT
 public:
     CGraphicsMazeScene();
-	void setMaze(const maze & xMaze);
+	void setMaze(boost::shared_ptr<maze_interface> maze_data);
 
 public Q_SLOTS:
 	void onExperimentSettingsChanged(const CExperimentSettings & xExperimentSettings);

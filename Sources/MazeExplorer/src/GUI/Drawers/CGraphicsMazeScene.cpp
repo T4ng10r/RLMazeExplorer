@@ -25,7 +25,7 @@ void CGraphicsMazeScene::reset()
         removeItem(iterLocs->second);
 	m_mCords2Locations.clear();
 }
-void CGraphicsMazeScene::setMaze(const maze & xMaze)
+void CGraphicsMazeScene::setMaze(boost::shared_ptr<maze_interface> maze_data)
 {
 	//if (NULL == pMaze)	
 	//{
@@ -34,15 +34,15 @@ void CGraphicsMazeScene::setMaze(const maze & xMaze)
 	//}
 	//Log4Qt::Logger::logger("Process")->info("New Maze to be added.");
 	reset();
-    int iSizeX = xMaze.get_size_x();
-    int iSizeY = xMaze.get_size_y();
+	int iSizeX = maze_data->get_size_x();
+	int iSizeY = maze_data->get_size_y();
 	CGraphicsMazeLocation * ptrLocation = NULL;
 
     for(int iX = 0; iX<iSizeX; iX++)
 	{
         for(int iY = 0; iY<iSizeY; iY++)
         {
-            boost::optional<location> loc = xMaze.get_location(iX, iY);
+			boost::optional<location> loc = maze_data->get_location(iX, iY);
 			if (!loc)
             {
 				QString strError = "Can't get location for (" + QString::number(iX)+","+QString::number(iY)+")";

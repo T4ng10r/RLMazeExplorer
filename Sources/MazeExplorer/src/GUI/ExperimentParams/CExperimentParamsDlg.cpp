@@ -83,7 +83,7 @@ void CExperimentParamsDlg::setupProgress()
 	startExperimentButton->setEnabled(false);
 
     startExperimentButton->setText(QApplication::translate("param_eks", "Rozpocznij", 0));
-	cancelButton->setText(QApplication::translate("param_eks", "Anuluj", 0));
+	//cancelButton->setText(QApplication::translate("param_eks", "Anuluj", 0));
 }
 void CExperimentParamsDlg::setupOkButton()
 {
@@ -196,12 +196,12 @@ void CExperimentParamsDlg::setConnections()
 {
 	bool bResult=false;
 	//////////////////////////////////////////////////////////////////////////
-	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(CMazeSettings &)),
-		m_ptrWidgetPositionParams,SLOT(onMazeGeneration(CMazeSettings &)));
+	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(maze_settings &)),
+					m_ptrWidgetPositionParams, SLOT(onMazeGeneration(maze_settings &)));
 	Q_ASSERT(bResult==true);
 
-	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(CMazeSettings &)),
-		SIGNAL(generateMaze(CMazeSettings &)));
+	bResult = connect(m_ptrWidgetMazeGenerationParam, SIGNAL(generateMaze(maze_settings &)),
+					  SIGNAL(generateMaze(maze_settings &)));
 	Q_ASSERT(bResult==true);
 	
 	bResult=connect(startExperimentButton,SIGNAL(clicked( bool )),SLOT(processExperiment( )));

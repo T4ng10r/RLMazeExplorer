@@ -4,7 +4,7 @@
 #include <Gui/Drawers/CGraphicsMazeScene.h>
 #include <Gui/CSingleRobotMoveDlg.h>
 #include <QGraphicsView>
-//#include <QPrinter>
+#include <QPrinter>
 #include <Tools/loggers.h>
 
 #include <Data/CDataThread.h>
@@ -111,7 +111,7 @@ void	MainWindow::setConnectionsForDlgs()
 //	bResult=connect(cExperimentParamsDlg,SIGNAL(getMazeData(CMaze &)),cMazeDraw,SLOT(setMazeData(CMaze &)));
 //	Q_ASSERT(bResult==true);
 	//perform generation
-	bResult=connect(m_ptrExperimentParamsDlg,SIGNAL(generateMaze(CMazeSettings &)),m_ptrDataThread, SLOT(onPerformMazeGeneration(CMazeSettings & )));
+	bResult = connect(m_ptrExperimentParamsDlg, SIGNAL(generateMaze(maze_settings &)), m_ptrDataThread, SLOT(onPerformMazeGeneration(maze_settings &)));
     Q_ASSERT(bResult==true);
 	bResult = connect(m_ptrDataThread, SIGNAL(maze_generated()), SLOT(on_maze_generated()));
 	Q_ASSERT(bResult==true);
@@ -167,17 +167,16 @@ void	MainWindow::onRobotDirChange(const QString text)
 	//	pEnviroment->setRobotDir(dir);
 }
 void	MainWindow::on_maze_generated()
-//void	MainWindow::onGenerateMaze(CMazeSettings & xMazeSettings)
 {
-	//m_ptrMazeScene->setMaze(*ptrMaze);
-	//m_ptrExperimentParamsDlg->onExperimentSettingsChanged();
-	//////////////////////////////////////////////////////////////////////////
-	//QPrinter printer(QPrinter::HighResolution);
-	//printer.setPaperSize(QPrinter::A4);
-	//printer.setOutputFileName("maze.pdf");
-	//QPainter painter(&printer);
-	//m_ptrMazeScene->render(&painter);
-	//painter.end();
+	m_ptrMazeScene->setMaze(m_ptrDataThread->get_maze());
+	m_ptrExperimentParamsDlg->onExperimentSettingsChanged();
+	////////////////////////////////////////////////////////////////////////
+	QPrinter printer(QPrinter::HighResolution);
+	printer.setPaperSize(QPrinter::A4);
+	printer.setOutputFileName("maze.pdf");
+	QPainter painter(&printer);
+	m_ptrMazeScene->render(&painter);
+	painter.end();
 }
 void MainWindow::onExperimentSettingsChanged(const CExperimentSettings & xExpSettings)
 {

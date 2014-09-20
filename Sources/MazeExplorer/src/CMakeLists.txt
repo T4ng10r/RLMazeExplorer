@@ -20,5 +20,7 @@ SET(TMP_FILES ${TMP_FILES} log4cpp.properties
 
 add_executable(MazeExplorer ${TMP_FILES} main.cpp  )
 target_link_libraries(MazeExplorer ${Boost_LIBRARIES} tools_lib log4cpp maze_lib KBLib)
-qt5_use_modules(MazeExplorer Widgets Core)
+qt5_use_modules(MazeExplorer Widgets Core PrintSupport)
 
+	add_custom_command(TARGET MazeExplorer POST_BUILD 
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/log4cpp.properties ${CMAKE_CURRENT_BINARY_DIR}/logs/log4cpp.properties)

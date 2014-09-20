@@ -61,7 +61,7 @@ public:
     //maze                        maze_data;
     std::vector< edge >         edges;
     std::vector< Lokacja >      locations;
-	std::shared_ptr<maze>       maze_data ;
+	boost::shared_ptr<maze>     maze_data;
 
 };
 
@@ -326,7 +326,7 @@ void maze_generator_kruskal_private::MakeNotPerfect()
 //////////////////////////////////////////////////////////////////////////
 maze_generator_kruskal::maze_generator_kruskal() : pimpl(new maze_generator_kruskal_private){}
 maze_generator_kruskal::~maze_generator_kruskal(){}
-std::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & settings)
+boost::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & settings)
 {
 	pimpl->size_x = settings.size_x;
 	pimpl->size_y = settings.size_y;

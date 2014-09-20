@@ -15,7 +15,7 @@ namespace constants
 class ut_maze_test : public ::testing::Test
 {
 public:
-	std::shared_ptr<maze_interface> uut;
+	boost::shared_ptr<maze_interface> uut;
 
 	ut_maze_test()
 	{

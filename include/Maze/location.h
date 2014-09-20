@@ -17,9 +17,13 @@ public:
 	{
 		directions[dir] = false;
 	}
-	bool is_wall(EDirections dir)
+	bool is_wall(EDirections dir) const
 	{
 		return directions[dir];
+	}
+	unsigned int get_count(bool wall) const
+	{
+		return std::count(directions.begin(), directions.end(), wall);
 	}
 	void reset()
 	{

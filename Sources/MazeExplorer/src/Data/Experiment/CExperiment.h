@@ -17,7 +17,7 @@ class CExperiment : public QObject
 public:
     CExperiment(void);
     ~CExperiment(void);
-	void setMazeData(const maze & xMazeSource);
+	void on_set_maze_data(const maze & xMazeSource);
 	maze& getMazeData();
 	void setExperimentSettings(const CExperimentSettings & xExperimentSettings);
 	void startExperiment();

@@ -11,54 +11,33 @@
 #include <QPoint>
 #include <QPair>
 #include <QTableWidgetItem>
-#include <Maze/maze.h>
+#include <Maze/maze_interface.h>
 #include <Data/Experiment/CMazeExplorationResult.h>
 #include <vector>
 #include <map>
+#include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 const QSize cIconSize(22,22);
 
 using namespace std;
+class maze_draw_private;
 
-class CMazeDraw : public QWidget
+class maze_draw : public QWidget
 {
     Q_OBJECT
 
 public:
-    CMazeDraw(QWidget *parent = 0);
-
-    void mouseMoveEvent(QMouseEvent * event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-	void setMaze(maze * maze)
-    {
-        pMaze=maze;
-    }
+    maze_draw(QWidget *parent = 0);
 
 protected:
-    void reset();
-    void createContextMenu();
-    void prepareLocationVars();
-    const QRect targetNormalRect(const QPoint &position);
-    const QRect getNormalRect(int posX,int posY);
-    const QRect getRouteRect(int posX,int posY);
-    const QRect getRobotRect(int posX,int posY);
-    QPoint m_ptRobot_startPos;
-    QPoint m_ptRobot_finishPos;
-    int   iDirection;
-    QList<QPoint>	m_lFinishPos;
-    void paintEvent(QPaintEvent *event);
-    void DrawLocation(const location& location, QRect rect, QPainter *painter);
-    void drawRobotLocations(QPainter &painter/*, QRect rectStart, QRect rectFinish*/);
-    void drawRobotRoute(QPainter &painter);
-    void drawCrossRoad(QPainter & painter,const CScanResults &scanResults);
+	void mouseMoveEvent(QMouseEvent * event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+	void paintEvent(QPaintEvent *event);
 
-    QPen pen;
-    QBrush brush;
-    QMenu *				menuContextMaze;
-    QAction *			actionSetStart;
-    QAction *			actionSetEnd;
-    QAction *			actionSetNextEnd;
-	maze *				pMaze;
+protected:
+	boost::scoped_ptr<maze_draw_private> pimpl;
+
 Q_SIGNALS:
     void	SelectRoutePos(int index);	//zaznacza wybrane przez uzytkownika pole ze sciezki robota na dialogu z wynikami eksploracji
     void	onNewStartPosition(int posX,int posY);		//wybrano nowa lokacje startowa
@@ -67,8 +46,8 @@ Q_SIGNALS:
     void	clearRobotRoute();
 
 public Q_SLOTS:
-    void	setMazeData(maze & mazeData);
-    void	setStartPosition(int posX,int posY);		//wybrano nowa lokacje startowa
+    void	on_set_maze_data(maze_interface_type mazeData);
+    void	on_set_start_position(int posX,int posY);		//wybrano nowa lokacje startowa
     void	setFinishPosition(int posX,int posY);		//wybrano nowa lokacje docelowa
     void	setNewFinishPosition(int posX,int posY);
     void	onSetRobotRoute(CMazeExplorationResult &lRoute);
@@ -76,23 +55,10 @@ public Q_SLOTS:
     void	onClearRobotRoute();
     void	onSetFinishPosition(vector< pair<int,int> >);
     void	onSetRobotStartDirection(int iDir);
-	protected Q_SLOTS:
-    void	onMenuSetStartPosition();	//zmiana pozycji startowej robota
+protected Q_SLOTS:
+    void	onMenuon_set_start_position();	//zmiana pozycji startowej robota
     void	onMenuSetFinishPosition();	//zmiana pozycji docelowej robota
     void	onMenuSetNextFinishPosition();	//zmiana pozycji docelowej robota
-
-private:
-    QRect	normalLoc;
-    QRect	scaledLoc;
-    QRect	robotLoc;
-    int sizeX,sizeY;
-    int scaleSizeX,scaleSizeY;
-    int robotScaleSizeX,robotScaleSizeY;
-    int m_iSelectedRobotPos_X;
-    int m_iSelectedRobotPos_Y;
-    CMazeExplorationResult		lRobotRoute;
-
-//	QList<QPair<int,int> > lRoute;
 };
 
 #endif

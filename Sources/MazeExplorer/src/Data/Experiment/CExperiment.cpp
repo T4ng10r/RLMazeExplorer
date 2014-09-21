@@ -29,7 +29,7 @@ int CExperiment::getExplorationsCount()
     return explorationResults.size();
 }
 //////////////////////////////////////////////////////////////////////////
-void CExperiment::setMazeData(const maze & xMazeSource)
+void CExperiment::on_set_maze_data(const maze & xMazeSource)
 {
     m_stMazeData = xMazeSource;
 }

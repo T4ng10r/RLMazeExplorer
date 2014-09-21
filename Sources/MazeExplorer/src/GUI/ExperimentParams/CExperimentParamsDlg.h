@@ -50,7 +50,7 @@ public:
     CExperimentParamsDlg(QWidget *parent=NULL);
 //	~CExperimentParamsDlg(void);
 Q_SIGNALS:
-    void setStartPosition(int ,int);
+    void on_set_start_position(int ,int);
     void setFinishPosition(int ,int);
     void setFinishPosition(vector< pair<int,int> >);
 	void generateMaze(maze_settings);
@@ -72,7 +72,7 @@ protected Q_SLOTS:
     void processExperiment();
     void openDialogLoadFile();
     void openDialogSaveFile();
-    void onSetStartPositionWrap(int ,int );
+    void onon_set_start_positionWrap(int ,int );
     void onSetFinishPositionWrap(vector< pair<int,int> >);
     //void onSetStartDirectionWrap(int);
 protected:

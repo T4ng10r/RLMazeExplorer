@@ -5,7 +5,7 @@
 
 #include <QGraphicsView>
 //#include <Maze/CMazeGenerator.h>
-//#include "CGraphicsMazeScene.h"
+//#include "graphics_maze_scene.h"
 //#include "EnviromentVariables.h"
 //////////////////////////////////////////////////////////////////////////
 #include <Tools/loggers.h>

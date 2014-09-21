@@ -281,7 +281,7 @@ void CExperimentPositionsParamsDlg::onInternalStartPosChange()
 {
     int X = spinStartX->value();
     int Y = spinStartY->value();
-    Q_EMIT setStartPosition(X,Y);
+    Q_EMIT on_set_start_position(X,Y);
 }
 void CExperimentPositionsParamsDlg::onInternalFinishPostionChanged(QStandardItem *)
 {
@@ -365,7 +365,7 @@ void CExperimentPositionsParamsDlg::onAddFinishPosition(int posX,int posY)
 //{
 //    spinStartX->setMaximum(iX);
 //    spinStartY->setMaximum(iY);
-//    emit setStartPosition(spinStartX->value(),spinStartY->value());
+//    emit on_set_start_position(spinStartX->value(),spinStartY->value());
 //
 //    //ustawiamy dla wszystkich pol w finish pos maxymalna wartosc
 //    for(int i=0; i<modelFinishPos->rowCount(); i++)
@@ -441,5 +441,5 @@ void CExperimentPositionsParamsDlg::onMazeGeneration(maze_settings xMazeSettings
 	spinStartX->setMaximum(xMazeSettings.size_x);
 	spinStartY->setMaximum(xMazeSettings.size_y);
 	PositionItemEditor::sIntMax=xMazeSettings.size_x;
-	//emit setStartPosition(spinStartX->value(),spinStartY->value());
+	//emit on_set_start_position(spinStartX->value(),spinStartY->value());
 }

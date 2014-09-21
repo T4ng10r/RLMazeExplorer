@@ -1,7 +1,8 @@
 #include "MainWindow.h"
 #include <Maze/maze_generator.h>
 
-#include <Gui/Drawers/CGraphicsMazeScene.h>
+#include <QMouseEvent>
+#include <Gui/Drawers/graphics_maze_scene.h>
 #include <Gui/CSingleRobotMoveDlg.h>
 #include <QGraphicsView>
 #include <QPrinter>
@@ -15,7 +16,7 @@ MainWindow::MainWindow()
 
     setMinimumSize( 800,650 );
 
-	m_ptrMazeScene = new CGraphicsMazeScene;
+	m_ptrMazeScene = new graphics_maze_scene;
 	setupUI();
 
     createActions();
@@ -106,7 +107,7 @@ void	MainWindow::setConnectionsForDlgs()
 {
     bool bResult=false;
 
-//	bResult=connect(cExperimentParamsDlg,SIGNAL(getMazeData(CMaze &)),cMazeDraw,SLOT(setMazeData(CMaze &)));
+//	bResult=connect(cExperimentParamsDlg,SIGNAL(getMazeData(CMaze &)),cMazeDraw,SLOT(on_set_maze_data(CMaze &)));
 //	Q_ASSERT(bResult==true);
 	//perform generation
 	bResult = connect(m_ptrExperimentParamsDlg, SIGNAL(generateMaze(maze_settings)), gDataThread.get(), SLOT(onPerformMazeGeneration(maze_settings)));

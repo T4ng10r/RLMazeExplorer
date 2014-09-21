@@ -34,7 +34,7 @@ public:
 	void getExperimentSettings(CExperimentSettings & cExperimentSettings);
 Q_SIGNALS:
 	//send signal about change in start positions
-    void setStartPosition(int ,int);	//wysyla informacja o ustawieniu nowej pozycji startowej
+    void on_set_start_position(int ,int);	//wysyla informacja o ustawieniu nowej pozycji startowej
     void setFinishPosition(int ,int);	//wysyla informacja o ustawieniu nowej pozycji koñcowej
 	//wysyla informacja o ustawieniu nowej pozycji koñcowej
 	void setFinishPositions(std::vector< std::pair<int,int> >);	

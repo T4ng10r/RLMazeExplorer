@@ -37,15 +37,15 @@ void data_thread::onPerformMazeGeneration(maze_settings xMazeSettings)
 
 	Q_EMIT maze_generated();
 
-	////m_stExperimentManager.getCurrentExperiment().setMazeData(maze);
-	//m_stExperiment.setMazeData(maze);
+	////m_stExperimentManager.getCurrentExperiment().on_set_maze_data(maze);
+	//m_stExperiment.on_set_maze_data(maze);
 	//m_ptrMazeScene->setMaze(maze);
 	//m_ptrExperimentParamsDlg->onExperimentSettingsChanged();
 	//bMazeUpdated=true;
-	////m_stExperimentManager.getCurrentExperiment().setMazeData(maze);
-	//m_stExperiment.setMazeData(maze);
+	////m_stExperimentManager.getCurrentExperiment().on_set_maze_data(maze);
+	//m_stExperiment.on_set_maze_data(maze);
 }
-boost::shared_ptr<maze_interface> data_thread::get_maze()
+maze_interface_type data_thread::get_maze()
 {
 	return maze_data;
 }

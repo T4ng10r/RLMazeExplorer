@@ -17,7 +17,7 @@
 #include <Data/Experiment/COneExplorationResultDlg.h>
 #include <GUI/ExperimentParams/CExperimentParamsDlg.h>
 
-class CGraphicsMazeScene;
+class graphics_maze_scene;
 class QGraphicsView;
 class CSingleRobotMoveDlg;
 class CDataThread;
@@ -38,7 +38,7 @@ public:
     //CEnviroment *	pEnviroment;
     QComboBox   * ctrlCombo;
     CExperimentParamsDlg *			m_ptrExperimentParamsDlg;
-	CGraphicsMazeScene *			m_ptrMazeScene;
+	graphics_maze_scene *			m_ptrMazeScene;
 	QGraphicsView *					m_ptrMazeDraw;
     COneExplorationResultDlg *		cRobotOneExplorationResult;
 	CSingleRobotMoveDlg *			m_ptrSingleRobotMove;

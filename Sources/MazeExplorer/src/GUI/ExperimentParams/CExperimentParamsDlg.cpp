@@ -208,7 +208,7 @@ void CExperimentParamsDlg::setConnections()
 	Q_ASSERT(bResult==true);
 	//////////////////////////////////////////////////////////////////////////
 	//send signal about change in start positions
-	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setStartPosition( int, int )),SLOT(onExperimentSettingsChanged()));
+	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(on_set_start_position( int, int )),SLOT(onExperimentSettingsChanged()));
 	Q_ASSERT(bResult==true);
 	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setFinishPosition( int, int )),SLOT(onExperimentSettingsChanged()));
 	Q_ASSERT(bResult==true);
@@ -284,9 +284,9 @@ void CExperimentParamsDlg::onExperimentSettingsChanged()
 	Q_EMIT experimentSettingsChanged(expSettings);
 	startExperimentButton->setEnabled(true);
 }
-void CExperimentParamsDlg::onSetStartPositionWrap(int iPosX,int iPosY)
+void CExperimentParamsDlg::onon_set_start_positionWrap(int iPosX,int iPosY)
 {
-	Q_EMIT setStartPosition(iPosX, iPosY);
+	Q_EMIT on_set_start_position(iPosX, iPosY);
 }
 void CExperimentParamsDlg::onSetFinishPositionWrap(vector< pair<int,int> > vPostionsList)
 {

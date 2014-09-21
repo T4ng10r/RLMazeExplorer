@@ -1,6 +1,6 @@
 #pragma once
 
-#include "maze.h"
+#include <Maze/maze_interface.h>
 #include "maze_settings.h"
 #include "maze_generator_interface.h"
 #include <boost/scoped_ptr.hpp>

@@ -175,6 +175,7 @@ void CExperimentMazeParamsDlg::getMazeSettings(maze_settings & stMazeSettings)
 }
 void CExperimentMazeParamsDlg::onGenerateMaze(bool)
 {
+	qRegisterMetaType<maze_settings>("maze_settings");
 	maze_settings mazeSettings;
 	getMazeSettings(mazeSettings);
     Q_EMIT generateMaze(mazeSettings);

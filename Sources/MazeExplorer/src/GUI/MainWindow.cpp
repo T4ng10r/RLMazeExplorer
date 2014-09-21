@@ -7,13 +7,11 @@
 #include <QPrinter>
 #include <Tools/loggers.h>
 
-#include <Data/CDataThread.h>
+#include <Data/data_thread.h>
 
 MainWindow::MainWindow()
 {
-
-	m_ptrDataThread = new CDataThread;
-	m_ptrDataThread->start();
+	gDataThread;
 
     setMinimumSize( 800,650 );
 
@@ -111,9 +109,9 @@ void	MainWindow::setConnectionsForDlgs()
 //	bResult=connect(cExperimentParamsDlg,SIGNAL(getMazeData(CMaze &)),cMazeDraw,SLOT(setMazeData(CMaze &)));
 //	Q_ASSERT(bResult==true);
 	//perform generation
-	bResult = connect(m_ptrExperimentParamsDlg, SIGNAL(generateMaze(maze_settings &)), m_ptrDataThread, SLOT(onPerformMazeGeneration(maze_settings &)));
+	bResult = connect(m_ptrExperimentParamsDlg, SIGNAL(generateMaze(maze_settings)), gDataThread.get(), SLOT(onPerformMazeGeneration(maze_settings)));
     Q_ASSERT(bResult==true);
-	bResult = connect(m_ptrDataThread, SIGNAL(maze_generated()), SLOT(on_maze_generated()));
+	bResult = connect(gDataThread.get(), SIGNAL(maze_generated()), SLOT(on_maze_generated()));
 	Q_ASSERT(bResult==true);
 
 	bResult=connect(m_ptrExperimentParamsDlg,SIGNAL(experimentSettingsChanged(const CExperimentSettings &)),
@@ -168,7 +166,7 @@ void	MainWindow::onRobotDirChange(const QString text)
 }
 void	MainWindow::on_maze_generated()
 {
-	m_ptrMazeScene->setMaze(m_ptrDataThread->get_maze());
+	m_ptrMazeScene->setMaze(gDataThread->get_maze());
 	m_ptrExperimentParamsDlg->onExperimentSettingsChanged();
 	////////////////////////////////////////////////////////////////////////
 	QPrinter printer(QPrinter::HighResolution);

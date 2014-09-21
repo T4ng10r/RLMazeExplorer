@@ -1,15 +1,32 @@
-#include <Data/CDataThread.h>
+#include <Data/data_thread.h>
 #include <Maze/maze_generator.h>
 #include <QString>
 #include <Tools/loggers.h>
+#include <QtCore/QThread>
 
-CDataThread::CDataThread(void){}
-void CDataThread::run()
+boost::shared_ptr<data_thread> data_thread::instance;
+
+data_thread::data_thread(void) 
+//: privPart(new CDataThreadPrivate(this))
 {
-	exec();
+	QThread* thread = new QThread;
+	this->moveToThread(thread);
+	thread->start();
 }
 
-void CDataThread::onPerformMazeGeneration(maze_settings & xMazeSettings)
+boost::shared_ptr<data_thread> data_thread::getInstance()
+{
+	if (!instance)
+	{
+		if (!instance)
+		{
+			instance.reset(new data_thread());
+		}
+	}
+	return instance;
+}
+
+void data_thread::onPerformMazeGeneration(maze_settings xMazeSettings)
 {
 	maze_generator mazeGen;
 	maze_data = mazeGen.generate_maze(xMazeSettings);
@@ -28,7 +45,7 @@ void CDataThread::onPerformMazeGeneration(maze_settings & xMazeSettings)
 	////m_stExperimentManager.getCurrentExperiment().setMazeData(maze);
 	//m_stExperiment.setMazeData(maze);
 }
-boost::shared_ptr<maze_interface> CDataThread::get_maze()
+boost::shared_ptr<maze_interface> data_thread::get_maze()
 {
 	return maze_data;
 }

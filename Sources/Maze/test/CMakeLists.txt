@@ -5,7 +5,8 @@ include_directories(${gmock_SOURCE_DIR}/include
                     ${RLME_include_SOURCE_DIR}/Tools)
 
 SET ( SOURCES_TESTS
-	maze_test.cpp
+	ut_maze_kruskal_test.cpp
+	ut_maze_prim_test.cpp 
 	)
 
 SET ( SOURCES_MAIN

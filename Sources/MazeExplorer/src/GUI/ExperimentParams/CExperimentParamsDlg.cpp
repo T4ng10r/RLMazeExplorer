@@ -196,12 +196,12 @@ void CExperimentParamsDlg::setConnections()
 {
 	bool bResult=false;
 	//////////////////////////////////////////////////////////////////////////
-	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(maze_settings &)),
-					m_ptrWidgetPositionParams, SLOT(onMazeGeneration(maze_settings &)));
+	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(maze_settings)),
+					m_ptrWidgetPositionParams, SLOT(onMazeGeneration(maze_settings)));
 	Q_ASSERT(bResult==true);
 
-	bResult = connect(m_ptrWidgetMazeGenerationParam, SIGNAL(generateMaze(maze_settings &)),
-					  SIGNAL(generateMaze(maze_settings &)));
+	bResult = connect(m_ptrWidgetMazeGenerationParam, SIGNAL(generateMaze(maze_settings)),
+					  SIGNAL(generateMaze(maze_settings)));
 	Q_ASSERT(bResult==true);
 	
 	bResult=connect(startExperimentButton,SIGNAL(clicked( bool )),SLOT(processExperiment( )));

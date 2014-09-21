@@ -53,7 +53,7 @@ Q_SIGNALS:
     void setStartPosition(int ,int);
     void setFinishPosition(int ,int);
     void setFinishPosition(vector< pair<int,int> >);
-	void generateMaze(maze_settings &);
+	void generateMaze(maze_settings);
     void experimentSettingsChanged(const CExperimentSettings &);
     //xMazeSettings
     void startExperiment(CExperimentSettings & cExperimentSettings);

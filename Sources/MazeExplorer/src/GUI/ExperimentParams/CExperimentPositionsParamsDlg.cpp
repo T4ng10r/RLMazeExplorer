@@ -434,7 +434,7 @@ void CExperimentPositionsParamsDlg::onButtonRemFinishPos()
     onInternalFinishPostionChanged(NULL);
 	tableViewFinishPos->resizeRowsToContents();
 }
-void CExperimentPositionsParamsDlg::onMazeGeneration(maze_settings & xMazeSettings)
+void CExperimentPositionsParamsDlg::onMazeGeneration(maze_settings xMazeSettings)
 {
 	if (false == isEnabled())
 		setEnabled(true);

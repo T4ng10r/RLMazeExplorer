@@ -12,12 +12,12 @@ namespace constants
 	const std::string maze_file_path("");
 };
 
-class ut_maze_test : public ::testing::Test
+class ut_maze_kruskal_test : public ::testing::Test
 {
 public:
 	boost::shared_ptr<maze_interface> uut;
 
-	ut_maze_test()
+	ut_maze_kruskal_test()
 	{
 		maze_generator mazeGen;
 		uut = mazeGen.generate_maze(constants::size_x, constants::size_y, constants::maze_type);
@@ -30,13 +30,13 @@ public:
 
 };
 
-TEST_F(ut_maze_test, maze_sizes)
+TEST_F(ut_maze_kruskal_test, maze_sizes)
 {
 	EXPECT_EQ(uut->get_size_x(), constants::size_x);
 	EXPECT_EQ(uut->get_size_y(), constants::size_y);
 }
 
-TEST_F(ut_maze_test, test_maze_edges)
+TEST_F(ut_maze_kruskal_test, test_maze_edges)
 {
 	for (int i = 0; i < uut->get_size_x(); i++)
 	{
@@ -58,7 +58,7 @@ TEST_F(ut_maze_test, test_maze_edges)
 	}
 }
 
-TEST_F(ut_maze_test, test_maze_locations_integrity)
+TEST_F(ut_maze_kruskal_test, test_maze_locations_integrity)
 {
 	for (int x = 0; x < uut->get_size_x(); x++)
 		for (int y = 0; y < uut->get_size_y(); y++)
@@ -88,7 +88,7 @@ TEST_F(ut_maze_test, test_maze_locations_integrity)
 		}
 }
 
-TEST_F(ut_maze_test, test_maze_locations_connections)
+TEST_F(ut_maze_kruskal_test, test_maze_locations_connections)
 {
 	unsigned int nodes_count = uut->get_size_x()*uut->get_size_y();
 	int x, y;

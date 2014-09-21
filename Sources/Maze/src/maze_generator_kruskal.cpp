@@ -1,4 +1,5 @@
 #include "maze_generator_kruskal.h"
+#include "maze.h"
 #include <time.h>
 #include <algorithm>
 #include <set>
@@ -7,40 +8,6 @@
 #include <boost/format.hpp>
 #include <time.h>       /* time */
 
-struct edge
-{
-    void reset()
-    {
-        WspX1=0;
-        WspY1=0;
-        WspX2=0;
-        WspY2=0;
-        bActive=false;
-    }
-    int  WspX1;
-    int  WspY1;
-    int  WspX2;
-    int  WspY2;
-    bool bActive;
-};
-
-struct   Lokacja
-{
-    void reset()
-    {
-        Head=this;
-        Tail=this;
-        Next=NULL;
-        Prev=NULL;
-    }
-    //
-    unsigned int   uiSet;
-    //
-    unsigned int   ID;
-    Lokacja   *Next,*Prev,*Head,*Tail;
-};
-//*m_vLocations
-
 const int empty_id_set(-1);
 typedef std::map<unsigned int, int> location_sets_type;
 
@@ -48,7 +15,7 @@ class maze_generator_kruskal_private
 {
 public:
 	maze_generator_kruskal_private();
-    unsigned int MakeID(unsigned int X, unsigned int Y);
+    unsigned int make_id(unsigned int X, unsigned int Y);
 
 	unsigned int get_bits_size(unsigned int);
 	void reset_locations();
@@ -61,7 +28,6 @@ public:
 
 public:
 	unsigned int                size_x, size_y;
-    unsigned int                edge_count;
 	unsigned int                locations_id_mask;
 	std::vector<unsigned int>	edges_sets;
 	location_sets_type          locations_sets;
@@ -93,7 +59,7 @@ void maze_generator_kruskal_private::allocate_locations_table()
 	maze_data->size_x = size_x;
 	maze_data->size_y = size_y;
 
-    edge_count =  2*size_x*size_y-size_y-size_x ;
+	unsigned int edge_count = 2 * size_x*size_y - size_y - size_x;
 	locations_id_mask = get_bits_size(edge_count);
 
 	maze_data->m_vvMapa.resize(size_x);
@@ -107,15 +73,21 @@ void maze_generator_kruskal_private::allocate_locations_table()
 void maze_generator_kruskal_private::generate_edges()
 {
 	edges_sets.clear();
-	for (unsigned int x = 0; x < size_x - 1; x++)
-		for (unsigned int y = 0; y < size_y - 1; y++)
+	for (unsigned int x = 0; x < size_x ; x++)
+		for (unsigned int y = 0; y < size_y ; y++)
 		{
+			unsigned int edge_id;
 			//get all left walls
-			unsigned int edge_id = MakeID(x, y) + (MakeID(x+1, y) << locations_id_mask);
-			edges_sets.push_back(edge_id);
-			edge_id = MakeID(x, y) + (MakeID(x, y + 1) << locations_id_mask);
-			edges_sets.push_back(edge_id);
-			//return;
+			if (x < size_x - 1)
+			{
+				edge_id = make_id(x, y) + (make_id(x + 1, y) << locations_id_mask);
+				edges_sets.push_back(edge_id);
+			}
+			if (y < size_y - 1)
+			{
+				edge_id = make_id(x, y) + (make_id(x, y + 1) << locations_id_mask);
+				edges_sets.push_back(edge_id);
+			}
 		}
 	srand(time(NULL));
 	std::random_shuffle(edges_sets.begin(), edges_sets.end());
@@ -164,7 +136,7 @@ void maze_generator_kruskal_private::join_sets(unsigned int loc1, unsigned int l
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-unsigned int maze_generator_kruskal_private::MakeID(unsigned int X, unsigned int Y)
+unsigned int maze_generator_kruskal_private::make_id(unsigned int X, unsigned int Y)
 {
     return (X+Y*size_x);
 }

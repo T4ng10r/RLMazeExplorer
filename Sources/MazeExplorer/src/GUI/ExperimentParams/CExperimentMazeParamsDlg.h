@@ -22,7 +22,7 @@ public:
 	void getMazeSettings(maze_settings & stMazeSettings);
 
 Q_SIGNALS:
-	void generateMaze(maze_settings &);
+	void generateMaze(maze_settings);
 protected Q_SLOTS:
 	//reaction on Generate Maze button click
 	void onGenerateMaze(bool);

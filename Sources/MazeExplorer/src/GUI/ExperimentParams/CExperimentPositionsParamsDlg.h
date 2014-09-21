@@ -42,7 +42,7 @@ Q_SIGNALS:
     void setStartDirection(int);	
 public Q_SLOTS:
 	//sets maximum limit values to start and finish positions
-	void onMazeGeneration(maze_settings &);
+	void onMazeGeneration(maze_settings);
 	//user selected new start position on Maze Draw
     void onNewStartPosition(int ,int);
 	//user selected first of finish position on Maze Draw

@@ -13,8 +13,8 @@
 #include <QStatusBar>
 
 #include <Data/Experiment/CEnviroment.h>
-#include <Data/Experiment/COneExplorationResultDlg.h>
 #include <Data/Experiment/CExperiment.h>
+#include <Data/Experiment/COneExplorationResultDlg.h>
 #include <GUI/ExperimentParams/CExperimentParamsDlg.h>
 
 class CGraphicsMazeScene;
@@ -73,8 +73,6 @@ protected:
     bool				bAutoGenerate;
     bool				bMazeUpdated;		//labirynt wymaga odrysowania
 
-	CDataThread *		m_ptrDataThread;
-
 public Q_SLOTS:
 	//generate maze according to params from dock window and send this maze to environment
 	void	on_maze_generated();
@@ -86,7 +84,7 @@ public Q_SLOTS:
     void	onStartExploring(CExperimentSettings &);
     void	onRobotDirChange(const QString text);
 Q_SIGNALS:
-	void	generateMaze(maze_settings &);
+	void	generateMaze(maze_settings);
 
 };
 #endif

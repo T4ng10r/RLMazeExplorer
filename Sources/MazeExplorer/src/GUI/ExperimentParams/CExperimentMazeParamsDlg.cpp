@@ -117,16 +117,16 @@ void CExperimentMazeParamsDlg::setupStochasticMazeChanges()
 void CExperimentMazeParamsDlg::retranslateUI()
 {
     labelSizeX->setText(QApplication::translate("Dialog", "Rozmiar X", 0));
-    labelMazeGenMethod->setText(QApplication::translate("Dialog", "Metoda\ngenerowania", 0));
-    labelSizeY->setText(QApplication::translate("Dialog", "Rozmiar Y", 0));
+    labelMazeGenMethod->setText(QApplication::translate("Dialog", "Generation\nmethod", 0));
+    labelSizeY->setText(QApplication::translate("Dialog", "Size Y", 0));
     comboGenerationMethod->addItem(tr("Kruskal's"), E_MT_KRUSKAL);
     comboGenerationMethod->addItem(tr("Recursive Backtracker"), E_MT_RECURSIVE);
     comboGenerationMethod->addItem(tr("Prim's"), E_MT_PRIM);
     buttonGenerateMaze->setText("Generuj");
-    checkBoxMazeIsPerfect->setText("Labirynt jest perfekcyjny");
-    groupStochasticMazeChanges->setTitle("Losowo¶æ labiryntu");
-    checkBoxCumulativeRandomness->setText("Kumulowaæ\nprawdopodobieñstwo");
-    labelRandomnessValue->setText(QApplication::translate("Dialog", "Losowoœæ", 0));
+    checkBoxMazeIsPerfect->setText("Labirinth is perfect");
+    groupStochasticMazeChanges->setTitle("Labirynt probability");
+    checkBoxCumulativeRandomness->setText("Acumulate\nprobability");
+    labelRandomnessValue->setText(QApplication::translate("Dialog", "Probability", 0));
 }
 void CExperimentMazeParamsDlg::setConnections()
 {

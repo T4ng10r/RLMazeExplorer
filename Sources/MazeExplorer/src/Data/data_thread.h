@@ -13,7 +13,7 @@ class data_thread : public QObject
 	static std::shared_ptr<data_thread> instance;
 public:
 	static std::shared_ptr<data_thread> getInstance();
-	std::shared_ptr<maze_interface> get_maze();
+	maze_interface_type get_maze();
 public Q_SLOTS:
 	//call this to generate new maze according to given maze settings
 	void onPerformMazeGeneration(maze_settings xMazeSettings);
@@ -23,7 +23,7 @@ Q_SIGNALS:
 	void maze_generated();
 
 protected:
-	std::shared_ptr<maze_interface> maze_data;
+	maze_interface_type maze_data;
 };
 
 #define gDataThread data_thread::getInstance() 

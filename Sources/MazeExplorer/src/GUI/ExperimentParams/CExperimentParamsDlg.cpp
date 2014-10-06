@@ -35,15 +35,15 @@ void CExperimentParamsDlg::setupUI()
     m_ptrTabDialog = new QTabWidget;
 
 	m_ptrWidgetMazeGenerationParam = new CExperimentMazeParamsDlg;
-	m_ptrTabDialog->addTab(m_ptrWidgetMazeGenerationParam,"Labirynt");
+	m_ptrTabDialog->addTab(m_ptrWidgetMazeGenerationParam,"Labirynth");
 
     m_ptrWidgetPositionParams = new CExperimentPositionsParamsDlg;
-    m_ptrTabDialog->addTab(m_ptrWidgetPositionParams,"Pozycjonowanie");
+    m_ptrTabDialog->addTab(m_ptrWidgetPositionParams,"Positions");
 	m_ptrWidgetPositionParams->setEnabled(false);
 
 
     m_ptrWidgetExperimentDetails = new CExperimentParamsExperimentDlg;
-    m_ptrTabDialog->addTab(m_ptrWidgetExperimentDetails,"Szczegó³y");
+    m_ptrTabDialog->addTab(m_ptrWidgetExperimentDetails,"Details");
 
     m_ptrMainLayout->addWidget(m_ptrTabDialog);
 
@@ -82,7 +82,7 @@ void CExperimentParamsDlg::setupProgress()
     progresLayout->addWidget(startExperimentButton);
 	startExperimentButton->setEnabled(false);
 
-    startExperimentButton->setText(QApplication::translate("param_eks", "Rozpocznij", 0));
+    startExperimentButton->setText(QApplication::translate("param_eks", "Start", 0));
 	//cancelButton->setText(QApplication::translate("param_eks", "Anuluj", 0));
 }
 void CExperimentParamsDlg::setupOkButton()
@@ -190,7 +190,7 @@ void CExperimentParamsDlg::retranslateUI()
 	setWindowTitle("Parametry eksperymentu");
 	m_ptrTabDialog->setTabText(0,QApplication::translate("Form", "Labirynt", 0));
 	m_ptrTabDialog->setTabText(1,QApplication::translate("Form", "Pozycjonowanie", 0));
-	m_ptrTabDialog->setTabText(2,QApplication::translate("Form", "Szczegó³y", 0));
+	m_ptrTabDialog->setTabText(2,QApplication::translate("Form", "Szczegï¿½y", 0));
 }
 void CExperimentParamsDlg::setConnections()
 {

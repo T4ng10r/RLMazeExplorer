@@ -34,7 +34,7 @@ public:
 	std::shared_ptr<maze>     maze_data;
 };
 
-maze_generator_kruskal_private::maze_generator_kruskal_private() :maze_data(new maze){}
+maze_generator_kruskal_private::maze_generator_kruskal_private() : maze_data(new maze){}
 unsigned int maze_generator_kruskal_private::get_bits_size(unsigned int test_value)
 {
 	unsigned int val(2);
@@ -98,14 +98,14 @@ void maze_generator_kruskal_private::generate_maze()
 		unsigned int edge_id = edges_sets.back();
 		unsigned int loc_2_id = edge_id >> locations_id_mask;
 		unsigned int loc_1_id = edge_id - (loc_2_id << locations_id_mask);
-		//sprawdz czy lokacje po obu stronach s¹ w tym samy zbiorze
+		//sprawdz czy lokacje po obu stronach sï¿½ w tym samy zbiorze
 		if (locations_sets[loc_1_id] != locations_sets[loc_2_id])
 		{
 			int x1 = loc_1_id % size_x;
 			int x2 = loc_2_id % size_x;
 			location& loc_1 = maze_data->get_xlocation(x1, loc_1_id / size_x);
 			location& loc_2 = maze_data->get_xlocation(x2, loc_2_id / size_x);
-			//jeœlie nie - usuñ scianê z obu lokacji i po³¹cz ich zbiory
+			//jeï¿½lie nie - usuï¿½ scianï¿½ z obu lokacji i poï¿½ï¿½cz ich zbiory
 			if (x1 == x2)
 			{
 				//remove up/bottom
@@ -163,7 +163,7 @@ void maze_generator_kruskal_private::MakeNotPerfect()
 
             for(count=0,index=0; index<4 ; index++)
                 if (dirs[index])	count++;
-            //skoro to œlepy zau³ek - usuñ dowoln¹ œcianê
+            //skoro to ï¿½lepy zauï¿½ek - usuï¿½ dowolnï¿½ ï¿½cianï¿½
             if (count==3)
             {
                 X1=X;
@@ -172,7 +172,7 @@ void maze_generator_kruskal_private::MakeNotPerfect()
                 for(indir=0; indir<4; indir++)
                     if (!dirs[indir])	break;
                 if (indir>=4) indir=255;
-                //usun œciany bêd¹ce granicami labiryntu
+                //usun ï¿½ciany bï¿½dï¿½ce granicami labiryntu
                 if (X == 1 && left)		dirs[3]=false;
                 else if (X == size_x && right)				dirs[2]=false;
                 if (Y == 1 && up)		dirs[0]=false;
@@ -189,7 +189,7 @@ void maze_generator_kruskal_private::MakeNotPerfect()
                 }
                 else
                 {
-                    //najpierw sprawdz czy mozna usun¹æ œcianê naprzeci wejscia
+                    //najpierw sprawdz czy mozna usunï¿½ï¿½ ï¿½cianï¿½ naprzeci wejscia
                     if (indir!=255)
                     {
                         switch(indir)

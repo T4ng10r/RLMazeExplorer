@@ -2,7 +2,8 @@
 #include <Maze/maze_generator.h>
 #include <QString>
 #include <Tools/loggers.h>
-#include <QtCore/QThread>
+#include <QThread>
+#include <boost/format.hpp>
 
 std::shared_ptr<data_thread> data_thread::instance;
 
@@ -31,9 +32,8 @@ void data_thread::onPerformMazeGeneration(maze_settings xMazeSettings)
 	maze_generator mazeGen;
 	maze_data = mazeGen.generate_maze(xMazeSettings);
 
-	QString strInfo;
-	strInfo = "Maze generated (" + QString::number(xMazeSettings.size_x) + "," + QString::number(xMazeSettings.size_y) + ")";
-	//Log4Qt::Logger::logger("Process")->info(strInfo);
+	printLog(eDebug, eDebugLogLevel, str(boost::format("Maze generated (%1%, %2%) ") 
+	                                     % xMazeSettings.size_x % xMazeSettings.size_y));
 
 	Q_EMIT maze_generated();
 

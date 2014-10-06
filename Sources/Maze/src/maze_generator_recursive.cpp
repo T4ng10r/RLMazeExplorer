@@ -1,3 +1,184 @@
+#include "maze_generator_recursive.h"
+#include "maze.h"
+#include <set>
+#include <stack>
+#include <Tools/loggers.h>
+
+class maze_generator_recursive_private
+{
+public:
+	maze_generator_recursive_private();
+	void generate_maze();
+	void fill_unvisited_set();
+	unsigned int make_id(unsigned int X, unsigned int Y);
+	boost::optional<unsigned int> get_neighbour_cell(unsigned int current_cell);
+	void allocate_locations_table();
+	void reset_locations();
+	void join_cells(unsigned int current_cell, unsigned int neighbour_cell);
+public:
+	unsigned int                size_x, size_y;
+	//unsigned int                locations_id_mask;
+	//std::vector<unsigned int>	edges_sets;
+	//location_sets_type          locations_sets;
+	std::shared_ptr<maze>     maze_data;
+	std::set<unsigned int>  unvisited_cells;
+};
+
+maze_generator_recursive_private::maze_generator_recursive_private() : size_x(0), size_y(0), maze_data(new maze){}
+
+void maze_generator_recursive_private::reset_locations()
+{
+	for (unsigned int index1 = 0; index1<size_x; index1++)
+		for (unsigned int index2 = 0; index2<size_y; index2++)
+            maze_data->m_vvMapa[index1][index2].reset();
+}
+void maze_generator_recursive_private::allocate_locations_table()
+{
+	maze_data->size_x = size_x;
+	maze_data->size_y = size_y;
+
+	unsigned int edge_count = 2 * size_x*size_y - size_y - size_x;
+	//locations_id_mask = get_bits_size(edge_count);
+
+	maze_data->m_vvMapa.resize(size_x);
+	for (unsigned int index = 0; index<size_x; index++)
+		maze_data->m_vvMapa[index].resize(size_y);
+	reset_locations();
+	//locations_sets.clear();
+	//for (unsigned int index = 0; index < size_x * size_y; index++)
+		//locations_sets[index] = index;
+}
+unsigned int maze_generator_recursive_private::make_id(unsigned int X, unsigned int Y)
+{
+    return (X+Y*size_x);
+}
+void maze_generator_recursive_private::fill_unvisited_set()
+{
+	unvisited_cells.clear();
+	for(unsigned int x=0;x<size_x;x++)
+		for(unsigned int y=0;y<size_y;y++)
+			unvisited_cells.insert(make_id(x,y));
+
+}
+boost::optional<unsigned int> maze_generator_recursive_private::get_neighbour_cell(unsigned int current_cell)
+{
+	unsigned int x = current_cell % size_x;
+	unsigned int y = current_cell / size_y;
+	unsigned int neighbour_cell;
+	//get_unvisited_neighboor_cell(current_cell);
+	std::vector<unsigned int> neighbours;
+	neighbour_cell = make_id(x-1,y);
+	if (x>0 && unvisited_cells.count(neighbour_cell))
+		neighbours.push_back(neighbour_cell);
+	neighbour_cell = make_id(x,y-1);
+	if (y>0 && unvisited_cells.count(neighbour_cell))
+		neighbours.push_back(neighbour_cell);
+	neighbour_cell = make_id(x+1,y);
+	if (x<size_x && unvisited_cells.count(neighbour_cell))
+		neighbours.push_back(neighbour_cell);
+	neighbour_cell = make_id(x,y+1);
+	if (y<size_y && unvisited_cells.count(neighbour_cell))
+		neighbours.push_back(neighbour_cell);
+	boost::optional<unsigned int> return_val;
+	if (neighbours.size())
+	{
+		int index = rand() %neighbours.size();
+		return_val = neighbours[index];
+	}
+	return return_val;
+}
+void maze_generator_recursive_private::generate_maze()
+{
+	//printLog(eDebug,eDebugLogLevel, "IN: Start generate_maze");
+    srand( (unsigned)time( NULL ) );
+    fill_unvisited_set();
+
+	unsigned int current_cell = rand()%make_id(size_x-1,size_y-1)-1;
+	std::stack<unsigned int> stack_;
+	unvisited_cells.erase(current_cell);
+	//take initial cell
+	while(unvisited_cells.size())
+	{
+		unsigned int current_x = current_cell % size_x;
+		unsigned int current_y = current_cell / size_y;
+		boost::optional<unsigned int> neighbour_cell;
+		boost::optional<location> curr_loc = maze_data->get_location(current_x, current_y);
+		if ((neighbour_cell = get_neighbour_cell(current_cell)))
+		{
+			stack_.push(current_cell);
+			join_cells(current_cell, neighbour_cell.get());
+			current_cell = neighbour_cell.get();
+			unvisited_cells.erase(current_cell);
+		}
+		else if (stack_.size())
+		{
+			current_cell = stack_.top();
+			stack_.pop();
+		}
+		else
+		{
+			std::set<unsigned int>::iterator it = unvisited_cells.begin();
+			unsigned int index = rand()%unvisited_cells.size()-1;
+			std::advance(it, index);
+			current_cell = *it;
+		}
+	}
+	//printLog(eDebug,eDebugLogLevel, "IN: End generate_maze");
+}
+void maze_generator_recursive_private::join_cells(unsigned int current_cell, unsigned int neighbour_cell)
+{
+	unsigned int current_x = current_cell % size_x;
+	unsigned int current_y = current_cell / size_y;
+	unsigned int neighbour_x = neighbour_cell % size_x;
+	unsigned int neighbour_y = neighbour_cell / size_y;
+	location & loc = maze_data->get_xlocation(neighbour_x, neighbour_y);
+	location & curr_loc = maze_data->get_xlocation(current_x, current_y);
+
+	if (current_x == neighbour_x)
+	{
+		if (current_y > neighbour_y)
+		{
+			curr_loc.set_passage(NORTH_DIR);
+			loc.set_passage(SOUTH_DIR);
+		}
+		else
+		{
+			curr_loc.set_passage(SOUTH_DIR);
+			loc.set_passage(NORTH_DIR);
+		}
+	} else {
+		if (current_x > neighbour_x)
+		{
+			curr_loc.set_passage(WEST_DIR);
+			loc.set_passage(EAST_DIR);
+		}
+		else
+		{
+			curr_loc.set_passage(EAST_DIR);
+			loc.set_passage(WEST_DIR);
+		}
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+maze_generator_recursive::maze_generator_recursive():pimpl(new maze_generator_recursive_private())
+{
+}
+maze_generator_recursive::~maze_generator_recursive()
+{
+}
+std::shared_ptr<maze_interface> maze_generator_recursive::generate_maze(const maze_settings & settings)
+{
+	///printLog(eDebug,eDebugLogLevel, "generate_maze");
+	pimpl->size_x = settings.size_x;
+	pimpl->size_y = settings.size_y;
+	pimpl->allocate_locations_table();
+	pimpl->maze_data->preset_maze_edges();
+	pimpl->generate_maze();
+	return pimpl->maze_data;
+}
+
 /*
 #include <Maze/maze_generator.h>
 #include <Maze/maze_generator_factory.h>
@@ -124,16 +305,16 @@ void CMazeGeneratorPrivate::GenerateMaze_Kruskal()
         edges[index1]  =temp;
     }
 
-    //generowanie labiryntu testujemy poszczególne krawedzie
+    //generowanie labiryntu testujemy poszczegï¿½lne krawedzie
     for(index=0; index<edge_count; index++)
     {
-        //obliczamy wspolrzedna liniow¹ dla lokacji po obu stronach krawedzi
+        //obliczamy wspolrzedna liniowï¿½ dla lokacji po obu stronach krawedzi
         Wsp_A=edges[index].WspX1+edges[index].WspY1*size_x;
         Wsp_B=edges[index].WspX2+edges[index].WspY2*size_x;
-        //ustalamy wska¿nik na lokacje bazowa identyfikujaca dany uiSet
+        //ustalamy wskaï¿½nik na lokacje bazowa identyfikujaca dany uiSet
 
-        //jeœli wska¿niki na globalny NrZestawy wskazuj¹ na ró¿ne zestawy
-        //to usuñ krawe¿
+        //jeï¿½li wskaï¿½niki na globalny NrZestawy wskazujï¿½ na rï¿½ne zestawy
+        //to usuï¿½ kraweï¿½
         if ( (locations[Wsp_A].uiSet) != (locations[Wsp_B].uiSet))
         {
             JoinSets(Wsp_A,Wsp_B);
@@ -168,7 +349,7 @@ void CMazeGeneratorPrivate::GenerateMaze_Recursive()
         Count = stack.size();
         index = stack.pop();
         Count = stack.size();
-        //sprawdzamy s¹siadów czy jest do nich dojscie
+        //sprawdzamy sï¿½siadï¿½w czy jest do nich dojscie
         //wybieramy losowo jeden z kierunkow
         index1 = rand()%4;
         do
@@ -353,7 +534,7 @@ void CMazeGeneratorPrivate::JoinSets(unsigned int Wsp_A,unsigned int Wsp_B)
     //idziemy do pierwszego w zestawie A
     //idzie na koniec zestawu A
     akt=(locations[Wsp_A].Head)->Tail;
-    //koniec zestawu A jako nastêpny wskazuje na poczatek zestawu B
+    //koniec zestawu A jako nastï¿½pny wskazuje na poczatek zestawu B
     akt->Next=locations[Wsp_B].Head;
     do
     {
@@ -472,7 +653,7 @@ void CMazeGeneratorPrivate::MakeNotPerfect()
 
             for(count=0,index=0; index<4 ; index++)
                 if (dirs[index])	count++;
-            //skoro to œlepy zau³ek - usuñ dowoln¹ œcianê
+            //skoro to ï¿½lepy zauï¿½ek - usuï¿½ dowolnï¿½ ï¿½cianï¿½
             if (count==3)
             {
                 X1=X;
@@ -481,7 +662,7 @@ void CMazeGeneratorPrivate::MakeNotPerfect()
                 for(indir=0; indir<4; indir++)
                     if (!dirs[indir])	break;
                 if (indir>=4) indir=255;
-                //usun œciany bêd¹ce granicami labiryntu
+                //usun ï¿½ciany bï¿½dï¿½ce granicami labiryntu
                 if (X == 1 && left)		dirs[3]=false;
                 else if (X == size_x && right)				dirs[2]=false;
                 if (Y == 1 && up)		dirs[0]=false;
@@ -498,7 +679,7 @@ void CMazeGeneratorPrivate::MakeNotPerfect()
                 }
                 else
                 {
-                    //najpierw sprawdz czy mozna usun¹æ œcianê naprzeci wejscia
+                    //najpierw sprawdz czy mozna usunï¿½ï¿½ ï¿½cianï¿½ naprzeci wejscia
                     if (indir!=255)
                     {
                         switch(indir)

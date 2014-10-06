@@ -3,6 +3,7 @@
 #include <set>
 #include <stack>
 #include <Tools/loggers.h>
+#include <time.h>
 
 class maze_generator_recursive_private
 {
@@ -121,6 +122,7 @@ void maze_generator_recursive_private::generate_maze()
 			unsigned int index = rand()%unvisited_cells.size()-1;
 			std::advance(it, index);
 			current_cell = *it;
+			unvisited_cells.erase(current_cell);
 		}
 	}
 	//printLog(eDebug,eDebugLogLevel, "IN: End generate_maze");
@@ -162,12 +164,8 @@ void maze_generator_recursive_private::join_cells(unsigned int current_cell, uns
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-maze_generator_recursive::maze_generator_recursive():pimpl(new maze_generator_recursive_private())
-{
-}
-maze_generator_recursive::~maze_generator_recursive()
-{
-}
+maze_generator_recursive::maze_generator_recursive():pimpl(new maze_generator_recursive_private()){}
+maze_generator_recursive::~maze_generator_recursive(){}
 std::shared_ptr<maze_interface> maze_generator_recursive::generate_maze(const maze_settings & settings)
 {
 	///printLog(eDebug,eDebugLogLevel, "generate_maze");

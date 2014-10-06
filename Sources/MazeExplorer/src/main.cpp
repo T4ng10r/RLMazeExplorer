@@ -1,7 +1,7 @@
 #include <QApplication>
 //#include <QString>
 //#include <QtCore/QTextCodec>
-#include <Gui/MainWindow.h>
+#include <GUI/MainWindow.h>
 
 #include <QGraphicsView>
 //#include <Maze/CMazeGenerator.h>

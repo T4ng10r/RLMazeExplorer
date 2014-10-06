@@ -43,7 +43,7 @@ public:
         typename std::map<ActionID,CKBLocationData>::iterator Iter;
         Iter = m_possibleActions.find(action);
         if (Iter==m_possibleActions.end())
-            return NULL;
+            return nullptr;
         return &(Iter->second);
     }
 

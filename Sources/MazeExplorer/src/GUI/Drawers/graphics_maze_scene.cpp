@@ -2,7 +2,7 @@
 #include <Tools/loggers.h>
 #include <QGraphicsView>
 #include <boost/shared_ptr.hpp>
-#include <Gui/Drawers/CGraphicsMazeLocation.h>
+#include <GUI/Drawers/CGraphicsMazeLocation.h>
 #include <set>
 #include <QGraphicsWidget>
 #include <QGraphicsGridLayout>
@@ -76,6 +76,7 @@ void graphics_maze_scene_private::reset()
 
 
 graphics_maze_scene::graphics_maze_scene() : pimpl(new graphics_maze_scene_private(this)) {}
+graphics_maze_scene::~graphics_maze_scene(){}
 void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 {
 	//if (NULL == pMaze)	

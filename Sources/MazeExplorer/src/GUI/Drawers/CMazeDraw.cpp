@@ -1,5 +1,5 @@
 #include "CMazeDraw.h"
-#include <Gui/MainWindow.h>
+#include <GUI/MainWindow.h>
 
 
 class maze_draw_private
@@ -264,6 +264,7 @@ maze_draw::maze_draw(QWidget *parent) : QWidget(parent), pimpl(new maze_draw_pri
     setMouseTracking(true);
 	pimpl->createContextMenu();
 }
+maze_draw::~maze_draw(){}
 //----------------------------------------------------------------//
 void maze_draw::paintEvent(QPaintEvent *)
 {

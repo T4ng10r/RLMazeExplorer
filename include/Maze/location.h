@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <Maze/maze_settings.h>
+#include <algorithm>
 
 class location	//jesli dany kierunek jest prawda - tam jest sciana
 {

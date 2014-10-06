@@ -17,6 +17,7 @@
 #include <map>
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <memory>
 const QSize cIconSize(22,22);
 
 using namespace std;
@@ -27,7 +28,8 @@ class maze_draw : public QWidget
     Q_OBJECT
 
 public:
-    maze_draw(QWidget *parent = 0);
+	maze_draw(QWidget *parent = 0);
+	~maze_draw();
 
 protected:
 	void mouseMoveEvent(QMouseEvent * event);

@@ -67,7 +67,7 @@ void CExperiment::startExperiment()
 	//emit setExploredKnowlegdeBase(m_ptrKnowledgeBase);	//we're giving control over KB existence to display widget
 	//m_ptrKnowledgeBase = NULL;
 }
-void CExperiment::addExplorationResult(CMazeExplorationResult & rExploration)
+void CExperiment::addExplorationResult(const CMazeExplorationResult & rExploration)
 {
     explorationResults.push_back(rExploration);
 }

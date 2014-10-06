@@ -11,7 +11,7 @@ public:
 	//~CExplorationResult();
 	virtual void	clear()		{	m_vDecisions.clear();	}
 	void	addDecision(StateID stateID, ActionID actionID);
-	size_t	getDecisionsCount()		{	return m_vDecisions.size();		}
+	std::size_t	getDecisionsCount()		{	return m_vDecisions.size();		}
 	bool	getDecisionPoint(unsigned int nr,StateID &stateID, ActionID &actionID)
 	{
 		if (m_vDecisions.size()>=nr)

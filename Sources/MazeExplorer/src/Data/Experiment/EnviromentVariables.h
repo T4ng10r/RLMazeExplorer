@@ -48,10 +48,10 @@ struct LocationDirs
     LocationDirs(eLocationDirs xlocDir):locDir(xlocDir) {}
     LocationDirs(directions xDir)
     {
-        if (xDir = FRONT_DIR) locDir = LOCATION_FRONT;
-        else if (xDir = LEFT_DIR) locDir = LOCATION_LEFT;
-        else if (xDir = RIGHT_DIR) locDir = LOCATION_RIGHT;
-        else if (xDir = BACK_DIR) locDir = LOCATION_BACK;
+        if (xDir == FRONT_DIR) locDir = LOCATION_FRONT;
+        else if (xDir == LEFT_DIR) locDir = LOCATION_LEFT;
+        else if (xDir == RIGHT_DIR) locDir = LOCATION_RIGHT;
+        else if (xDir == BACK_DIR) locDir = LOCATION_BACK;
         else locDir = LOCATION_EMPTY;
     }
 	std::vector<directions> Directions()

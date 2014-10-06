@@ -6,6 +6,7 @@ enable_testing()
 include(${PROJECT_SOURCE_DIR}/CMake/functions.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/options.cmake)
 include_directories(${Boost_INCLUDE_DIR})
+set_c11_flags()
 
 add_subdirectory(include)
 add_subdirectory(Sources)

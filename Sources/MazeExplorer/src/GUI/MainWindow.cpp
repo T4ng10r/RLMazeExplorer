@@ -2,8 +2,8 @@
 #include <Maze/maze_generator.h>
 
 #include <QMouseEvent>
-#include <Gui/Drawers/graphics_maze_scene.h>
-#include <Gui/CSingleRobotMoveDlg.h>
+#include <GUI/Drawers/graphics_maze_scene.h>
+#include <GUI/CSingleRobotMoveDlg.h>
 #include <QGraphicsView>
 #include <QPrinter>
 #include <Tools/loggers.h>

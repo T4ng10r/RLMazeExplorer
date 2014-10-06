@@ -15,7 +15,7 @@ public:
 	void setMaze(maze_interface_type maze_data);
 
 public Q_SLOTS:
-	void onExperimentSettingsChanged(const CExperimentSettings & xExperimentSettings);
+	void on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings);
 
 protected:
 	std::unique_ptr<graphics_maze_scene_private>  pimpl;

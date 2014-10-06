@@ -22,8 +22,8 @@ int PositionItemEditor::sIntMax=10;
 CExperimentPositionsParamsDlg::CExperimentPositionsParamsDlg(QWidget *parent) : QWidget(parent)
 {
 	QTextCodec::codecForName("System");
-	setupUI();
-	retranslateUI();
+	setup_ui();
+	retranslate_ui();
 	setConnections();
 
 	QItemEditorFactory *ptrFactory = new QItemEditorFactory;
@@ -42,7 +42,7 @@ CExperimentPositionsParamsDlg::~CExperimentPositionsParamsDlg()
 {
 	delete ptrDelegate;
 }
-void CExperimentPositionsParamsDlg::setupUI()
+void CExperimentPositionsParamsDlg::setup_ui()
 {
     m_ptrMainLayout = new QVBoxLayout;
     m_ptrMainLayout->setObjectName(QString::fromUtf8("vboxExperimentParamLayout"));
@@ -202,7 +202,7 @@ void CExperimentPositionsParamsDlg::setupFinishPos()
 
     hFinishPosLayout->addLayout(hAddRemoveButtonsLayout);
 }
-void CExperimentPositionsParamsDlg::retranslateUI()
+void CExperimentPositionsParamsDlg::retranslate_ui()
 {
 	labelRepeatQuantity->setText(QApplication::translate("param_eks", "Ilość powtórzeń", 0));
 	//labelRepeatQuantity->setText(QApplication::translate("param_eks", "Ilość powtórzeń", 0));

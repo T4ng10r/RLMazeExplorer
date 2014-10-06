@@ -40,7 +40,7 @@ void data_thread::onPerformMazeGeneration(maze_settings xMazeSettings)
 	////m_stExperimentManager.getCurrentExperiment().on_set_maze_data(maze);
 	//m_stExperiment.on_set_maze_data(maze);
 	//m_ptrMazeScene->setMaze(maze);
-	//m_ptrExperimentParamsDlg->onExperimentSettingsChanged();
+	//m_ptrExperimentParamsDlg->on_experiment_settings_changed();
 	//bMazeUpdated=true;
 	////m_stExperimentManager.getCurrentExperiment().on_set_maze_data(maze);
 	//m_stExperiment.on_set_maze_data(maze);

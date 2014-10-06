@@ -1,17 +1,17 @@
-#include "CExperimentResultDraft.h"
+#include "experiment_result_draft.h"
 #include <Qt>
 
 const QColor backgroundColor(Qt::white);
 const QColor gridColor = QColor("#A4c2DB");
 
-CExperimentResultDraft::CExperimentResultDraft(QWidget *parent) : QWidget(parent)
+experiment_result_draft::experiment_result_draft(QWidget *parent) : QWidget(parent)
 {
 }
 
-CExperimentResultDraft::~CExperimentResultDraft(void)
+experiment_result_draft::~experiment_result_draft(void)
 {
 }
-void CExperimentResultDraft::paintEvent(QPaintEvent *event)
+void experiment_result_draft::paintEvent(QPaintEvent *event)
 {
     QPainter painter;
     QRect qRect	= event->rect();
@@ -31,7 +31,7 @@ void CExperimentResultDraft::paintEvent(QPaintEvent *event)
     //drawRooms(painter,qRect);
     painter.end();
 }
-void CExperimentResultDraft::drawGrid(QPainter &painter,QRect & rect)
+void experiment_result_draft::drawGrid(QPainter &painter,QRect & rect)
 {
     unsigned int delta;
     QSize qSize = rect.size();
@@ -54,7 +54,7 @@ void CExperimentResultDraft::drawGrid(QPainter &painter,QRect & rect)
         painter.drawLine(QPoint(0,index),QPoint(qSize.width(),index));
     }
 }
-void CExperimentResultDraft::drawExperimentResults(QPainter &painter,QRect & rect)
+void experiment_result_draft::drawExperimentResults(QPainter &painter,QRect & rect)
 {
     QPoint startPoint,endPoint;
 
@@ -86,7 +86,7 @@ void CExperimentResultDraft::drawExperimentResults(QPainter &painter,QRect & rec
     }
     painter.setPen(qPen);
 }
-void CExperimentResultDraft::slotDataForDraft(QVector<float> &data)
+void experiment_result_draft::slotDataForDraft(QVector<float> &data)
 {
     dataForDraft = data;
     update();

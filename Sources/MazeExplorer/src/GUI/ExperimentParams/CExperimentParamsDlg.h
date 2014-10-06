@@ -53,7 +53,7 @@ Q_SIGNALS:
     void on_set_start_position(int ,int);
     void setFinishPosition(int ,int);
     void setFinishPosition(vector< pair<int,int> >);
-	void generateMaze(maze_settings);
+	void generate_maze(maze_settings);
     void experimentSettingsChanged(const CExperimentSettings &);
     //xMazeSettings
     void startExperiment(CExperimentSettings & cExperimentSettings);
@@ -66,7 +66,7 @@ public Q_SLOTS:
     void onAddFinishPosition(int ,int);
     void resetExperimentStatus();
     void nextStepInExperiment();
-	void onExperimentSettingsChanged();
+	void on_experiment_settings_changed();
 protected Q_SLOTS:
     void onSpinBoxStartSignals();
     void processExperiment();
@@ -78,11 +78,11 @@ protected Q_SLOTS:
 protected:
     void setConnections();
     //metody u�ywane przy tworzeniu GUI
-    void setupUI();
+    void setup_ui();
     void setupProgress();
     void setupLoadSaveKBPaths();
     void setupOkButton();
-	void retranslateUI();
+	void retranslate_ui();
 
 protected:
     unsigned int sizeXUpdated,sizeYUpdated;

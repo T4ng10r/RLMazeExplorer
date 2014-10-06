@@ -1,26 +1,17 @@
 #include <QApplication>
-//#include <QString>
-//#include <QtCore/QTextCodec>
-#include <GUI/MainWindow.h>
+#include <GUI/main_window.h>
 
-#include <QGraphicsView>
-//#include <Maze/CMazeGenerator.h>
-//#include "graphics_maze_scene.h"
-//#include "EnviromentVariables.h"
-//////////////////////////////////////////////////////////////////////////
 #include <Tools/loggers.h>
 #include <boost/scoped_ptr.hpp>
 
 int main(int argc, char **argv)
 {
-    createLoggers();
     QApplication    app(argc, argv);
-    //QTextCodec::setCodecForTr(QTextCodec::codecForName ("System"));
 	app.setApplicationName("MazeExplorer");
 	app.setOrganizationName("T4ng10r");
 	createLoggers();
 
-	boost::scoped_ptr<MainWindow> main_window(new MainWindow);
+	boost::scoped_ptr<main_window> main_window(new main_window);
 	main_window->show();
 	return app.exec();
 }

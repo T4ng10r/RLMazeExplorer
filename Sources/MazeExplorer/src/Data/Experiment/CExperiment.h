@@ -42,7 +42,7 @@ Q_SIGNALS:
 	void robotBeforeMove(CScanResults *scanResult);
 	void robotNextMove();
 public Q_SLOTS:
-	void onNextRobotMove();
+	void onnext_robot_move();
 protected:
 	time_t	experimentDuration;
 	unsigned int m_iExplorationSucces;		//how many time exploration was successful

@@ -3,7 +3,7 @@
 /*
 CExperimentsDraftsDlg::CExperimentsDraftsDlg(void) : QWidget(NULL)
 {
-    setupUI();
+    setup_ui();
     connect(this,SIGNAL(emitDataForDraft(QVector<float> &)),widgetResultDraft,SLOT(slotDataForDraft(QVector<float> &)));
     pExperiment=NULL;
 }
@@ -18,7 +18,7 @@ void CExperimentsDraftsDlg::connecting()
     bResult=connect(treeExplorationResults,SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *) ),this,SLOT(slotTreeItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)));
     Q_ASSERT(bResult==TRUE);
 }
-void CExperimentsDraftsDlg::setupUI()
+void CExperimentsDraftsDlg::setup_ui()
 {
     setObjectName(QString::fromUtf8("ExperimentResultDraftDialog"));
     resize(QSize(651, 378).expandedTo(minimumSizeHint()));
@@ -28,7 +28,7 @@ void CExperimentsDraftsDlg::setupUI()
     gridWindowLayout->setObjectName(QString::fromUtf8("gridWindowLayout"));
     setLayout(gridWindowLayout);
 
-    setupUIToolBoxPages();
+    setup_uiToolBoxPages();
     //tutaj musimy skorzystać z TabWidgeta
     tabDialog = new QTabWidget;
     gridWindowLayout->addWidget(tabDialog,0,1,1,1);
@@ -56,7 +56,7 @@ void CExperimentsDraftsDlg::setupUI()
 void CExperimentsDraftsDlg::setKnowlegdeBase(CMazeKnowlegdeBase * ptKB)
 {
     pKB = ptKB;
-    setupUIFillKnowlegdeBaseData();
+    setup_uiFillKnowlegdeBaseData();
     QTreeWidgetItem			*	parentItem;
 
     parentItem = treeExplorationResults->itemAt(2,2);
@@ -65,7 +65,7 @@ void CExperimentsDraftsDlg::setKnowlegdeBase(CMazeKnowlegdeBase * ptKB)
 
     slotTreeItemClicked(parentItem, 0);
 }
-void CExperimentsDraftsDlg::setupUIToolBoxPages()
+void CExperimentsDraftsDlg::setup_uiToolBoxPages()
 {
     toolBox = new QToolBox(this);
     toolBox->setObjectName(QString::fromUtf8("toolBoox"));
@@ -305,7 +305,7 @@ void CExperimentsDraftsDlg::fillTableWithExperimentData(CExperiment &exp)
     treeExplorationResults->resizeColumnToContents(0);
     treeExplorationResults->resizeColumnToContents(1);
 }
-void CExperimentsDraftsDlg::setupUIFillKnowlegdeBaseData()
+void CExperimentsDraftsDlg::setup_uiFillKnowlegdeBaseData()
 {
     QString test;
 

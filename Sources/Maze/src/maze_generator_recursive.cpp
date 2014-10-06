@@ -90,7 +90,6 @@ boost::optional<unsigned int> maze_generator_recursive_private::get_neighbour_ce
 }
 void maze_generator_recursive_private::generate_maze()
 {
-	//printLog(eDebug,eDebugLogLevel, "IN: Start generate_maze");
     srand( (unsigned)time( NULL ) );
     fill_unvisited_set();
 
@@ -125,7 +124,6 @@ void maze_generator_recursive_private::generate_maze()
 			unvisited_cells.erase(current_cell);
 		}
 	}
-	//printLog(eDebug,eDebugLogLevel, "IN: End generate_maze");
 }
 void maze_generator_recursive_private::join_cells(unsigned int current_cell, unsigned int neighbour_cell)
 {
@@ -168,7 +166,6 @@ maze_generator_recursive::maze_generator_recursive():pimpl(new maze_generator_re
 maze_generator_recursive::~maze_generator_recursive(){}
 std::shared_ptr<maze_interface> maze_generator_recursive::generate_maze(const maze_settings & settings)
 {
-	///printLog(eDebug,eDebugLogLevel, "generate_maze");
 	pimpl->size_x = settings.size_x;
 	pimpl->size_y = settings.size_y;
 	pimpl->allocate_locations_table();
@@ -178,46 +175,6 @@ std::shared_ptr<maze_interface> maze_generator_recursive::generate_maze(const ma
 }
 
 /*
-#include <Maze/maze_generator.h>
-#include <Maze/maze_generator_factory.h>
-#include <time.h>
-#include <QtCore/QStack>
-#include <set>
-
-struct edge
-{
-    void reset()
-    {
-        WspX1=0;
-        WspY1=0;
-        WspX2=0;
-        WspY2=0;
-        bActive=false;
-    }
-    int  WspX1;
-    int  WspY1;
-    int  WspX2;
-    int  WspY2;
-    bool bActive;
-};
-
-struct   Lokacja
-{
-    void reset()
-    {
-        Head=this;
-        Tail=this;
-        Next=NULL;
-        Prev=NULL;
-    }
-    //
-    unsigned int   uiSet;
-    //
-    unsigned int   ID;
-    Lokacja   *Next,*Prev,*Head,*Tail;
-};
-//*m_vLocations
-
 class CMazeGeneratorPrivate
 {
 public:
@@ -754,40 +711,4 @@ void CMazeGeneratorPrivate::MakeNotPerfect()
         }
 }
 //////////////////////////////////////////////////////////////////////////
-const maze & maze_generator::generate_maze(unsigned int MaxX, unsigned int MaxY, EMazeTypes eMazeType)
-{
-    maze_settings xMazeSettings;
-    xMazeSettings.size_x=MaxX;
-    xMazeSettings.size_y=MaxY;
-    xMazeSettings.mazeType=eMazeType;
-    xMazeSettings.bMazePerfect=true;
-	generate_maze(xMazeSettings);
-	pimpl->maze_data.SetMazeEdges();
-    return pimpl->maze_data;
-}
-const maze & maze_generator::generate_maze(const maze_settings & xMazeSettings)
-{
-    pimpl->PerformLocationReset();
-    pimpl->size_x=xMazeSettings.size_x;
-    pimpl->size_y=xMazeSettings.size_y;
-    pimpl->AllocateLocationTable();
-
-	maze_generator_factory
-
-    switch (xMazeSettings.mazeType)
-    {
-    case E_MT_KRUSKAL:
-        pimpl->GenerateMaze_Kruskal();
-        break;
-    case E_MT_PRIM:
-        pimpl->GenerateMaze_Prim();
-        break;
-    case E_MT_RECURSIVE:
-        pimpl->GenerateMaze_Recursive();
-        break;
-    default:
-        break;
-    }
-    return pimpl->maze_data;
-}
 */

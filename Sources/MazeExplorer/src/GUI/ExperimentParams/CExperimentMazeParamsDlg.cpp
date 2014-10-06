@@ -3,11 +3,11 @@
 
 CExperimentMazeParamsDlg::CExperimentMazeParamsDlg(QWidget *parent) : QWidget(parent)
 {
-    setupUI();
-    retranslateUI();
+    setup_ui();
+    retranslate_ui();
     setConnections();
 }
-void CExperimentMazeParamsDlg::setupUI()
+void CExperimentMazeParamsDlg::setup_ui()
 {
     mainLayout = new QGridLayout;
     mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
@@ -53,10 +53,10 @@ void CExperimentMazeParamsDlg::setupUI()
     //setupStochasticMazeChanges();
 
 
-//	buttonGenerateMaze = new QPushButton;
-    buttonGenerateMaze=new QPushButton(this);
-    buttonGenerateMaze->setObjectName(QString::fromUtf8("buttonBrowseLoadKBPath"));
-    mainLayout->addWidget(buttonGenerateMaze,5,0,1,1);
+//	button_generate_maze = new QPushButton;
+    button_generate_maze=new QPushButton(this);
+    button_generate_maze->setObjectName(QString::fromUtf8("buttonBrowseLoadKBPath"));
+    mainLayout->addWidget(button_generate_maze,5,0,1,1);
 
 //	QCheckBox	*	checkBoxMazeIsPerfect;
     checkBoxMazeIsPerfect = new QCheckBox(this);
@@ -114,24 +114,24 @@ void CExperimentMazeParamsDlg::setupStochasticMazeChanges()
     gboxMazeStochasticLayout->addWidget(checkBoxCumulativeRandomness,1,0,1,2);
 
 }
-void CExperimentMazeParamsDlg::retranslateUI()
+void CExperimentMazeParamsDlg::retranslate_ui()
 {
-    labelSizeX->setText(QApplication::translate("Dialog", "Rozmiar X", 0));
+    labelSizeX->setText(QApplication::translate("Dialog", "Size X", 0));
     labelMazeGenMethod->setText(QApplication::translate("Dialog", "Generation\nmethod", 0));
     labelSizeY->setText(QApplication::translate("Dialog", "Size Y", 0));
     comboGenerationMethod->addItem(tr("Kruskal's"), E_MT_KRUSKAL);
     comboGenerationMethod->addItem(tr("Recursive Backtracker"), E_MT_RECURSIVE);
     comboGenerationMethod->addItem(tr("Prim's"), E_MT_PRIM);
-    buttonGenerateMaze->setText("Generuj");
-    checkBoxMazeIsPerfect->setText("Labirinth is perfect");
-    groupStochasticMazeChanges->setTitle("Labirynt probability");
-    checkBoxCumulativeRandomness->setText("Acumulate\nprobability");
+    button_generate_maze->setText("Generate");
+    checkBoxMazeIsPerfect->setText("Maze is perfect");
+    groupStochasticMazeChanges->setTitle("Maze probability");
+    checkBoxCumulativeRandomness->setText("Accumulate\nprobability");
     labelRandomnessValue->setText(QApplication::translate("Dialog", "Probability", 0));
 }
 void CExperimentMazeParamsDlg::setConnections()
 {
     bool bResult=false;
-    bResult=connect(buttonGenerateMaze,SIGNAL(clicked(bool)),this,SLOT(onGenerateMaze(bool)));
+    bResult=connect(button_generate_maze,SIGNAL(clicked(bool)),this,SLOT(on_generate_maze(bool)));
     Q_ASSERT(bResult==true);
 }
 //////////////////////////////////////////////////////////////////////////
@@ -159,24 +159,24 @@ void CExperimentMazeParamsDlg::setMazeGenerationMethod(EMazeTypes eType)
 	comboGenerationMethod->blockSignals(false);
 }
 //////////////////////////////////////////////////////////////////////////
-void CExperimentMazeParamsDlg::setMazeSettings(maze_settings & stMazeSettings)
+void CExperimentMazeParamsDlg::set_maze_settings(maze_settings & stMazeSettings)
 {
 	spinSizeX->setValue(stMazeSettings.size_x);
 	spinSizeY->setValue(stMazeSettings.size_y);
 	setMazeGenerationMethod(stMazeSettings.mazeType);
 	checkBoxMazeIsPerfect->setChecked(stMazeSettings.bMazePerfect);
 }
-void CExperimentMazeParamsDlg::getMazeSettings(maze_settings & stMazeSettings)
+void CExperimentMazeParamsDlg::get_maze_settings(maze_settings & stMazeSettings)
 {
 	stMazeSettings.size_x = spinSizeX->value();
 	stMazeSettings.size_y = spinSizeY->value();
 	stMazeSettings.mazeType=getMazeGenerationMethod();
 	stMazeSettings.bMazePerfect=checkBoxMazeIsPerfect->isChecked();
 }
-void CExperimentMazeParamsDlg::onGenerateMaze(bool)
+void CExperimentMazeParamsDlg::on_generate_maze(bool)
 {
 	qRegisterMetaType<maze_settings>("maze_settings");
 	maze_settings mazeSettings;
-	getMazeSettings(mazeSettings);
-    Q_EMIT generateMaze(mazeSettings);
+	get_maze_settings(mazeSettings);
+    Q_EMIT generate_maze(mazeSettings);
 }

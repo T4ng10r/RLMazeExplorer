@@ -28,8 +28,8 @@ public:
     CExperimentParamsExperimentDlg(QWidget *parent = 0);
     void getExperimentSettings(CExperimentSettings & cExperimentSettings);
 protected:
-    void setupUI();
-    void retranslateUI();
+    void setup_ui();
+    void retranslate_ui();
     void setConnections();
     void setupLearningParamGroup();
     void setupLearningMethod();

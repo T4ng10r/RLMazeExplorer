@@ -119,7 +119,7 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 	pimpl->m_sEndPoints.clear();
 	//Log4Qt::Logger::logger("Process")->info("Maze fitted into view.");
 }
-void graphics_maze_scene::onExperimentSettingsChanged(const CExperimentSettings & xExperimentSettings)
+void graphics_maze_scene::on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings)
 {
 	if (xExperimentSettings.startPosition.posX != pimpl->m_pStartPoint.first ||
 		xExperimentSettings.startPosition.posY != pimpl->m_pStartPoint.second)

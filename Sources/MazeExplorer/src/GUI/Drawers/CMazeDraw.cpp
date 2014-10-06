@@ -1,5 +1,5 @@
 #include "CMazeDraw.h"
-#include <GUI/MainWindow.h>
+#include <GUI/main_window.h>
 
 
 class maze_draw_private
@@ -33,9 +33,9 @@ public:
 	QRect	normalLoc;
 	QRect	scaledLoc;
 	QRect	robotLoc;
-	int sizeX, sizeY;
-	int scaleSizeX, scaleSizeY;
-	int robotScaleSizeX, robotScaleSizeY;
+	int size_x, size_y;
+	int scale_size_x, scale_size_y;
+	int robot_scale_size_x, robot_scale_size_y;
 	int m_iSelectedRobotPos_X;
 	int m_iSelectedRobotPos_Y;
 	CMazeExplorationResult		lRobotRoute;
@@ -47,10 +47,10 @@ maze_draw_private::maze_draw_private(maze_draw * pub) : public_(pub), iDirection
 void maze_draw_private::reset()
 {
 	lRobotRoute.clear();
-	sizeX = 0;
-	sizeY = 0;
-	scaleSizeX = 0;
-	scaleSizeY = 0;
+	size_x = 0;
+	size_y = 0;
+	scale_size_x = 0;
+	scale_size_y = 0;
 	m_iSelectedRobotPos_X = -1;
 	m_iSelectedRobotPos_Y = -1;
 }
@@ -76,21 +76,21 @@ void maze_draw_private::createContextMenu()
 }
 const QRect maze_draw_private::get_normal_rect(const QPoint &position)
 {
-	return QRect(position.x() / sizeX * sizeX, position.y() / sizeY * sizeY, sizeX, sizeY);
+	return QRect(position.x() / size_x * size_x, position.y() / size_y * size_y, size_x, size_y);
 }
-const QRect maze_draw_private::get_normal_rect(int posX, int posY)
+const QRect maze_draw_private::get_normal_rect(int pos_x, int pos_y)
 {
-	return QRect(posX * sizeX, posY * sizeY, sizeX, sizeY);
+	return QRect(pos_x * size_x, pos_y * size_y, size_x, size_y);
 }
-const QRect maze_draw_private::getRouteRect(int posX, int posY)
+const QRect maze_draw_private::getRouteRect(int pos_x, int size_y)
 {
-	QRect rect = get_normal_rect(posX, posY);
-	return rect.adjusted(scaleSizeX, scaleSizeY, -scaleSizeX, -scaleSizeY);
+	QRect rect = get_normal_rect(pos_x, size_y);
+	return rect.adjusted(scale_size_x, scale_size_y, -scale_size_x, -scale_size_y);
 }
-const QRect maze_draw_private::getRobotRect(int posX, int posY)
+const QRect maze_draw_private::getRobotRect(int pos_x, int pos_y)
 {
-	QRect rect = getRouteRect(posX, posY);
-	return rect.adjusted(robotScaleSizeX, robotScaleSizeY, -robotScaleSizeX, -robotScaleSizeY);
+	QRect rect = getRouteRect(pos_x, pos_y);
+	return rect.adjusted(robot_scale_size_x, robot_scale_size_y, -robot_scale_size_x, -robot_scale_size_y);
 }
 void maze_draw_private::prepareLocationVars()
 {
@@ -102,14 +102,14 @@ void maze_draw_private::prepareLocationVars()
 	heig = public_->height() - 2;
 	wid = public_->width() - 2;
 
-	sizeX = wid / X;
-	sizeY = heig / Y;
+	size_x = wid / X;
+	size_y = heig / Y;
 
-	scaleSizeX = sizeY*0.15;
-	scaleSizeY = sizeY*0.15;
+	scale_size_x = size_y*0.15;
+	scale_size_y = size_y*0.15;
 
-	robotScaleSizeX = scaleSizeX*0.5;
-	robotScaleSizeY = scaleSizeY*0.5;
+	robot_scale_size_x = scale_size_x*0.5;
+	robot_scale_size_y = scale_size_y*0.5;
 }
 void maze_draw_private::drawRobotRoute(QPainter &painter)
 {
@@ -304,8 +304,8 @@ void maze_draw::mouseMoveEvent(QMouseEvent * event)
 	pimpl->m_iSelectedRobotPos_Y = -1;
     if (count)
     {
-		x = event->x() / pimpl->sizeX + 1;
-		y = event->y() / pimpl->sizeY + 1;
+		x = event->x() / pimpl->size_x + 1;
+		y = event->y() / pimpl->size_y + 1;
         //szukamy pozycji z trasy robota
         for(int index=0; index<count; index++)
         {

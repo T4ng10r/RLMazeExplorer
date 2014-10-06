@@ -1,16 +1,16 @@
-#include <GUI/CSingleRobotMoveDlg.h>
+#include <GUI/single_robot_move_dlg.h>
 #include <Data/CScanResults.h>
 
 const int maxFinishPos(5);
 
-CSingleRobotMoveDlg::CSingleRobotMoveDlg(QWidget *parent) : QDockWidget(parent)
+single_robot_move_dlg::single_robot_move_dlg(QWidget *parent) : QDockWidget(parent)
 {
 	show();
-    setupUI();
-	retranslateUI();
+    setup_ui();
+	retranslate_ui();
 }
 //////////////////////////////////////////////////////////////////////////
-void CSingleRobotMoveDlg::setupUI()
+void single_robot_move_dlg::setup_ui()
 {
 	setObjectName(QString::fromUtf8("SingleRobotMoveDlg"));
 	QWidget * ptrWidget = new QWidget();
@@ -118,19 +118,19 @@ void CSingleRobotMoveDlg::setupUI()
 
 	m_ptrVMainlLayout->addLayout(m_ptrDownLayout);
 
-	retranslateUI();
+	retranslate_ui();
 	QMetaObject::connectSlotsByName(this);
 }
-void CSingleRobotMoveDlg::retranslateUI()
+void single_robot_move_dlg::retranslate_ui()
 {
-	setWindowTitle(QApplication::translate("Form", "Form", 0));
+	setWindowTitle(QApplication::translate("Form", "Robot move position", 0));
 	m_ptrRobotPosLabel->setText(QApplication::translate("Form", "Robot position", 0));
 	m_ptrTimeOutGroupBox->setTitle(QApplication::translate("Form", "GroupBox", 0));
 	m_ptrTimeOutLabel->setText(QApplication::translate("Form", "TimOut between single moves", 0));
 	m_ptrNextMoveButton->setText(QApplication::translate("Form", "Next", 0));
 }
 //////////////////////////////////////////////////////////////////////////
-void CSingleRobotMoveDlg::on_NextMoveButton_clicked(bool checked)
+void single_robot_move_dlg::on_NextMoveButton_clicked(bool checked)
 {
     /*	blockSignals(true);
 
@@ -149,7 +149,7 @@ void CSingleRobotMoveDlg::on_NextMoveButton_clicked(bool checked)
     	blockSignals(false);*/
 
 }
-void CSingleRobotMoveDlg::onRobotBeforeMove(CScanResults *scanResult)
+void single_robot_move_dlg::onRobotBeforeMove(CScanResults *scanResult)
 {
 	if (!scanResult)	return;
 	QString strVal = QString::number(scanResult->robotPos.posX)+","+QString::number(scanResult->robotPos.posY);

@@ -42,7 +42,7 @@ void CExperiment::setExperimentSettings(const CExperimentSettings & xExperimentS
     m_stExperimentSettings = xExperimentSettings;
 }
 //////////////////////////////////////////////////////////////////////////
-void CExperiment::onNextRobotMove()
+void CExperiment::onnext_robot_move()
 {
 	Q_EMIT robotNextMove();
 }

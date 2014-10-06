@@ -19,22 +19,22 @@
 
 class CScanResults;
 
-class CSingleRobotMoveDlg : public QDockWidget
+class single_robot_move_dlg : public QDockWidget
 {
     Q_OBJECT
 public:
-    CSingleRobotMoveDlg(QWidget *parent=NULL);
+    single_robot_move_dlg(QWidget *parent=NULL);
 //	~CSingleRobotMoveDlg(void);
 Q_SIGNALS:
 	//signal that next robot move can be performed
-    void nextRobotMove();
+    void next_robot_move();
 public Q_SLOTS:
 	//robot is ready to perform next move - it show what he sees
 	void onRobotBeforeMove(CScanResults *scanResult);
 	void on_NextMoveButton_clicked(bool checked);
 protected:
-    void setupUI();
-	void retranslateUI();
+    void setup_ui();
+	void retranslate_ui();
 protected:
 	QVBoxLayout *		m_ptrVMainlLayout;
 	QLabel *			m_ptrRobotPosLabel;

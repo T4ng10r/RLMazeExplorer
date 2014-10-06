@@ -61,8 +61,8 @@ protected Q_SLOTS:
 	//user changed starting direction of agent by highlighting entry in comboBox
 	void onInternalDirectionChanged(int iIndex);
 private:
-    void setupUI();
-    void retranslateUI();
+    void setup_ui();
+    void retranslate_ui();
     void setupRepeatQuant();
     void setupStartingPos();
     void setupFinishPos();

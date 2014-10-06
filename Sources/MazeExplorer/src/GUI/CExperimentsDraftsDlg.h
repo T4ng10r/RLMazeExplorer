@@ -14,7 +14,7 @@
 #include <QLabel>
 #include <QTreeWidget>
 #include <QTabWidget>
-#include "CExperimentResultDraft.h"
+#include "experiment_result_draft.h"
 #include <Data/CMazeKnowlegdeBase.h>
 #include  "CExperimentsKBGraph.h"
 
@@ -77,8 +77,8 @@ protected:
     void fillTableWithExperimentData(CExperiment &exp);
     void fillItemExplorationData(QTreeWidgetItem * parentItem,CMazeExplorationResult &expResult);
     void fillItemExplorationPath(QTreeWidgetItem * parentItemPath,QTreeWidgetItem * parentItemCrossroadPath,CMazeExplorationResult &expResult);
-    void setupUI();
-    void setupUIToolBoxPages();
-    void setupUIFillKnowlegdeBaseData();
+    void setup_ui();
+    void setup_uiToolBoxPages();
+    void setup_uiFillKnowlegdeBaseData();
 };
 */

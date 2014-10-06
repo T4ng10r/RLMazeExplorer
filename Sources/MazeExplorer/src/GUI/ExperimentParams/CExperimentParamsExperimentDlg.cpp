@@ -2,12 +2,12 @@
 
 CExperimentParamsExperimentDlg::CExperimentParamsExperimentDlg(QWidget *parent) : QWidget(parent)
 {
-    setupUI();
-    retranslateUI();
+    setup_ui();
+    retranslate_ui();
     setConnections();
 }
 
-void CExperimentParamsExperimentDlg::setupUI()
+void CExperimentParamsExperimentDlg::setup_ui()
 {
     mainLayout = new QGridLayout;
     mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
@@ -39,9 +39,9 @@ void CExperimentParamsExperimentDlg::setupUI()
 
     setupLearningPenaltyValue();
     setupLearningPriceValue();
-    retranslateUI();
+    retranslate_ui();
 }
-void CExperimentParamsExperimentDlg::retranslateUI()
+void CExperimentParamsExperimentDlg::retranslate_ui()
 {
     groupLearningParam->setTitle(QApplication::translate("param_eks", "Parametry uczenia", 0));
     labelLearningMethod->setText(QApplication::translate("param_eks", "Metoda", 0));

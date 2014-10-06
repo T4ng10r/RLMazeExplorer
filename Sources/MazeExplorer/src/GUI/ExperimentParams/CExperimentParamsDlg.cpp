@@ -15,11 +15,11 @@ CExperimentParamsDlg::CExperimentParamsDlg(QWidget *parent) :
     sizeXUpdated = 10;
     sizeYUpdated = 10;
     //setMinimumSize(rcDockWidgetSize);
-    setupUI();
-	retranslateUI();
+    setup_ui();
+	retranslate_ui();
 }
 //////////////////////////////////////////////////////////////////////////
-void CExperimentParamsDlg::setupUI()
+void CExperimentParamsDlg::setup_ui()
 {
     setObjectName(QString::fromUtf8("ExperimentParamsDlg"));
     //setMinimumSize(QSize(250, 350));//.expandedTo(minimumSizeHint()));
@@ -35,7 +35,7 @@ void CExperimentParamsDlg::setupUI()
     m_ptrTabDialog = new QTabWidget;
 
 	m_ptrWidgetMazeGenerationParam = new CExperimentMazeParamsDlg;
-	m_ptrTabDialog->addTab(m_ptrWidgetMazeGenerationParam,"Labirynth");
+	m_ptrTabDialog->addTab(m_ptrWidgetMazeGenerationParam,"Maze");
 
     m_ptrWidgetPositionParams = new CExperimentPositionsParamsDlg;
     m_ptrTabDialog->addTab(m_ptrWidgetPositionParams,"Positions");
@@ -185,36 +185,36 @@ void CExperimentParamsDlg::setupLoadSaveKBPaths()
     	gboxLoadSaveKB->addWidget(buttonBrowseSaveKBPath,1,2,1,1);*/
     //////////////////////////////////////////////////////////////////////////
 }
-void CExperimentParamsDlg::retranslateUI()
+void CExperimentParamsDlg::retranslate_ui()
 {
-	setWindowTitle("Parametry eksperymentu");
-	m_ptrTabDialog->setTabText(0,QApplication::translate("Form", "Labirynt", 0));
-	m_ptrTabDialog->setTabText(1,QApplication::translate("Form", "Pozycjonowanie", 0));
-	m_ptrTabDialog->setTabText(2,QApplication::translate("Form", "Szczeg�y", 0));
+	setWindowTitle("Experiment parameters");
+	m_ptrTabDialog->setTabText(0,QApplication::translate("Form", "Maze", 0));
+	m_ptrTabDialog->setTabText(1,QApplication::translate("Form", "Localizing", 0));
+	m_ptrTabDialog->setTabText(2,QApplication::translate("Form", "Details", 0));
 }
 void CExperimentParamsDlg::setConnections()
 {
 	bool bResult=false;
 	//////////////////////////////////////////////////////////////////////////
-	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generateMaze(maze_settings)),
+	bResult=connect(m_ptrWidgetMazeGenerationParam,SIGNAL(generate_maze(maze_settings)),
 					m_ptrWidgetPositionParams, SLOT(onMazeGeneration(maze_settings)));
 	Q_ASSERT(bResult==true);
 
-	bResult = connect(m_ptrWidgetMazeGenerationParam, SIGNAL(generateMaze(maze_settings)),
-					  SIGNAL(generateMaze(maze_settings)));
+	bResult = connect(m_ptrWidgetMazeGenerationParam, SIGNAL(generate_maze(maze_settings)),
+					  SIGNAL(generate_maze(maze_settings)));
 	Q_ASSERT(bResult==true);
 	
 	bResult=connect(startExperimentButton,SIGNAL(clicked( bool )),SLOT(processExperiment( )));
 	Q_ASSERT(bResult==true);
 	//////////////////////////////////////////////////////////////////////////
 	//send signal about change in start positions
-	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(on_set_start_position( int, int )),SLOT(onExperimentSettingsChanged()));
+	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(on_set_start_position( int, int )),SLOT(on_experiment_settings_changed()));
 	Q_ASSERT(bResult==true);
-	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setFinishPosition( int, int )),SLOT(onExperimentSettingsChanged()));
+	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setFinishPosition( int, int )),SLOT(on_experiment_settings_changed()));
 	Q_ASSERT(bResult==true);
-	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setFinishPositions( std::vector< std::pair<int,int> > )),SLOT(onExperimentSettingsChanged()));
+	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setFinishPositions( std::vector< std::pair<int,int> > )),SLOT(on_experiment_settings_changed()));
 	Q_ASSERT(bResult==true);
-	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setStartDirection( int )),SLOT(onExperimentSettingsChanged()));
+	bResult=connect(m_ptrWidgetPositionParams,SIGNAL(setStartDirection( int )),SLOT(on_experiment_settings_changed()));
 	Q_ASSERT(bResult==true);
 	//////////////////////////////////////////////////////////////////////////
 
@@ -224,13 +224,13 @@ void CExperimentParamsDlg::setConnections()
 void CExperimentParamsDlg::onSetExperimentSettings(CExperimentSettings & cExperimentSettings)
 {
     m_ptrWidgetPositionParams->setExperimentSettings(cExperimentSettings);
-	m_ptrWidgetMazeGenerationParam->setMazeSettings(cExperimentSettings.mazeSettings);
+	m_ptrWidgetMazeGenerationParam->set_maze_settings(cExperimentSettings.mazeSettings);
 }
 void CExperimentParamsDlg::processExperiment()
 {
     CExperimentSettings cExperimentSettings;
 
-    m_ptrWidgetMazeGenerationParam->getMazeSettings(cExperimentSettings.mazeSettings);
+    m_ptrWidgetMazeGenerationParam->get_maze_settings(cExperimentSettings.mazeSettings);
     m_ptrWidgetPositionParams->getExperimentSettings(cExperimentSettings);
     //m_ptrWidgetExperimentDetails->getExperimentSettings(cExperimentSettings);
 
@@ -274,11 +274,11 @@ void CExperimentParamsDlg::onAddFinishPosition(int posX,int posY)
     	blockSignals(false);*/
 
 }
-void CExperimentParamsDlg::onExperimentSettingsChanged()
+void CExperimentParamsDlg::on_experiment_settings_changed()
 {
 	CExperimentSettings expSettings;
 
-	m_ptrWidgetMazeGenerationParam->getMazeSettings(expSettings.mazeSettings);
+	m_ptrWidgetMazeGenerationParam->get_maze_settings(expSettings.mazeSettings);
 	m_ptrWidgetPositionParams->getExperimentSettings(expSettings);
 
 	Q_EMIT experimentSettingsChanged(expSettings);

@@ -9,6 +9,7 @@ include_directories(${gmock_SOURCE_DIR}/include
 SET ( SOURCES_TESTS
 	ut_maze_kruskal_test.cpp
 	ut_maze_prim_test.cpp 
+	ut_maze_recursive_test.cpp 
 	)
 
 SET ( SOURCES_MAIN

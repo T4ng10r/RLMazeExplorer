@@ -31,8 +31,7 @@ public:
 	unsigned int                locations_id_mask;
 	std::vector<unsigned int>	edges_sets;
 	location_sets_type          locations_sets;
-	boost::shared_ptr<maze>     maze_data;
-
+	std::shared_ptr<maze>     maze_data;
 };
 
 maze_generator_kruskal_private::maze_generator_kruskal_private() :maze_data(new maze){}
@@ -269,11 +268,11 @@ void maze_generator_kruskal_private::MakeNotPerfect()
 //////////////////////////////////////////////////////////////////////////
 maze_generator_kruskal::maze_generator_kruskal() : pimpl(new maze_generator_kruskal_private){}
 maze_generator_kruskal::~maze_generator_kruskal(){}
-boost::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & settings)
+std::shared_ptr<maze_interface> maze_generator_kruskal::generate_maze(const maze_settings & settings)
 {
 	pimpl->size_x = settings.size_x;
 	pimpl->size_y = settings.size_y;
-    pimpl->allocate_locations_table();
+	pimpl->allocate_locations_table();
 	pimpl->maze_data->preset_maze_edges();
 	pimpl->generate_edges();
 	pimpl->generate_maze();

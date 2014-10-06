@@ -2,9 +2,9 @@
 #include "maze_generator_kruskal.h"
 #include "maze_generator_prim.h"
 
-boost::shared_ptr<maze_generator_interface> maze_generator_factory::create_generator(EMazeTypes type)
+std::shared_ptr<maze_generator_interface> maze_generator_factory::create_generator(EMazeTypes type)
 {
-	boost::shared_ptr<maze_generator_interface> maze_generator_;
+	std::shared_ptr<maze_generator_interface> maze_generator_;
 
 	switch (type)
 	{

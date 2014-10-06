@@ -15,7 +15,7 @@ namespace constants
 class ut_maze_kruskal_test : public ::testing::Test
 {
 public:
-	boost::shared_ptr<maze_interface> uut;
+	std::shared_ptr<maze_interface> uut;
 
 	ut_maze_kruskal_test()
 	{

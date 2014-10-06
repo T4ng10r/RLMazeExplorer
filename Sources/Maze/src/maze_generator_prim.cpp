@@ -30,7 +30,7 @@ public:
     unsigned int                edge_count;
     unsigned int                nodes_count;
 	unsigned int                locations_id_mask;
-	boost::shared_ptr<maze>     maze_data;
+	std::shared_ptr<maze>     maze_data;
 	std::set<unsigned int>      visited_cells;
 	std::vector<unsigned int>   to_be_visited_edges;
 };
@@ -175,7 +175,7 @@ unsigned int maze_generator_prim_private::make_id(unsigned int x, unsigned int y
 //////////////////////////////////////////////////////////////////////////
 maze_generator_prim::maze_generator_prim() : pimpl(new maze_generator_prim_private){}
 maze_generator_prim::~maze_generator_prim(){}
-boost::shared_ptr<maze_interface> maze_generator_prim::generate_maze(const maze_settings & settings)
+std::shared_ptr<maze_interface> maze_generator_prim::generate_maze(const maze_settings & settings)
 {
 	pimpl->size_x = settings.size_x;
 	pimpl->size_y = settings.size_y;

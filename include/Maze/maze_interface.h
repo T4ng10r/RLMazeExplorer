@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Maze/location.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/optional.hpp>
 #include <fstream>
 
@@ -16,4 +16,4 @@ public:
 	virtual boost::optional<location> get_location(int X, int Y) const = 0;
 };
 
-typedef boost::shared_ptr<maze_interface> maze_interface_type;
+typedef std::shared_ptr<maze_interface> maze_interface_type;

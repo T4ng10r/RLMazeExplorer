@@ -4,7 +4,7 @@
 #include <Tools/loggers.h>
 #include <QtCore/QThread>
 
-boost::shared_ptr<data_thread> data_thread::instance;
+std::shared_ptr<data_thread> data_thread::instance;
 
 data_thread::data_thread(void) 
 //: privPart(new CDataThreadPrivate(this))
@@ -14,7 +14,7 @@ data_thread::data_thread(void)
 	thread->start();
 }
 
-boost::shared_ptr<data_thread> data_thread::getInstance()
+std::shared_ptr<data_thread> data_thread::getInstance()
 {
 	if (!instance)
 	{

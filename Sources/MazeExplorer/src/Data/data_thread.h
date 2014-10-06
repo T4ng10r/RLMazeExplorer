@@ -4,16 +4,16 @@
 
 #include <Maze/maze_settings.h>
 #include <Maze/maze.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 class data_thread : public QObject
 {
 	Q_OBJECT
 	data_thread(void);
-	static boost::shared_ptr<data_thread> instance;
+	static std::shared_ptr<data_thread> instance;
 public:
-	static boost::shared_ptr<data_thread> getInstance();
-	boost::shared_ptr<maze_interface> get_maze();
+	static std::shared_ptr<data_thread> getInstance();
+	std::shared_ptr<maze_interface> get_maze();
 public Q_SLOTS:
 	//call this to generate new maze according to given maze settings
 	void onPerformMazeGeneration(maze_settings xMazeSettings);
@@ -23,7 +23,7 @@ Q_SIGNALS:
 	void maze_generated();
 
 protected:
-	boost::shared_ptr<maze_interface> maze_data;
+	std::shared_ptr<maze_interface> maze_data;
 };
 
 #define gDataThread data_thread::getInstance() 

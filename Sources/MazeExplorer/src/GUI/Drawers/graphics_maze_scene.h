@@ -8,6 +8,10 @@ class graphics_maze_scene_private;
 
 class graphics_maze_scene : public QGraphicsScene
 {
+	void add_maze_locations(const maze_interface_type& maze_data);
+	void
+	fit_into_view ();
+
     Q_OBJECT
 public:
 	graphics_maze_scene();

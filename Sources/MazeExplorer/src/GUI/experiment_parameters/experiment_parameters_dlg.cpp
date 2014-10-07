@@ -1,12 +1,18 @@
 #include "experiment_parameters_dlg.h"
 #include "experiment_positions_parameters_dlg.h"
-#include "CExperimentMazeParamsDlg.h"
+#include "experiment_maze_params_dlg.h"
 #include "experiment_parameters_experiment_dlg.h"
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QProgressBar>
+#include <QBoxLayout>
+#include <QTabWidget>
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
 #include <map>
 #include <Maze/maze_settings.h>
+#include <Tools/loggers.h>
 
 const int maxFinishPos(5);
 
@@ -23,7 +29,7 @@ public:
 public:
 	experiment_parameters_dlg * public_;
 	experiment_positions_parameters_dlg *  	m_ptrWidgetPositionParams;
-	CExperimentMazeParamsDlg *			m_ptrWidgetMazeGenerationParam;
+	experiment_maze_params_dlg *			m_ptrWidgetMazeGenerationParam;
 	experiment_parameters_experiment_dlg *	m_ptrWidgetExperimentDetails;
 
 	QWidget *			main_widget;
@@ -54,8 +60,6 @@ experiment_parameters_dlg_private::experiment_parameters_dlg_private(experiment_
 void experiment_parameters_dlg_private::setup_ui()
 {
 	public_->setObjectName(QString::fromUtf8("ExperimentParamsDlg"));
-	//setMinimumSize(QSize(250, 350));//.expandedTo(minimumSizeHint()));
-	//resize(QSize(350, 380));//.expandedTo(minimumSizeHint()));
 
 	main_widget = new QWidget(public_);
 	main_widget->setObjectName(QString::fromUtf8("main_widget_dockWidget"));
@@ -66,23 +70,22 @@ void experiment_parameters_dlg_private::setup_ui()
 
 	tab_dialog = new QTabWidget;
 
-	m_ptrWidgetMazeGenerationParam = new CExperimentMazeParamsDlg;
-	tab_dialog->addTab(m_ptrWidgetMazeGenerationParam, "Maze");
+	m_ptrWidgetMazeGenerationParam = new experiment_maze_params_dlg;
+	tab_dialog->addTab(m_ptrWidgetMazeGenerationParam, "");
 
 	m_ptrWidgetPositionParams = new experiment_positions_parameters_dlg;
-	tab_dialog->addTab(m_ptrWidgetPositionParams, "Positions");
+	tab_dialog->addTab(m_ptrWidgetPositionParams, "");
 	m_ptrWidgetPositionParams->setEnabled(false);
 
 
 	m_ptrWidgetExperimentDetails = new experiment_parameters_experiment_dlg;
-	tab_dialog->addTab(m_ptrWidgetExperimentDetails, "Details");
+	tab_dialog->addTab(m_ptrWidgetExperimentDetails, "");
 
 	main_layout->addWidget(tab_dialog);
 
 	setup_progress();
 	main_layout->addLayout(progres_layout);
 
-	//	setupLoadSaveKBPaths();
 	public_->setWidget(main_widget);
 
 	set_connections();
@@ -243,14 +246,14 @@ void experiment_parameters_dlg_private::set_connections()
 	Q_ASSERT(bResult == true);
 	//////////////////////////////////////////////////////////////////////////
 
-	qDebug("Sygnaly polaczone");
+	printLog(eSlots, eDebugLogLevel, "experiment_parameters_dlg_private : Signals connected");
 }
 void experiment_parameters_dlg_private::retranslate_ui()
 {
 	public_->setWindowTitle("Experiment parameters");
-	tab_dialog->setTabText(0, QObject::tr("experiment_parameters_dlg", "Maze", 0));
-	tab_dialog->setTabText(1, QObject::tr("experiment_parameters_dlg", "Localizing", 0));
-	tab_dialog->setTabText(2, QObject::tr("experiment_parameters_dlg", "Details", 0));
+	tab_dialog->setTabText(0, QObject::tr("Maze", "experiment_parameters_dlg", 0));
+	tab_dialog->setTabText(1, QObject::tr("Locations", "experiment_parameters_dlg", 0));
+	tab_dialog->setTabText(2, QObject::tr("Learning parameters", "experiment_parameters_dlg", 0));
 }
 //////////////////////////////////////////////////////////////////////////
 experiment_parameters_dlg::experiment_parameters_dlg(QWidget *parent) :

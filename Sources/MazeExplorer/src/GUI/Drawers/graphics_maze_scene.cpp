@@ -8,6 +8,7 @@
 #include <QGraphicsGridLayout>
 #include <QPoint>
 #include <map>
+#include <boost/format.hpp>
 
 class CMaze;
 
@@ -34,128 +35,134 @@ class graphics_maze_scene_private
 {
 public:
 	graphics_maze_scene_private(graphics_maze_scene * pub);
-
+	void add_maze_locations(const maze_interface_type& maze_data);
+	void fit_into_view ();
 	void reset();
+public:
 	graphics_maze_scene * public_;
 	MapCoords2Location m_mCords2Locations;
 	MapCoords2Location::iterator iterCords2LocStart;
 	MapCoords2Location::iterator iterCords2LocEnd;
 
-	QGraphicsWidget *		m_ptrMainItem;
-	QGraphicsGridLayout	*	m_ptrMainGridLayout;
+	QGraphicsWidget *		main_item;
+	QGraphicsGridLayout	*	main_grid_layout;
 
-	std::pair< int, int> 	m_pEmptyPoint;
-	std::pair< int, int> 	m_pStartPoint;
-	PointSet				m_sEndPoints;
+	std::pair< int, int> 	empty_point;
+	std::pair< int, int> 	start_point;
+	PointSet				end_points;
 };
 
 graphics_maze_scene_private::graphics_maze_scene_private(graphics_maze_scene * pub) : public_(pub)
 {
-	m_ptrMainItem = new QGraphicsWidget;
-	m_ptrMainGridLayout = new QGraphicsGridLayout(m_ptrMainItem);
-	m_ptrMainGridLayout->setSpacing(0);
-	public_->addItem(m_ptrMainItem);
+	main_item = new QGraphicsWidget;
+	main_grid_layout = new QGraphicsGridLayout(main_item);
+	main_grid_layout->setSpacing(0);
+	public_->addItem(main_item);
 
 	iterCords2LocStart = m_mCords2Locations.begin();
 	iterCords2LocEnd = m_mCords2Locations.end();
 
-	m_pStartPoint = std::make_pair(-1, -1);
-	m_pEmptyPoint = m_pStartPoint;
-	m_sEndPoints.clear();;
-
+	start_point = std::make_pair(-1, -1);
+	empty_point = start_point;
+	end_points.clear();;
 }
 
 void graphics_maze_scene_private::reset()
 {
-	while (m_ptrMainGridLayout->count())
-		m_ptrMainGridLayout->removeAt(0);
+	while (main_grid_layout->count())
+		main_grid_layout->removeAt(0);
 	for (MapCoords2Location::iterator iterLocs = iterCords2LocStart; iterLocs != iterCords2LocEnd; iterLocs++)
 		public_->removeItem(iterLocs->second);
 	m_mCords2Locations.clear();
 }
-
-
+void graphics_maze_scene_private::add_maze_locations(const maze_interface_type& maze_data)
+{
+	int size_x = maze_data->get_size_x();
+	int size_y = maze_data->get_size_y();
+	for (int x = 0; x < size_x; ++x)
+	{
+		for (int y = 0; y < size_y; ++y)
+		{
+			boost::optional<location> maze_location = maze_data->get_location(x, y);
+			if (!maze_location)
+			{
+				printLog(eDebug, eWarningLogLevel,str(boost::format("Can't get location for ( %1%, %2% )")% x % y));
+				continue;
+			}
+			CGraphicsMazeLocation* draw_location = new CGraphicsMazeLocation;
+			draw_location->setLocationData(maze_location.get());
+			draw_location->setLocationPos(x, y);
+			main_grid_layout->addItem(draw_location, y, x);
+			m_mCords2Locations.insert(
+			std::make_pair(std::make_pair(x, y), draw_location));
+		}
+	}
+}
+void graphics_maze_scene_private::fit_into_view ()
+{
+	//Log4Qt::Logger::logger("Process")->info("Maze drawned. Fitting into view.");
+	QList<QGraphicsView*> lViews = public_->views ();
+	QRectF rectF = main_item->geometry ();
+	lViews.first ()->fitInView (rectF, Qt::KeepAspectRatio);
+}
 graphics_maze_scene::graphics_maze_scene() : pimpl(new graphics_maze_scene_private(this)) {}
 graphics_maze_scene::~graphics_maze_scene(){}
+
+
 void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 {
-	//if (NULL == pMaze)	
-	//{
-	//	Log4Qt::Logger::logger("Process")->error("Trying to set Maze with NULL pointer.");
-	//	return;
-	//}
-	//Log4Qt::Logger::logger("Process")->info("New Maze to be added.");
-	pimpl->reset();
-	int iSizeX = maze_data->get_size_x();
-	int iSizeY = maze_data->get_size_y();
-	CGraphicsMazeLocation * ptrLocation = NULL;
-
-    for(int iX = 0; iX<iSizeX; iX++)
+	if (!maze_data)
 	{
-        for(int iY = 0; iY<iSizeY; iY++)
-        {
-			boost::optional<location> loc = maze_data->get_location(iX, iY);
-			if (!loc)
-            {
-				QString strError = "Can't get location for (" + QString::number(iX)+","+QString::number(iY)+")";
-				//Log4Qt::Logger::logger("Process")->error(strError);
-				continue;
-            }
-            ptrLocation = new CGraphicsMazeLocation;
-            ptrLocation->setLocationData(loc.get());
-            ptrLocation->setLocationPos(iX,iY);
-			pimpl->m_ptrMainGridLayout->addItem(ptrLocation, iY, iX);
-			pimpl->m_mCords2Locations.insert(std::make_pair(std::make_pair(iX, iY), ptrLocation));
-        }
+		printLog(eDebug, eErrorLogLevel, "Trying to set Maze with NULL pointer.");
+		return;
 	}
-	pimpl->m_ptrMainGridLayout->activate();
-	//Log4Qt::Logger::logger("Process")->info("Maze drawned. Fitting into view.");
-	QList<QGraphicsView*> lViews = views();
-	QRectF rectF = pimpl->m_ptrMainItem->geometry();
-	lViews.first()->fitInView(rectF,Qt::KeepAspectRatio);
+	pimpl->reset();
+	add_maze_locations(maze_data);
+	pimpl->main_grid_layout->activate();
+
+	fit_into_view ();
 	pimpl->iterCords2LocStart = pimpl->m_mCords2Locations.begin();
 	pimpl->iterCords2LocEnd = pimpl->m_mCords2Locations.end();
-	pimpl->m_pStartPoint = pimpl->m_pEmptyPoint;
-	pimpl->m_sEndPoints.clear();
-	//Log4Qt::Logger::logger("Process")->info("Maze fitted into view.");
+	pimpl->start_point = pimpl->empty_point;
+	pimpl->end_points.clear();
 }
 void graphics_maze_scene::on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings)
 {
-	if (xExperimentSettings.startPosition.posX != pimpl->m_pStartPoint.first ||
-		xExperimentSettings.startPosition.posY != pimpl->m_pStartPoint.second)
+	if (xExperimentSettings.startPosition.posX != pimpl->start_point.first ||
+		xExperimentSettings.startPosition.posY != pimpl->start_point.second)
 	{
-		if (pimpl->m_pStartPoint != pimpl->m_pEmptyPoint)
+		if (pimpl->start_point != pimpl->empty_point)
 		{
-			pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->setExitStartLocation(true, true);
-			pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->setPathData(ROBOT_NONE_DIR);
-			pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->update();
+			pimpl->m_mCords2Locations[pimpl->start_point]->setExitStartLocation(true, true);
+			pimpl->m_mCords2Locations[pimpl->start_point]->setPathData(ROBOT_NONE_DIR);
+			pimpl->m_mCords2Locations[pimpl->start_point]->update();
 		}
-		pimpl->m_pStartPoint = std::make_pair(xExperimentSettings.startPosition.posX - 1, xExperimentSettings.startPosition.posY - 1);
-		pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->setExitStartLocation(true);
+		pimpl->start_point = std::make_pair(xExperimentSettings.startPosition.posX - 1, xExperimentSettings.startPosition.posY - 1);
+		pimpl->m_mCords2Locations[pimpl->start_point]->setExitStartLocation(true);
 		//m_mCords2Locations[m_pStartPoint]->setPathData(xExperimentSettings.startPosition.dir);
 	}
-	pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->setPathData(xExperimentSettings.startPosition.dir);
+	pimpl->m_mCords2Locations[pimpl->start_point]->setPathData(xExperimentSettings.startPosition.dir);
 	QString strInfo = QString ("robot start direction selected: %1").arg(ROBOT_DIRECTION_STRING(xExperimentSettings.startPosition.dir));
 	//Log4Qt::Logger::logger("Process")->info(strInfo);
-	pimpl->m_mCords2Locations[pimpl->m_pStartPoint]->update();
+	pimpl->m_mCords2Locations[pimpl->start_point]->update();
 	PointSet				sEndPoints(xExperimentSettings.lFinishPositions.begin(),xExperimentSettings.lFinishPositions.end());
 
-	if (sEndPoints != pimpl->m_sEndPoints)
+	if (sEndPoints != pimpl->end_points)
 	{
-		for (PointSet::iterator iterPos = pimpl->m_sEndPoints.begin(); iterPos != pimpl->m_sEndPoints.end(); iterPos++)
+		for (PointSet::iterator iterPos = pimpl->end_points.begin(); iterPos != pimpl->end_points.end(); iterPos++)
 		{
 			std::pair< int, int> 	pPointPos;
 			pPointPos = std::make_pair(iterPos->x()-1,iterPos->y()-1);
-			if (pPointPos == pimpl->m_pEmptyPoint) continue;
+			if (pPointPos == pimpl->empty_point) continue;
 			pimpl->m_mCords2Locations[pPointPos]->setExitStartLocation(true, true);
 			pimpl->m_mCords2Locations[pPointPos]->update();
 		}
-		pimpl->m_sEndPoints = sEndPoints;
-		for (PointSet::iterator iterPos = pimpl->m_sEndPoints.begin(); iterPos != pimpl->m_sEndPoints.end(); iterPos++)
+		pimpl->end_points = sEndPoints;
+		for (PointSet::iterator iterPos = pimpl->end_points.begin(); iterPos != pimpl->end_points.end(); iterPos++)
 		{
 			std::pair< int, int> 	pPointPos;
 			pPointPos = std::make_pair(iterPos->x()-1,iterPos->y()-1);
-			if (pPointPos == pimpl->m_pEmptyPoint) continue;
+			if (pPointPos == pimpl->empty_point) continue;
 			pimpl->m_mCords2Locations[pPointPos]->setExitStartLocation(false);
 			pimpl->m_mCords2Locations[pPointPos]->update();
 		}

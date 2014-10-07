@@ -12,7 +12,7 @@
 #include <Data/Experiment/CEnviroment.h>
 #include <Data/Experiment/CExperiment.h>
 #include <Data/Experiment/COneExplorationResultDlg.h>
-#include <GUI/ExperimentParams/experiment_parameters_dlg.h>
+#include <GUI/experiment_parameters/experiment_parameters_dlg.h>
 
 const int ciStartingMazeWidth = 10;
 const int ciStartingMazeHeight = 10;

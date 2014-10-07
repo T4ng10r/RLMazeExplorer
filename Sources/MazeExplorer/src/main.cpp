@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	app.setOrganizationName("T4ng10r");
 	createLoggers();
 
-	boost::scoped_ptr<main_window> main_window(new main_window);
-	main_window->show();
+	boost::scoped_ptr<main_window> main_window_(new main_window);
+	main_window_->show();
 	return app.exec();
 }

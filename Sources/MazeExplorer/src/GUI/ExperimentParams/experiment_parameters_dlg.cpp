@@ -1,7 +1,7 @@
 #include "experiment_parameters_dlg.h"
 #include "experiment_positions_parameters_dlg.h"
 #include "CExperimentMazeParamsDlg.h"
-#include "CExperimentParamsExperimentDlg.h"
+#include "experiment_parameters_experiment_dlg.h"
 #include <QLineEdit>
 #include <QFileDialog>
 #include <map>
@@ -23,7 +23,7 @@ public:
 	experiment_parameters_dlg * public_;
 	experiment_positions_parameters_dlg *  	m_ptrWidgetPositionParams;
 	CExperimentMazeParamsDlg *			m_ptrWidgetMazeGenerationParam;
-	CExperimentParamsExperimentDlg *	m_ptrWidgetExperimentDetails;
+	experiment_parameters_experiment_dlg *	m_ptrWidgetExperimentDetails;
 
 	QWidget *			main_widget;
 	QVBoxLayout *		main_layout;
@@ -73,7 +73,7 @@ void experiment_parameters_dlg_private::setup_ui()
 	m_ptrWidgetPositionParams->setEnabled(false);
 
 
-	m_ptrWidgetExperimentDetails = new CExperimentParamsExperimentDlg;
+	m_ptrWidgetExperimentDetails = new experiment_parameters_experiment_dlg;
 	tab_dialog->addTab(m_ptrWidgetExperimentDetails, "Details");
 
 	main_layout->addWidget(tab_dialog);

@@ -1,32 +1,79 @@
-#include "CExperimentParamsExperimentDlg.h"
+#include "experiment_parameters_experiment_dlg.h"
 
-CExperimentParamsExperimentDlg::CExperimentParamsExperimentDlg(QWidget *parent) : QWidget(parent)
+class experiment_parameters_experiment_dlg_private
+{
+public:
+	experiment_parameters_experiment_dlg_private(experiment_parameters_experiment_dlg * pub);
+	void setup_ui();
+    void retranslate_ui();
+    void set_connections();
+    void setup_learning_param_group();
+    void setup_learning_method();
+    void setup_learning_penalty_value();
+    void setup_learning_price_value();
+public:
+	experiment_parameters_experiment_dlg * public_;
+
+    QGroupBox *  groupLearningParam;
+    QWidget *  groupLearningParamWidget;
+    QHBoxLayout *  hLearningMethodLayout;
+    QLabel *  labelLearningMethod;
+    QComboBox *  comboLearningMethod;
+    QPushButton *  pushLearningMethod;
+    QWidget *  gridLayoutWidget;
+    QGridLayout *		gridPenaltyPriceLayout;
+    QLabel *		labelPenaltyValue;
+    QDoubleSpinBox *	spinPriceValue;
+    QDoubleSpinBox *	spinPenaltyValue;
+    QLabel *		labelPriceValue;
+    QPushButton *		pushPriceValue;
+    QPushButton *		pushPenaltyValue;
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    QGroupBox	*	groupLoadSaveKB;
+    QGridLayout *		gboxLoadSaveKB;
+
+    QLabel		*	labelLoadKBPath;
+    QLineEdit	*	lineEditLoadKBPath;
+    QPushButton *		buttonBrowseLoadKBPath;
+
+    QLabel		*	labelSaveKBPath;
+    QLineEdit	*	lineEditSaveKBPath;
+    QPushButton *		buttonBrowseSaveKBPath;
+
+    //////////////////////////////////////////////////////////////////////////
+    QPushButton *	cancelButton;
+
+//	QFileDialog *	fileDialog;
+    QTabWidget *	tabDialog;
+};
+
+experiment_parameters_experiment_dlg_private::experiment_parameters_experiment_dlg_private(experiment_parameters_experiment_dlg * pub) : public_(pub)
 {
     setup_ui();
     retranslate_ui();
-    setConnections();
+    set_connections();
 }
-
-void CExperimentParamsExperimentDlg::setup_ui()
+void experiment_parameters_experiment_dlg_private::setup_ui()
 {
-    mainLayout = new QGridLayout;
-    mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
-    mainLayout->setSpacing(6);
-    mainLayout->setMargin(4);
-    delete layout();
-    setLayout(mainLayout);
+    QGridLayout *  main_layout = new QGridLayout;
+    main_layout->setObjectName(QString::fromUtf8("mainLayout"));
+    main_layout->setSpacing(6);
+    main_layout->setMargin(4);
+    delete public_->layout();
+    public_->setLayout(main_layout);
 
     groupLearningParam = new QGroupBox();
     groupLearningParam->setObjectName(QString::fromUtf8("groupLearningParam"));
     groupLearningParam->setGeometry(QRect(210, dockWidgetYPos, 221, 231));
     groupLearningParam->setMinimumSize(rcLearningParams);
 
-    mainLayout->addWidget(groupLearningParam,0,2,1,1);
+    main_layout->addWidget(groupLearningParam,0,2,1,1);
 
     groupLearningParamWidget = new QWidget(groupLearningParam);
     groupLearningParamWidget->setObjectName(QString::fromUtf8("groupLearningParamWidget"));
     groupLearningParamWidget->setGeometry(QRect(10, 20, 191, 27));
-    setupLearningMethod();
+    setup_learning_method();
 
     gridLayoutWidget = new QWidget(groupLearningParam);
     gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
@@ -37,25 +84,23 @@ void CExperimentParamsExperimentDlg::setup_ui()
     gridPenaltyPriceLayout->setMargin(0);
     gridPenaltyPriceLayout->setObjectName(QString::fromUtf8("gridPenaltyPriceLayout"));
 
-    setupLearningPenaltyValue();
-    setupLearningPriceValue();
+    setup_learning_penalty_value();
+    setup_learning_price_value();
     retranslate_ui();
 }
-void CExperimentParamsExperimentDlg::retranslate_ui()
+void experiment_parameters_experiment_dlg_private::retranslate_ui()
 {
-    groupLearningParam->setTitle(QApplication::translate("param_eks", "Parametry uczenia", 0));
-    labelLearningMethod->setText(QApplication::translate("param_eks", "Metoda", 0));
+    groupLearningParam->setTitle(QApplication::translate("param_eks", "Learning parameters", 0));
+    labelLearningMethod->setText(QApplication::translate("param_eks", "Learning method", 0));
     pushLearningMethod->setText(QApplication::translate("param_eks", "?", 0));
-    labelPenaltyValue->setText(QApplication::translate("param_eks", "Warto\305\233\304\207 kary", 0));
-    labelPriceValue->setText(QApplication::translate("param_eks", "Warto\305\233\304\207 nagrody", 0));
+    labelPenaltyValue->setText(QApplication::translate("param_eks", "Penalty value", 0));
+    labelPriceValue->setText(QApplication::translate("param_eks", "Reward value", 0));
     pushPriceValue->setText(QApplication::translate("param_eks", "?", 0));
     pushPenaltyValue->setText(QApplication::translate("param_eks", "?", 0));
 }
-void CExperimentParamsExperimentDlg::setConnections()
-{
-}
-void CExperimentParamsExperimentDlg::setupLearningParamGroup() {}
-void CExperimentParamsExperimentDlg::setupLearningMethod()
+void experiment_parameters_experiment_dlg_private::set_connections(){}
+void experiment_parameters_experiment_dlg_private::setup_learning_param_group() {}
+void experiment_parameters_experiment_dlg_private::setup_learning_method()
 {
     hLearningMethodLayout = new QHBoxLayout(groupLearningParamWidget);
     hLearningMethodLayout->setSpacing(6);
@@ -94,7 +139,7 @@ void CExperimentParamsExperimentDlg::setupLearningMethod()
 
     hLearningMethodLayout->addWidget(pushLearningMethod);
 }
-void CExperimentParamsExperimentDlg::setupLearningPenaltyValue()
+void experiment_parameters_experiment_dlg_private::setup_learning_penalty_value()
 {
     labelPenaltyValue = new QLabel(gridLayoutWidget);
     labelPenaltyValue->setObjectName(QString::fromUtf8("labelPenaltyValue"));
@@ -126,7 +171,7 @@ void CExperimentParamsExperimentDlg::setupLearningPenaltyValue()
     gridPenaltyPriceLayout->addWidget(pushPenaltyValue, 1, 2, 1, 1);
 
 }
-void CExperimentParamsExperimentDlg::setupLearningPriceValue()
+void experiment_parameters_experiment_dlg_private::setup_learning_price_value()
 {
     labelPriceValue = new QLabel(gridLayoutWidget);
     labelPriceValue->setObjectName(QString::fromUtf8("labelPriceValue"));
@@ -156,8 +201,12 @@ void CExperimentParamsExperimentDlg::setupLearningPriceValue()
 
     gridPenaltyPriceLayout->addWidget(pushPriceValue, 0, 2, 1, 1);
 }
-void CExperimentParamsExperimentDlg::getExperimentSettings(CExperimentSettings & cExperimentSettings)
+////////////////////////////////////////////////////////////////////////////////
+experiment_parameters_experiment_dlg::experiment_parameters_experiment_dlg(QWidget *parent) : QWidget(parent), pimpl(new experiment_parameters_experiment_dlg_private(this))
+{}
+experiment_parameters_experiment_dlg::~experiment_parameters_experiment_dlg(){};
+void experiment_parameters_experiment_dlg::getExperimentSettings(CExperimentSettings & cExperimentSettings)
 {
-    cExperimentSettings.fPenaltyValue = spinPenaltyValue->value();
-    cExperimentSettings.fPriceValue = spinPriceValue->value();
+    cExperimentSettings.fPenaltyValue = pimpl->spinPenaltyValue->value();
+    cExperimentSettings.fPriceValue = pimpl->spinPriceValue->value();
 }

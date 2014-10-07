@@ -12,7 +12,7 @@
 #include <Data/Experiment/CEnviroment.h>
 #include <Data/Experiment/CExperiment.h>
 #include <Data/Experiment/COneExplorationResultDlg.h>
-#include <GUI/ExperimentParams/CExperimentParamsDlg.h>
+#include <GUI/ExperimentParams/experiment_parameters_dlg.h>
 
 const int ciStartingMazeWidth = 10;
 const int ciStartingMazeHeight = 10;
@@ -56,7 +56,7 @@ public:
 	CExperiment m_stExperiment;
 	//CEnviroment *	pEnviroment;
 	QComboBox   * ctrlCombo;
-	CExperimentParamsDlg *			m_ptrExperimentParamsDlg;
+	experiment_parameters_dlg *			m_ptrExperimentParamsDlg;
 	single_robot_move_dlg *			m_ptrSingleRobotMove;
 };
 
@@ -96,7 +96,7 @@ void main_window_private::setup_dock_widgets()
 	//	cRobotOneExplorationResult->hide();
 	//	cRobotOneExplorationResult->setFloating(true);
 
-	m_ptrExperimentParamsDlg = new CExperimentParamsDlg;
+	m_ptrExperimentParamsDlg = new experiment_parameters_dlg;
 	m_ptrExperimentParamsDlg->setAllowedAreas(Qt::BottomDockWidgetArea);
 	public_->addDockWidget(Qt::RightDockWidgetArea, m_ptrExperimentParamsDlg);
 
@@ -280,13 +280,9 @@ void	main_window::onStartExploring(CExperimentSettings & xExpSettings)
 	//m_stExperimentManager.getCurrentExperiment().startExperiment();
     //pEnviroment->startExploring();
 }
-void	main_window::mouseMoveEvent(QMouseEvent * event)
+void main_window::mousePressEvent(QMouseEvent * e)
 {
-    Qt::MouseButtons	Buttons;
-    int x =0;
-    Buttons = event->buttons();
-    if (Buttons & Qt::LeftButton)
-    {
-        x =1;
-    }
+	Qt::MouseButtons	Buttons;
+	Buttons = e->buttons();
+
 }

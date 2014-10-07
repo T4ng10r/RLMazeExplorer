@@ -26,7 +26,7 @@ public:
 
 protected:
 	std::unique_ptr<main_window_private>  pimpl;
-	void mouseMoveEvent(QMouseEvent * event);
+	void mousePressEvent(QMouseEvent * e);;
 
 public Q_SLOTS:
 	//generate maze according to params from dock window and send this maze to environment

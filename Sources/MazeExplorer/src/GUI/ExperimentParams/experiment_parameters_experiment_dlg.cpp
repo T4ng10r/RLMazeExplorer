@@ -1,9 +1,23 @@
 #include "experiment_parameters_experiment_dlg.h"
 
+#include <QLabel>
+#include <QGroupBox>
+#include <QSpinBox>
+#include <QPushButton>
+#include <QComboBox>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <Maze/maze_settings.h>
+
+const QSize rcLearningParams(211, 141);
+const QSize rcDockWidgetSize(451, 328);
+const int	dockWidgetYPos(25);
+
 class experiment_parameters_experiment_dlg_private
 {
 public:
 	experiment_parameters_experiment_dlg_private(experiment_parameters_experiment_dlg * pub);
+
 	void setup_ui();
     void retranslate_ui();
     void set_connections();
@@ -14,38 +28,21 @@ public:
 public:
 	experiment_parameters_experiment_dlg * public_;
 
-    QGroupBox *  groupLearningParam;
-    QWidget *  groupLearningParamWidget;
-    QHBoxLayout *  hLearningMethodLayout;
-    QLabel *  labelLearningMethod;
-    QComboBox *  comboLearningMethod;
-    QPushButton *  pushLearningMethod;
     QWidget *  gridLayoutWidget;
-    QGridLayout *		gridPenaltyPriceLayout;
-    QLabel *		labelPenaltyValue;
-    QDoubleSpinBox *	spinPriceValue;
-    QDoubleSpinBox *	spinPenaltyValue;
-    QLabel *		labelPriceValue;
-    QPushButton *		pushPriceValue;
-    QPushButton *		pushPenaltyValue;
+    QWidget *  groupLearningParamWidget;
+    QLabel * labelLearningMethod;
+    QLabel * labelPenaltyValue;
+    QLabel * labelPriceValue;
+    QComboBox * comboLearningMethod;
+    QGroupBox * groupLearningParam;
+    QPushButton * pushLearningMethod;
+    QDoubleSpinBox * spinPriceValue;
+    QDoubleSpinBox * spinPenaltyValue;
+    QPushButton * pushPriceValue;
+    QPushButton * pushPenaltyValue;
+    QGridLayout * gridPenaltyPriceLayout;
+    QHBoxLayout * hLearningMethodLayout;
     //////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-    QGroupBox	*	groupLoadSaveKB;
-    QGridLayout *		gboxLoadSaveKB;
-
-    QLabel		*	labelLoadKBPath;
-    QLineEdit	*	lineEditLoadKBPath;
-    QPushButton *		buttonBrowseLoadKBPath;
-
-    QLabel		*	labelSaveKBPath;
-    QLineEdit	*	lineEditSaveKBPath;
-    QPushButton *		buttonBrowseSaveKBPath;
-
-    //////////////////////////////////////////////////////////////////////////
-    QPushButton *	cancelButton;
-
-//	QFileDialog *	fileDialog;
-    QTabWidget *	tabDialog;
 };
 
 experiment_parameters_experiment_dlg_private::experiment_parameters_experiment_dlg_private(experiment_parameters_experiment_dlg * pub) : public_(pub)
@@ -90,13 +87,13 @@ void experiment_parameters_experiment_dlg_private::setup_ui()
 }
 void experiment_parameters_experiment_dlg_private::retranslate_ui()
 {
-    groupLearningParam->setTitle(QApplication::translate("param_eks", "Learning parameters", 0));
-    labelLearningMethod->setText(QApplication::translate("param_eks", "Learning method", 0));
-    pushLearningMethod->setText(QApplication::translate("param_eks", "?", 0));
-    labelPenaltyValue->setText(QApplication::translate("param_eks", "Penalty value", 0));
-    labelPriceValue->setText(QApplication::translate("param_eks", "Reward value", 0));
-    pushPriceValue->setText(QApplication::translate("param_eks", "?", 0));
-    pushPenaltyValue->setText(QApplication::translate("param_eks", "?", 0));
+    groupLearningParam->setTitle(QObject::tr("param_eks", "Learning parameters", 0));
+    labelLearningMethod->setText(QObject::tr("param_eks", "Learning method", 0));
+    pushLearningMethod->setText(QObject::tr("param_eks", "?", 0));
+    labelPenaltyValue->setText(QObject::tr("param_eks", "Penalty value", 0));
+    labelPriceValue->setText(QObject::tr("param_eks", "Reward value", 0));
+    pushPriceValue->setText(QObject::tr("param_eks", "?", 0));
+    pushPenaltyValue->setText(QObject::tr("param_eks", "?", 0));
 }
 void experiment_parameters_experiment_dlg_private::set_connections(){}
 void experiment_parameters_experiment_dlg_private::setup_learning_param_group() {}

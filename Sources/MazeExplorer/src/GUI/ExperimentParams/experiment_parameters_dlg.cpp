@@ -4,6 +4,7 @@
 #include "experiment_parameters_experiment_dlg.h"
 #include <QLineEdit>
 #include <QFileDialog>
+#include <QProgressBar>
 #include <map>
 #include <Maze/maze_settings.h>
 
@@ -113,7 +114,7 @@ void experiment_parameters_dlg_private::setup_progress()
 	progres_layout->addWidget(start_experiment_button);
 	start_experiment_button->setEnabled(false);
 
-	start_experiment_button->setText(QApplication::translate("param_eks", "Start", 0));
+	start_experiment_button->setText(QObject::tr("param_eks", "Start", 0));
 	//cancelButton->setText(QApplication::translate("param_eks", "Anuluj", 0));
 }
 void experiment_parameters_dlg_private::setup_ok_button()
@@ -247,9 +248,9 @@ void experiment_parameters_dlg_private::set_connections()
 void experiment_parameters_dlg_private::retranslate_ui()
 {
 	public_->setWindowTitle("Experiment parameters");
-	tab_dialog->setTabText(0, QApplication::translate("experiment_parameters_dlg", "Maze", 0));
-	tab_dialog->setTabText(1, QApplication::translate("experiment_parameters_dlg", "Localizing", 0));
-	tab_dialog->setTabText(2, QApplication::translate("experiment_parameters_dlg", "Details", 0));
+	tab_dialog->setTabText(0, QObject::tr("experiment_parameters_dlg", "Maze", 0));
+	tab_dialog->setTabText(1, QObject::tr("experiment_parameters_dlg", "Localizing", 0));
+	tab_dialog->setTabText(2, QObject::tr("experiment_parameters_dlg", "Details", 0));
 }
 //////////////////////////////////////////////////////////////////////////
 experiment_parameters_dlg::experiment_parameters_dlg(QWidget *parent) :

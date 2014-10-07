@@ -1,26 +1,8 @@
-#ifndef CEXPERIMENTPARAMSEXPERIMENTDLG_H
-#define CEXPERIMENTPARAMSEXPERIMENTDLG_H
+#pragma once
+
 #include <memory>
 #include <QWidget>
-#include <QApplication>
-
-#include <QGroupBox>
-#include <QLabel>
-#include <QSpinBox>
-#include <QPushButton>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QProgressBar>
-#include <Maze/maze_settings.h>
 #include <Data/Experiment/CExperimentSettings.h>
-/**
-	@author Tanglor <tanglor@tanglor-desktop>
-*/
-const QSize rcLearningParams(211, 141);
-const QSize rcDockWidgetSize(451, 328);
-const int	dockWidgetYPos(25);
 
 class experiment_parameters_experiment_dlg_private;
 
@@ -34,5 +16,3 @@ public:
 protected:
     std::unique_ptr<experiment_parameters_experiment_dlg_private> pimpl;
 };
-
-#endif

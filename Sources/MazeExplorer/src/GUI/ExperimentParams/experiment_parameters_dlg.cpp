@@ -1,5 +1,5 @@
 #include "experiment_parameters_dlg.h"
-#include "CExperimentPositionsParamsDlg.h"
+#include "experiment_positions_parameters_dlg.h"
 #include "CExperimentMazeParamsDlg.h"
 #include "CExperimentParamsExperimentDlg.h"
 #include <QLineEdit>
@@ -21,7 +21,7 @@ public:
 	void setup_load_save_kb_paths();
 public:
 	experiment_parameters_dlg * public_;
-	CExperimentPositionsParamsDlg *  	m_ptrWidgetPositionParams;
+	experiment_positions_parameters_dlg *  	m_ptrWidgetPositionParams;
 	CExperimentMazeParamsDlg *			m_ptrWidgetMazeGenerationParam;
 	CExperimentParamsExperimentDlg *	m_ptrWidgetExperimentDetails;
 
@@ -68,7 +68,7 @@ void experiment_parameters_dlg_private::setup_ui()
 	m_ptrWidgetMazeGenerationParam = new CExperimentMazeParamsDlg;
 	tab_dialog->addTab(m_ptrWidgetMazeGenerationParam, "Maze");
 
-	m_ptrWidgetPositionParams = new CExperimentPositionsParamsDlg;
+	m_ptrWidgetPositionParams = new experiment_positions_parameters_dlg;
 	tab_dialog->addTab(m_ptrWidgetPositionParams, "Positions");
 	m_ptrWidgetPositionParams->setEnabled(false);
 
@@ -334,7 +334,7 @@ void experiment_parameters_dlg::onon_set_start_positionWrap(int iPosX,int iPosY)
 {
 	Q_EMIT on_set_start_position(iPosX, iPosY);
 }
-void experiment_parameters_dlg::onSetFinishPositionWrap(vector< pair<int,int> > vPostionsList)
+void experiment_parameters_dlg::onSetFinishPositionWrap(std::vector< std::pair<int, int> > vPostionsList)
 {
 	Q_EMIT setFinishPosition(vPostionsList);
 }

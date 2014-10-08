@@ -126,7 +126,7 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 	pimpl->start_point = pimpl->empty_point;
 	pimpl->end_points.clear();
 }
-void graphics_maze_scene::on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings)
+void graphics_maze_scene::on_experiment_settings_changed(const experiment_settings & xExperimentSettings)
 {
 	if (xExperimentSettings.startPosition.posX != pimpl->start_point.first ||
 		xExperimentSettings.startPosition.posY != pimpl->start_point.second)

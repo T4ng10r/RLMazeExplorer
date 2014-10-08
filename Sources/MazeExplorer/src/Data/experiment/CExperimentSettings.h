@@ -9,18 +9,20 @@
 
 //stores list of parameters about experiment - used to initialize 
 //CExperiment and CEnviroment class
-class CExperimentSettings
+class experiment_settings
 {
 public:
-    CExperimentSettings(void);
-    ~CExperimentSettings(void);
-    int					repeatingQuantity;
+	experiment_settings(void);
+	~experiment_settings(void);
+	void reset();
+public:
+	int					repeat_count;
 	maze_settings		mazeSettings;
-    CRobotPostion		startPosition;
+	CRobotPostion		startPosition;
 	std::list<QPoint>	lFinishPositions;
-    double				fPenaltyValue;
-    double				fPriceValue;
-    QString				sLoadKBPath;
-    QString				sSaveKBPath;
+	double				fPenaltyValue;
+	double				fPriceValue;
+	QString				sLoadKBPath;
+	QString				sSaveKBPath;
 };
 #endif

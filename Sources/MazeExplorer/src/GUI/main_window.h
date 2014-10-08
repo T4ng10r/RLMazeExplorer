@@ -33,10 +33,10 @@ public Q_SLOTS:
 	void on_maze_generated();
 
 	//there were some changes in start or end position - udpate maze drawer
-    void on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings);
+    void on_experiment_settings_changed(const experiment_settings & xExperimentSettings);
 
     void onRobotPosChanged();
-    void onStartExploring(CExperimentSettings &);
+    void onStartExploring(experiment_settings &);
     void onRobotDirChange(const QString text);
 Q_SIGNALS:
 	void generate_maze(maze_settings);

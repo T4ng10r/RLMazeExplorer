@@ -12,7 +12,7 @@ class experiment_parameters_experiment_dlg : public QWidget
 public:
     experiment_parameters_experiment_dlg(QWidget *parent = 0);
     ~experiment_parameters_experiment_dlg();
-    void getExperimentSettings(CExperimentSettings & cExperimentSettings);
+    void getExperimentSettings(experiment_settings & cExperimentSettings);
 protected:
     std::unique_ptr<experiment_parameters_experiment_dlg_private> pimpl;
 };

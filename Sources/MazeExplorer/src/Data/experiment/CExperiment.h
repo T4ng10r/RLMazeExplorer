@@ -19,7 +19,7 @@ public:
 	~CExperiment(void);
 	void on_set_maze_data(const maze & xMazeSource);
 	maze& getMazeData();
-	void setExperimentSettings(const CExperimentSettings & xExperimentSettings);
+	void setExperimentSettings(const experiment_settings & xExperimentSettings);
 	void startExperiment();
 	//////////////////////////////////////////////////////////////////////////
 	void operator=(const CExperiment & experimentDest);
@@ -48,7 +48,7 @@ protected:
 	unsigned int m_iExplorationSucces;		//how many time exploration was successful
 	unsigned int m_iExplorationFails;		//how many time exploration was failure
 	maze						m_stMazeData;
-	CExperimentSettings			m_stExperimentSettings;
+	experiment_settings			m_stExperimentSettings;
 	CEnviroment * 				m_ptrEnviroment;
 	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
 	CMazeKnowlegdeBase			m_cKnowledgeBase;

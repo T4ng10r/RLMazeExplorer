@@ -17,17 +17,17 @@ class CEnviroment : public QObject
 {
     Q_OBJECT
 public:
-    CEnviroment(void);
-    ~CEnviroment(void);
+	CEnviroment(void);
+	~CEnviroment(void);
 
 	CMazeExplorationResult getExplorationResults() { return m_stExplorationResult; }
-	void setExperimentSettings(CExperimentSettings val) { m_stExperimentSettings = val; }
+	void setExperimentSettings(experiment_settings val) { m_stExperimentSettings = val; }
 	void setKnowlegdeBase(CMazeKnowlegdeBase * ptrKB)		{ m_ptrKnowledgeBase = ptrKB;	}
 	void setMaze(const maze &val) { m_stMaze = val; }
 	//////////////////////////////////////////////////////////////////////////
 	// exploration methods
-    void startSingleExploring();
-    void getRobotPos(unsigned int &X, unsigned int &Y);
+	void startSingleExploring();
+	void getRobotPos(unsigned int &X, unsigned int &Y);
 
 	//QTableWidget *		explorationResult;
 	void debugPrintDirections();
@@ -35,49 +35,48 @@ public:
 public Q_SLOTS:
 	//void robotNextMove();
 Q_SIGNALS:
-    void robotFinished(CMazeExplorationResult &lRoute);
+	void robotFinished(CMazeExplorationResult &lRoute);
 	void robotBeforeMove(CScanResults *scanResult);
-//    void nextExplorationInExperiment();
-//    void redrawMaze();
-//    void setMazeLimits(int,int);
-	//will set all experiment values to m_ExperimentSettings and start performing it
-	//void	onStartExperiment(CExperimentSettings &m_ExperimentSettings);
+	//    void nextExplorationInExperiment();
+	//    void redrawMaze();
+	//    void setMazeLimits(int,int);
+	//    will set all experiment values to m_ExperimentSettings and start performing it
+	//    void	onStartExperiment(CExperimentSettings &m_ExperimentSettings);
 protected Q_SLOTS:
 	//for agent - his performing scan of location
-    void	onRobotScan(CScanResults *scanResult);
+	void	onRobotScan(CScanResults *scanResult);
 	//for agent - agent moves 
-    void	onRobotMoved();
+	void	onRobotMoved();
 	//for agent - agent rotates
-    void	onRobotRotated(bool bRight,bool bBack);
+	void	onRobotRotated(bool bRight,bool bBack);
 	//for agent - to check if robot has reched target
-    void	onRobotIfInExit(bool &bIfInExit);
+	void	onRobotIfInExit(bool &bIfInExit);
 protected:
-    //void	save(QString strPath);
-    //void	load(QString strPath);
+	//void	save(QString strPath);
+	//void	load(QString strPath);
 
 	void	setRobotToStart();			//ustaw robota w pozycji startowej
 	void	rotateScanResults(CScanResults & scanResult,eRobotDir dir);
-    void	afterFinishedExploration();
+	void	afterFinishedExploration();
 	//
-    void	createRobotRouteInfo();
+	void	createRobotRouteInfo();
 protected:
 	maze					m_stMaze;
 	//experiment settings - like robot start position, end points and maze params
-	CExperimentSettings		m_stExperimentSettings;
+	experiment_settings		m_stExperimentSettings;
 	//robot/agent - he will perform experiment
 	CRobot	*				m_ptrRobot;
 	//location in which robot is currently
-    location				m_stCurrentLocation;
+	location				m_stCurrentLocation;
 	//current robot directions facing
-    eRobotDir				m_iRobotDir;
+	eRobotDir				m_iRobotDir;
 	//current robot position in maze
-    QPoint					m_iRobotPos;
+	QPoint					m_iRobotPos;
 	CMazeExplorationResult	m_stExplorationResult;				//result of current exploration process
 
-    //CExperiment				currentExperiment;
+	//CExperiment				currentExperiment;
 
 	CMazeKnowlegdeBase		*	m_ptrKnowledgeBase;		//baza wiedzy
-    CScanResults		*	currentScanResults;
-
+	CScanResults		*	currentScanResults;
 };
 #endif

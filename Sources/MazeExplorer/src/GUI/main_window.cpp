@@ -138,8 +138,8 @@ void main_window_private::set_connections()
 	//		cMazeDraw,SLOT(onCellSelected( int , int )));
 	//	Q_ASSERT(bResult==true);
 
-	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(startExperiment(CExperimentSettings &)),
-					  public_, SLOT(onStartExploring(CExperimentSettings &)));
+	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(startExperiment(experiment_settings &)),
+					  public_, SLOT(onStartExploring(experiment_settings &)));
 	Q_ASSERT(bResult == true);
 
 	//bResult=connect(pEnviroment,SIGNAL(nextExplorationInExperiment()),
@@ -158,11 +158,11 @@ void main_window_private::set_connections_for_dlgs()
 	bResult = QObject::connect(gDataThread.get(), SIGNAL(maze_generated()), public_, SLOT(on_maze_generated()));
 	Q_ASSERT(bResult == true);
 
-	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const CExperimentSettings &)),
-					  maze_scene, SLOT(on_experiment_settings_changed(const CExperimentSettings &)));
+	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const experiment_settings &)),
+					  maze_scene, SLOT(on_experiment_settings_changed(const experiment_settings &)));
 	Q_ASSERT(bResult == true);
-	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const CExperimentSettings &)),
-					  public_, SLOT(on_experiment_settings_changed(const CExperimentSettings &)));
+	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const experiment_settings &)),
+					  public_, SLOT(on_experiment_settings_changed(const experiment_settings &)));
 	Q_ASSERT(bResult == true);
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//bResult=connect(cMazeDraw,SIGNAL(onNewStartPosition(int ,int )),
@@ -187,7 +187,7 @@ void main_window_private::initializing()
 	bAutoGenerate = false;
 	bMazeUpdated = false;
 
-	CExperimentSettings stExpSettings;
+	experiment_settings stExpSettings;
 	m_ptrExperimentParamsDlg->onSetExperimentSettings(stExpSettings);
 
 	//pEnviroment = new CEnviroment;
@@ -254,7 +254,7 @@ void main_window::on_maze_generated()
 	pimpl->maze_scene->render(&painter);
 	painter.end();
 }
-void main_window::on_experiment_settings_changed(const CExperimentSettings & xExpSettings)
+void main_window::on_experiment_settings_changed(const experiment_settings & xExpSettings)
 {
 	pimpl->m_stExperiment.setExperimentSettings(xExpSettings);
 	//m_stExperimentManager.getCurrentExperiment().setExperimentSettings(xExpSettings);
@@ -273,7 +273,7 @@ void main_window::onRobotPosChanged()
 //	pEnviroment->setRobotFinishPos(X,Y);
 //	cMazeDraw->update();
 }
-void	main_window::onStartExploring(CExperimentSettings & xExpSettings)
+void	main_window::onStartExploring(experiment_settings & xExpSettings)
 {
 	pimpl->m_stExperiment.setExperimentSettings(xExpSettings);
 	pimpl->m_stExperiment.startExperiment();

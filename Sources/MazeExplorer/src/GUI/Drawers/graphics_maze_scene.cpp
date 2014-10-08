@@ -117,10 +117,10 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 		return;
 	}
 	pimpl->reset();
-	add_maze_locations(maze_data);
+	pimpl->add_maze_locations(maze_data);
 	pimpl->main_grid_layout->activate();
 
-	fit_into_view ();
+	pimpl->fit_into_view ();
 	pimpl->iterCords2LocStart = pimpl->m_mCords2Locations.begin();
 	pimpl->iterCords2LocEnd = pimpl->m_mCords2Locations.end();
 	pimpl->start_point = pimpl->empty_point;

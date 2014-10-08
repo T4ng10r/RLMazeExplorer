@@ -48,8 +48,8 @@ public:
 	QAction *			actionExperimentResult;
 	bool				bAutoGenerate;
 	bool				bMazeUpdated;		//labirynt wymaga odrysowania
-	QGraphicsView *					m_ptrMazeDraw;
-	graphics_maze_scene *			m_ptrMazeScene;
+	QGraphicsView *					maze_draw_view;
+	graphics_maze_scene *			maze_scene;
 
 	COneExplorationResultDlg *		cRobotOneExplorationResult;
 	//CExperimentManager				m_stExperimentManager;
@@ -57,12 +57,12 @@ public:
 	//CEnviroment *	pEnviroment;
 	QComboBox   * ctrlCombo;
 	experiment_parameters_dlg *			m_ptrExperimentParamsDlg;
-	single_robot_move_dlg *			m_ptrSingleRobotMove;
+	single_robot_move_dlg *			single_robot_move;
 };
 
 main_window_private::main_window_private(main_window * pub) : public_(pub)
 {
-	m_ptrMazeScene = new graphics_maze_scene;
+	maze_scene = new graphics_maze_scene;
 	setup_ui();
 
 	create_actions();
@@ -73,23 +73,18 @@ main_window_private::main_window_private(main_window * pub) : public_(pub)
 }
 main_window_private::~main_window_private()
 {
-	delete m_ptrMazeScene;
+	delete maze_scene;
 }
 void main_window_private::setup_ui()
 {
-	public_->setWindowTitle(QObject::tr("Experiment"));
+	maze_draw_view = new QGraphicsView(public_);
+	maze_draw_view->setScene(maze_scene);
+	public_->setCentralWidget(maze_draw_view);
 
-	m_ptrMazeDraw = new QGraphicsView(public_);
-	m_ptrMazeDraw->setScene(m_ptrMazeScene);
-	public_->setCentralWidget(m_ptrMazeDraw);
-
-	m_ptrSingleRobotMove = new single_robot_move_dlg;
-	public_->addDockWidget(Qt::AllDockWidgetAreas, m_ptrSingleRobotMove);
-	m_ptrSingleRobotMove->setFloating(true);
-	m_ptrSingleRobotMove->show();
 }
 void main_window_private::setup_dock_widgets()
 {
+	public_->setDockNestingEnabled(true);
 	//	cRobotOneExplorationResult = new COneExplorationResultDlg(this);
 	//	cRobotOneExplorationResult->setAllowedAreas(Qt::RightDockWidgetArea);
 	//	addDockWidget(Qt::RightDockWidgetArea, cRobotOneExplorationResult);
@@ -104,16 +99,21 @@ void main_window_private::setup_dock_widgets()
 	actionExperimentSettings->setShortcut(QObject::tr("Ctrl+W"));
 	actionExperimentSettings->setStatusTip(QObject::tr("Show window with experiment details"));
 	public_->menuBar()->addAction(actionExperimentSettings);
+
+	single_robot_move = new single_robot_move_dlg;
+	public_->addDockWidget(Qt::RightDockWidgetArea, single_robot_move);
+	//m_ptrSingleRobotMove->setFloating(true);
+	//m_ptrSingleRobotMove->show();
 }
 void main_window_private::set_connections()
 {
 	bool bResult = false;
 	set_connections_for_dlgs();
 
-	bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(CScanResults *)), m_ptrSingleRobotMove,
+	bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(CScanResults *)), single_robot_move,
 					  SLOT(onRobotBeforeMove(CScanResults *)));
 	Q_ASSERT(bResult == true);
-	bResult = QObject::connect(m_ptrSingleRobotMove, SIGNAL(next_robot_move()), &m_stExperiment,
+	bResult = QObject::connect(single_robot_move, SIGNAL(next_robot_move()), &m_stExperiment,
 					  SLOT(onnext_robot_move()));
 	Q_ASSERT(bResult == true);
 
@@ -159,7 +159,7 @@ void main_window_private::set_connections_for_dlgs()
 	Q_ASSERT(bResult == true);
 
 	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const CExperimentSettings &)),
-					  m_ptrMazeScene, SLOT(on_experiment_settings_changed(const CExperimentSettings &)));
+					  maze_scene, SLOT(on_experiment_settings_changed(const CExperimentSettings &)));
 	Q_ASSERT(bResult == true);
 	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(experimentSettingsChanged(const CExperimentSettings &)),
 					  public_, SLOT(on_experiment_settings_changed(const CExperimentSettings &)));
@@ -244,14 +244,14 @@ void main_window::onRobotDirChange(const QString text)
 }
 void main_window::on_maze_generated()
 {
-	pimpl->m_ptrMazeScene->setMaze(gDataThread->get_maze());
+	pimpl->maze_scene->setMaze(gDataThread->get_maze());
 	pimpl->m_ptrExperimentParamsDlg->on_experiment_settings_changed();
 	////////////////////////////////////////////////////////////////////////
 	QPrinter printer(QPrinter::HighResolution);
 	printer.setPaperSize(QPrinter::A4);
 	printer.setOutputFileName("maze.pdf");
 	QPainter painter(&printer);
-	pimpl->m_ptrMazeScene->render(&painter);
+	pimpl->maze_scene->render(&painter);
 	painter.end();
 }
 void main_window::on_experiment_settings_changed(const CExperimentSettings & xExpSettings)

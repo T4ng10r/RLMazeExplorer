@@ -2,10 +2,10 @@
 #define ENVIROMENT_H
 //#include <QtGui/QStringListModel>
 //#include <QtGui/QTableWidget>
-#include <Data/Experiment/CMazeExplorationResult.h>
 #include <QtDebug>
 #include <Maze/maze.h>
-#include <Data/Experiment/CExperimentSettings.h>
+#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/CMazeExplorationResult.h>
 #define DEBUG_INFO
 
 class CRobot;

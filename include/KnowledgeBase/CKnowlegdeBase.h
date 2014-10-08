@@ -3,7 +3,7 @@
 
 #include <KnowledgeBase/CKBLocationData.h>
 #include <KnowledgeBase/CExplorationResult.h>
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 
 #include <vector>
 #include <map>

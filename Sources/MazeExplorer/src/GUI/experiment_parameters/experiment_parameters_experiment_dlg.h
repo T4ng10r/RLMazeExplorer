@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <QWidget>
-#include <Data/Experiment/CExperimentSettings.h>
+#include <Data/experiment/CExperimentSettings.h>
 
 class experiment_parameters_experiment_dlg_private;
 

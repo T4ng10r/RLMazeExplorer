@@ -1,6 +1,6 @@
 #include "CEnviroment.h"
 #include <QFile>
-#include <Data/Experiment/CRobot.h>
+#include <Data/experiment/CRobot.h>
 #include <KnowledgeBase/CKnowlegdeBase.h>
 #include <Tools/loggers.h>
 
@@ -42,7 +42,7 @@ void CEnviroment::startSingleExploring()
     m_ptrKnowledgeBase->ResetRootNode();
 	m_stExplorationResult.clear();
     setRobotToStart();
-    m_ptrRobot->setKnowledgeBase(m_ptrKnowledgeBase); //pod³¹czamy agenta do KB
+    m_ptrRobot->setKnowledgeBase(m_ptrKnowledgeBase); //podï¿½ï¿½czamy agenta do KB
     //actual exploration process
     m_ptrRobot->robotStartExploring();
     afterFinishedExploration();
@@ -63,7 +63,7 @@ void CEnviroment::afterFinishedExploration()
 	//////////////////////////////////////////////////////////////////////////
     //zapamietujemy wynik aktualnej eksploracji
 	m_ptrKnowledgeBase->setCurrentExplorationResult(&m_stExplorationResult);
-    //testujemy czy prawid³owo zosta³a zapisana sciezka
+    //testujemy czy prawidï¿½owo zostaï¿½a zapisana sciezka
     //learning from explored maze parts and gathered data
     //NewExperiment
     //m_ptrKnowledgeBase->addExplorationResult(m_stExplorationResult);

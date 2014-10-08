@@ -4,7 +4,7 @@
 #include <QGraphicsLayoutItem>
 #include <QVector>
 #include <QLineF>
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 #include <Maze/location.h>
 
 enum eLocationType

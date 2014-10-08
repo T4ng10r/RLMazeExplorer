@@ -1,7 +1,7 @@
 #pragma once
 #include <QDockWidget>
 #include <QObject>
-#include <Data/Experiment/CExperimentSettings.h>
+#include <Data/experiment/CExperimentSettings.h>
 #include <vector>
 #include <utility>
 #include <memory>

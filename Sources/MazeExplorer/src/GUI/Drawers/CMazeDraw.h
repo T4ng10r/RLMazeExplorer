@@ -12,7 +12,7 @@
 #include <QPair>
 #include <QTableWidgetItem>
 #include <Maze/maze_interface.h>
-#include <Data/Experiment/CMazeExplorationResult.h>
+#include <Data/experiment/CMazeExplorationResult.h>
 #include <vector>
 #include <map>
 #include <boost/shared_ptr.hpp>

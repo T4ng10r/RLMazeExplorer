@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include <Data/Experiment/CExperimentSettings.h>
-#include <Data/Experiment/CMazeExplorationResult.h>
+#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/CMazeExplorationResult.h>
 #include <Data/CScanResults.h>
 #include <Maze/maze.h>
 #include <Data/CMazeKnowlegdeBase.h>
@@ -50,7 +50,7 @@ protected:
 	maze						m_stMazeData;
 	CExperimentSettings			m_stExperimentSettings;
 	CEnviroment * 				m_ptrEnviroment;
-	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka¿dego przejœcia w ramach danego eksperymentu
+	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla kaï¿½dego przejï¿½cia w ramach danego eksperymentu
 	CMazeKnowlegdeBase			m_cKnowledgeBase;
-	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla ka¿dego przejœcia w ramach danego eksperymentu
+	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla kaï¿½dego przejï¿½cia w ramach danego eksperymentu
 };

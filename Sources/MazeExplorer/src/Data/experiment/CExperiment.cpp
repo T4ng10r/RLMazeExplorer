@@ -1,5 +1,5 @@
-#include <Data/Experiment/CExperiment.h>
-#include <Data/Experiment/CEnviroment.h>
+#include <Data/experiment/CExperiment.h>
+#include <Data/experiment/CEnviroment.h>
 #include <Maze/maze_generator.h>
 
 CExperiment::CExperiment(void) : m_iExplorationSucces(0), m_iExplorationFails(0),m_ptrEnviroment(NULL){}

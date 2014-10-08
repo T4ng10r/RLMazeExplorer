@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <memory>
-#include <Data/Experiment/CExperimentSettings.h>
+#include <Data/experiment/CExperimentSettings.h>
 #include <QStandardItem>
 
 class experiment_positions_parameters_dlg_private;
@@ -20,8 +20,8 @@ public:
 Q_SIGNALS:
 	//send signal about change in start positions
     void on_set_start_position(int ,int);	//wysyla informacja o ustawieniu nowej pozycji startowej
-    void setFinishPosition(int ,int);	//wysyla informacja o ustawieniu nowej pozycji koñcowej
-	//wysyla informacja o ustawieniu nowej pozycji koñcowej
+    void setFinishPosition(int ,int);	//wysyla informacja o ustawieniu nowej pozycji koï¿½cowej
+	//wysyla informacja o ustawieniu nowej pozycji koï¿½cowej
 	void setFinishPositions(std::vector< std::pair<int,int> >);	
 	//send info about change of start direction (on argument perform cast into eRobotDir)
     void setStartDirection(int);	

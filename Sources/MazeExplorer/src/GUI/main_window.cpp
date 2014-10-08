@@ -9,9 +9,9 @@
 #include <Tools/loggers.h>
 
 #include <Data/data_thread.h>
-#include <Data/Experiment/CEnviroment.h>
-#include <Data/Experiment/CExperiment.h>
-#include <Data/Experiment/COneExplorationResultDlg.h>
+#include <Data/experiment/CEnviroment.h>
+#include <Data/experiment/CExperiment.h>
+#include <Data/experiment/COneExplorationResultDlg.h>
 #include <GUI/experiment_parameters/experiment_parameters_dlg.h>
 
 const int ciStartingMazeWidth = 10;

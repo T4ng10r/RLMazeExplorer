@@ -1,7 +1,7 @@
 #include "CKBLocationDataTest.h"
 #include <set>
 #include <KnowledgeBase/CKBLocationData.h>
-#include <Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 
 typedef CKBLocationData<LocationDirs,directions> CKBTreeNode;
 

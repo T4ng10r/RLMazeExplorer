@@ -1,7 +1,7 @@
 #include "CKBStateDataTest.h"
-#include "MazeExplorer\Experiment\EnviromentVariables.h"
+#include <Data/experiment/EnviromentVariables.h>
 #include <set>
-
+/*
 class CTestDecisionPoint : public CDecisionPoint
 {
 public:
@@ -86,3 +86,4 @@ void CKBStateDataTest::testActionCorrectness()
 	//QVERIFY(action3!=action1);
 
 }
+*/

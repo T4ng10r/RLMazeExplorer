@@ -1,6 +1,6 @@
 #ifndef CKBTREE_H
 #define CKBTREE_H
-#include "CKBStateData.h"
+/*#include "CKBStateData.h"
 
 class CKBTreeBase : public CKBStateData
 {
@@ -27,5 +27,5 @@ protected:
 
     CKBStateData root;
     CKBStateData *	currentNode;
-};
+};*/
 #endif

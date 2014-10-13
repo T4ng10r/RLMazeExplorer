@@ -1,5 +1,4 @@
-#ifndef EXPERIMENTSETTINGS_HPP
-#define EXPERIMENTSETTINGS_HPP
+#pragma once
 
 #include <list>
 #include <QtCore/QPoint>
@@ -12,8 +11,8 @@
 class experiment_settings
 {
 public:
-	experiment_settings(void);
-	~experiment_settings(void);
+	experiment_settings();
+	~experiment_settings();
 	void reset();
 public:
 	int					repeat_count;
@@ -25,4 +24,3 @@ public:
 	QString				sLoadKBPath;
 	QString				sSaveKBPath;
 };
-#endif

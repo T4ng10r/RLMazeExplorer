@@ -13,7 +13,7 @@
 #include <QDockWidget>
 #include <QMenuBar>
 #include <QStatusBar>
-#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/experiment_settings.h>
 
 class main_window_private;
 

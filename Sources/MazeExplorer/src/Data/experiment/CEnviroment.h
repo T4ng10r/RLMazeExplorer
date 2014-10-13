@@ -4,7 +4,7 @@
 //#include <QtGui/QTableWidget>
 #include <QtDebug>
 #include <Maze/maze.h>
-#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/experiment_settings.h>
 #include <Data/experiment/CMazeExplorationResult.h>
 #define DEBUG_INFO
 

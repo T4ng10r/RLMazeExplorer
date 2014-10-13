@@ -30,7 +30,7 @@ public:
     QSpinBox	*	spinSizeY;
     QLabel		*	labelMazeGenMethod;
     QComboBox	*	comboGenerationMethod;
-    QPushButton *		button_generate_maze;
+    QPushButton *   button_generate_maze;
     QCheckBox	*	checkBoxMazeIsPerfect;
 
     QGroupBox *		groupStochasticMazeChanges;

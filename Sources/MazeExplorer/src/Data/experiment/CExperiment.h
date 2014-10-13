@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/experiment_settings.h>
 #include <Data/experiment/CMazeExplorationResult.h>
 #include <Data/CScanResults.h>
 #include <Maze/maze.h>

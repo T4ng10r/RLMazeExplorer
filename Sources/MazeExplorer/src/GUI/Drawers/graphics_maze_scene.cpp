@@ -36,6 +36,8 @@ class graphics_maze_scene_private
 public:
 	graphics_maze_scene_private(graphics_maze_scene * pub);
 	void reset();
+	void fit_into_view();
+	void add_maze_locations(const maze_interface_type maze_data);
 public:
 	graphics_maze_scene * public_;
 	MapCoords2Location m_mCords2Locations;
@@ -73,6 +75,15 @@ void graphics_maze_scene_private::reset()
 		public_->removeItem(iterLocs->second);
 	m_mCords2Locations.clear();
 }
+
+void graphics_maze_scene_private::fit_into_view()
+{
+	//Log4Qt::Logger::logger("Process")->info("Maze drawned. Fitting into view.");
+	QList<QGraphicsView*> lViews = public_->views ();
+	QRectF rectF = main_item->geometry ();
+	lViews.first ()->fitInView (rectF, Qt::KeepAspectRatio);
+}
+void graphics_maze_scene_private::add_maze_locations(const maze_interface_type maze_data)
 {
 	int size_x = maze_data->get_size_x();
 	int size_y = maze_data->get_size_y();
@@ -83,7 +94,7 @@ void graphics_maze_scene_private::reset()
 			boost::optional<location> maze_location = maze_data->get_location(x, y);
 			if (!maze_location)
 			{
-				printLog(eDebug, eWarningLogLevel,str(boost::format("Can't get location for ( %1%, %2% )")% x % y));
+				printLog(eDebug, eWarningLogLevel, str(boost::format("Can't get location for ( %1%, %2% )") % x % y));
 				continue;
 			}
 			CGraphicsMazeLocation* draw_location = new CGraphicsMazeLocation;
@@ -91,20 +102,13 @@ void graphics_maze_scene_private::reset()
 			draw_location->setLocationPos(x, y);
 			main_grid_layout->addItem(draw_location, y, x);
 			m_mCords2Locations.insert(
-			std::make_pair(std::make_pair(x, y), draw_location));
+				std::make_pair(std::make_pair(x, y), draw_location));
 		}
 	}
 }
-void graphics_maze_scene_private::fit_into_view ()
-{
-	//Log4Qt::Logger::logger("Process")->info("Maze drawned. Fitting into view.");
-	QList<QGraphicsView*> lViews = public_->views ();
-	QRectF rectF = main_item->geometry ();
-	lViews.first ()->fitInView (rectF, Qt::KeepAspectRatio);
-}
+//////////////////////////////////////////////////////////////////////////
 graphics_maze_scene::graphics_maze_scene() : pimpl(new graphics_maze_scene_private(this)) {}
 graphics_maze_scene::~graphics_maze_scene(){}
-
 
 void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 {
@@ -123,6 +127,7 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 	pimpl->start_point = pimpl->empty_point;
 	pimpl->end_points.clear();
 }
+void graphics_maze_scene::on_experiment_settings_changed(const experiment_settings & xExperimentSettings)
 {
 	if (xExperimentSettings.startPosition.posX != pimpl->start_point.first ||
 		xExperimentSettings.startPosition.posY != pimpl->start_point.second)

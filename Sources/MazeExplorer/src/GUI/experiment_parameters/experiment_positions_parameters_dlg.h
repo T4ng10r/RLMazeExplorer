@@ -4,7 +4,7 @@
 #include <memory>
 #include <QWidget>
 #include <QStandardItem>
-#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/experiment_settings.h>
 
 class experiment_positions_parameters_dlg_private;
 

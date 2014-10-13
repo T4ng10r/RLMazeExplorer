@@ -1,6 +1,6 @@
 #pragma once
 #include <QGraphicsScene>
-#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/experiment_settings.h>
 #include <Maze/maze_interface.h>
 #include <memory>
 

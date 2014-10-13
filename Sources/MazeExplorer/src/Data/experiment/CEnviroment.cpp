@@ -42,7 +42,6 @@ void CEnviroment::startSingleExploring()
     m_ptrKnowledgeBase->ResetRootNode();
 	m_stExplorationResult.clear();
     setRobotToStart();
-    m_ptrRobot->setKnowledgeBase(m_ptrKnowledgeBase); //pod³¹czamy agenta do KB
     //actual exploration process
     m_ptrRobot->start_exploring();
     afterFinishedExploration();
@@ -63,7 +62,6 @@ void CEnviroment::afterFinishedExploration()
 	//////////////////////////////////////////////////////////////////////////
     //zapamietujemy wynik aktualnej eksploracji
 	m_ptrKnowledgeBase->setCurrentExplorationResult(&m_stExplorationResult);
-    //testujemy czy prawid³owo zosta³a zapisana sciezka
     //learning from explored maze parts and gathered data
     //NewExperiment
     //m_ptrKnowledgeBase->addExplorationResult(m_stExplorationResult);

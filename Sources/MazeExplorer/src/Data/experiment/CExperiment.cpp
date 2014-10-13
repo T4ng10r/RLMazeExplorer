@@ -1,5 +1,5 @@
-#include <Data/Experiment/CExperiment.h>
-#include <Data/Experiment/CEnviroment.h>
+#include <Data/experiment/CExperiment.h>
+#include <Data/experiment/CEnviroment.h>
 #include <Maze/maze_generator.h>
 
 CExperiment::CExperiment(void) : m_iExplorationSucces(0), m_iExplorationFails(0),m_ptrEnviroment(NULL){}
@@ -37,7 +37,7 @@ maze& CExperiment::getMazeData()
 {
     return m_stMazeData;
 }
-void CExperiment::setExperimentSettings(const CExperimentSettings & xExperimentSettings)
+void CExperiment::setExperimentSettings(const experiment_settings & xExperimentSettings)
 {
     m_stExperimentSettings = xExperimentSettings;
 }
@@ -58,7 +58,7 @@ void CExperiment::startExperiment()
 	m_ptrEnviroment->setMaze(m_stMazeData);
 	m_ptrEnviroment->setKnowlegdeBase(&m_cKnowledgeBase);
 
-	for(int index=0; index<m_stExperimentSettings.repeatingQuantity; index++)
+	for(int index=0; index<m_stExperimentSettings.repeat_count; index++)
 	{
 		m_ptrEnviroment->startSingleExploring();
 		addExplorationResult(m_ptrEnviroment->getExplorationResults());
@@ -106,7 +106,7 @@ void CExperiment::saveExperiment(QTextStream *pStream)
     vector<CMazeExplorationResult>::iterator	iterExploration;
 	std::list<QPoint>::iterator		iterPoints;
     (*pStream)<<"EXPERIMENT_DATA\n";
-    (*pStream)<<"Quantity   "<<m_stExperimentSettings.repeatingQuantity<<"\n";
+    (*pStream)<<"Quantity   "<<m_stExperimentSettings.repeat_count<<"\n";
     (*pStream)<<"StartPos   "<<m_stExperimentSettings.startPosition.posX<<" "<<m_stExperimentSettings.startPosition.posY<<" "<<(int)m_stExperimentSettings.startPosition.dir<<"\n";
     for(iterPoints=m_stExperimentSettings.lFinishPositions.begin();
             iterPoints!=m_stExperimentSettings.lFinishPositions.end(); iterPoints++)

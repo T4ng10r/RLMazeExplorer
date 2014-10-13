@@ -202,7 +202,7 @@ void experiment_parameters_experiment_dlg_private::setup_learning_price_value()
 experiment_parameters_experiment_dlg::experiment_parameters_experiment_dlg(QWidget *parent) : QWidget(parent), pimpl(new experiment_parameters_experiment_dlg_private(this))
 {}
 experiment_parameters_experiment_dlg::~experiment_parameters_experiment_dlg(){};
-void experiment_parameters_experiment_dlg::getExperimentSettings(CExperimentSettings & cExperimentSettings)
+void experiment_parameters_experiment_dlg::getExperimentSettings(experiment_settings & cExperimentSettings)
 {
     cExperimentSettings.fPenaltyValue = pimpl->spinPenaltyValue->value();
     cExperimentSettings.fPriceValue = pimpl->spinPriceValue->value();

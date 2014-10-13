@@ -1,5 +1,6 @@
 
 project(ut_maze)
+SetWindowsPolicies()
 
 include_directories(${gmock_SOURCE_DIR}/include
                     ${gtest_SOURCE_DIR}/include

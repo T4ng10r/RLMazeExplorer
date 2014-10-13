@@ -1,5 +1,5 @@
 #pragma once
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 #include <QPoint>
 class CRobotPostion
 {

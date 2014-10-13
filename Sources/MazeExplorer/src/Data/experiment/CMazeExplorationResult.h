@@ -2,7 +2,7 @@
 #define _MAZE_EXPLORATION_RESULTS_INCLUDE
 
 #include <KnowledgeBase/CExplorationResult.h>
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 #include <Data/CScanResults.h>
 #include <QtCore/QTextStream>
 

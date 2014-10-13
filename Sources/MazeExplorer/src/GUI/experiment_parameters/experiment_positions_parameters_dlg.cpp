@@ -312,7 +312,7 @@ experiment_positions_parameters_dlg::~experiment_positions_parameters_dlg()
 	delete pimpl->ptrDelegate;
 }
 //////////////////////////////////////////////////////////////////////////
-void experiment_positions_parameters_dlg::setExperimentSettings(CExperimentSettings & cExperimentSettings)
+void experiment_positions_parameters_dlg::setExperimentSettings(experiment_settings & cExperimentSettings)
 {
 	pimpl->spinStartX->blockSignals(true);
 	pimpl->spinStartY->blockSignals(true);
@@ -333,12 +333,12 @@ void experiment_positions_parameters_dlg::setExperimentSettings(CExperimentSetti
 	pimpl->spinStartX->blockSignals(false);
 	pimpl->spinStartY->blockSignals(false);
 }
-void experiment_positions_parameters_dlg::getExperimentSettings(CExperimentSettings & cExperimentSettings)
+void experiment_positions_parameters_dlg::getExperimentSettings(experiment_settings & cExperimentSettings)
 {
 	QModelIndex index;
 	QPoint pos;
 	int rowCount = pimpl->modelFinishPos->rowCount();
-	cExperimentSettings.repeatingQuantity = pimpl->spinRepeatQuantity->value();
+	cExperimentSettings.repeat_count = pimpl->spinRepeatQuantity->value();
 	cExperimentSettings.startPosition.posX = pimpl->spinStartX->value();
 	cExperimentSettings.startPosition.posY = pimpl->spinStartY->value();
 	cExperimentSettings.lFinishPositions.clear();

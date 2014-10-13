@@ -1,7 +1,7 @@
 #pragma once
 #include <KnowledgeBase/CKnowlegdeBase.h>
-#include <Data/Experiment/CMazeExplorationResult.h>
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/CMazeExplorationResult.h>
+#include <Data/experiment/EnviromentVariables.h>
 
 #include <vector>
 #include <map>

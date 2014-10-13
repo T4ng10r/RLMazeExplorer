@@ -6,8 +6,9 @@ const int maxFinishPos(5);
 single_robot_move_dlg::single_robot_move_dlg(QWidget *parent) : QDockWidget(parent)
 {
 	show();
-    setup_ui();
+	setup_ui();
 	retranslate_ui();
+	setAllowedAreas(Qt::RightDockWidgetArea);
 }
 //////////////////////////////////////////////////////////////////////////
 void single_robot_move_dlg::setup_ui()

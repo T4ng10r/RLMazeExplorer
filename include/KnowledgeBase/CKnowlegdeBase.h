@@ -3,7 +3,7 @@
 
 #include <KnowledgeBase/CKBLocationData.h>
 #include <KnowledgeBase/CExplorationResult.h>
-#include <Data/Experiment/EnviromentVariables.h>
+//#include "Data/experiment/EnviromentVariables.h"
 
 #include <vector>
 #include <map>
@@ -15,7 +15,6 @@ enum choosingExitsMethod
     staticOneLocationLearning,
     treeOfLastDecisionPoints
 };
-
 
 template<class StateID, class ActionID>
 class CKnowlegdeBase
@@ -50,7 +49,7 @@ public:
 	{
 		static unsigned int before=1;
 		double			probability;
-		directions		result;
+		ActionID		result;
 
 		unsigned int seed = (unsigned)time( NULL );
 		seed =seed+seed%before++;
@@ -63,14 +62,14 @@ public:
 			//		result = m_mOneLocation[locationID].getLocation(probability);
 			break;
 		case treeOfLastDecisionPoints:
-			result = chooseExitFromTree(stateID,probability);
+			//result = chooseExitFromTree(stateID,probability);
 			break;
 		}
 		return (ActionID)-1;
 	}
-	virtual ActionID chooseExitFromTree( StateID stateID,double probability )=0;
+	//virtual ActionID chooseExitFromTree( StateID stateID,double probability )=0;
 protected:
-	virtual void treeLearningPolicy(CExplorationResult<StateID,ActionID> *lastExplorationResult, double value, bool bReward) = 0;
+	//virtual void treeLearningPolicy(CExplorationResult<StateID,ActionID> *lastExplorationResult, double value, bool bReward) = 0;
 	
 protected:
 	choosingExitsMethod		m_eTeachMethod;

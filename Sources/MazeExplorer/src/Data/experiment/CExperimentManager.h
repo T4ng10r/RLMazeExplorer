@@ -2,7 +2,7 @@
 #define EXPERIMENT_MANAGER_HPP
 
 #include <list>
-#include <Data/Experiment/CExperiment.h>
+#include <Data/experiment/CExperiment.h>
 
 //Manages experiments
 class CExperimentManager

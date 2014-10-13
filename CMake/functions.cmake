@@ -48,3 +48,10 @@ CreateProjectStructure(${CMAKE_CURRENT_SOURCE_DIR} ${TMP_FILES})
 
 endmacro(GatheringFiles)
 
+
+macro(SetWindowsPolicies)
+IF (WIN32)
+cmake_policy(SET CMP0020 NEW)
+cmake_policy(SET CMP0043 NEW)
+ENDIF()
+endmacro()

@@ -117,7 +117,6 @@ void experiment_parameters_dlg_private::setup_progress()
 	progres_layout->addWidget(start_experiment_button);
 	start_experiment_button->setEnabled(false);
 
-	start_experiment_button->setText(QObject::tr("param_eks", "Start", 0));
 	//cancelButton->setText(QApplication::translate("param_eks", "Anuluj", 0));
 }
 void experiment_parameters_dlg_private::setup_ok_button()
@@ -254,6 +253,7 @@ void experiment_parameters_dlg_private::retranslate_ui()
 	tab_dialog->setTabText(0, QObject::tr("Maze", "experiment_parameters_dlg", 0));
 	tab_dialog->setTabText(1, QObject::tr("Locations", "experiment_parameters_dlg", 0));
 	tab_dialog->setTabText(2, QObject::tr("Learning parameters", "experiment_parameters_dlg", 0));
+	start_experiment_button->setText(QObject::tr("Start", "experiment_parameters_dlg", 0));
 }
 //////////////////////////////////////////////////////////////////////////
 experiment_parameters_dlg::experiment_parameters_dlg(QWidget *parent) :
@@ -271,14 +271,14 @@ experiment_parameters_dlg::experiment_parameters_dlg(QWidget *parent) :
 experiment_parameters_dlg::~experiment_parameters_dlg(){}
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-void experiment_parameters_dlg::onSetExperimentSettings(CExperimentSettings & cExperimentSettings)
+void experiment_parameters_dlg::onSetExperimentSettings(experiment_settings & cExperimentSettings)
 {
     pimpl->m_ptrWidgetPositionParams->setExperimentSettings(cExperimentSettings);
 	pimpl->m_ptrWidgetMazeGenerationParam->set_maze_settings(cExperimentSettings.mazeSettings);
 }
 void experiment_parameters_dlg::processExperiment()
 {
-    CExperimentSettings cExperimentSettings;
+	experiment_settings cExperimentSettings;
 
 	pimpl->m_ptrWidgetMazeGenerationParam->get_maze_settings(cExperimentSettings.mazeSettings);
 	pimpl->m_ptrWidgetPositionParams->getExperimentSettings(cExperimentSettings);
@@ -286,7 +286,7 @@ void experiment_parameters_dlg::processExperiment()
 
 	//////////////////////////////////////////////////////////////////////////
 	pimpl->progress_bar->setMinimum(1);
-	pimpl->progress_bar->setMaximum(cExperimentSettings.repeatingQuantity);
+	pimpl->progress_bar->setMaximum(cExperimentSettings.repeat_count);
 	pimpl->progress_bar->reset();
 
 	//cExperimentSettings.sLoadKBPath = pimpl->lineEditLoadKBPath->text();
@@ -326,7 +326,7 @@ void experiment_parameters_dlg::onAddFinishPosition(int posX,int posY)
 }
 void experiment_parameters_dlg::on_experiment_settings_changed()
 {
-	CExperimentSettings expSettings;
+	experiment_settings expSettings;
 
 	pimpl->m_ptrWidgetMazeGenerationParam->get_maze_settings(expSettings.mazeSettings);
 	pimpl->m_ptrWidgetPositionParams->getExperimentSettings(expSettings);

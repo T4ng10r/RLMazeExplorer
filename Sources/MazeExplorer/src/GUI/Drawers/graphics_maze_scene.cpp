@@ -36,8 +36,6 @@ class graphics_maze_scene_private
 public:
 	graphics_maze_scene_private(graphics_maze_scene * pub);
 	void reset();
-	void fit_into_view();
-	void add_maze_locations(const maze_interface_type maze_data);
 public:
 	graphics_maze_scene * public_;
 	MapCoords2Location m_mCords2Locations;
@@ -75,7 +73,6 @@ void graphics_maze_scene_private::reset()
 		public_->removeItem(iterLocs->second);
 	m_mCords2Locations.clear();
 }
-void graphics_maze_scene_private::add_maze_locations(const maze_interface_type maze_data)
 {
 	int size_x = maze_data->get_size_x();
 	int size_y = maze_data->get_size_y();
@@ -126,7 +123,6 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 	pimpl->start_point = pimpl->empty_point;
 	pimpl->end_points.clear();
 }
-void graphics_maze_scene::on_experiment_settings_changed(const CExperimentSettings & xExperimentSettings)
 {
 	if (xExperimentSettings.startPosition.posX != pimpl->start_point.first ||
 		xExperimentSettings.startPosition.posY != pimpl->start_point.second)

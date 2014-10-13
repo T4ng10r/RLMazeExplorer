@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include <Data/Experiment/CExperimentSettings.h>
-#include <Data/Experiment/CMazeExplorationResult.h>
+#include <Data/experiment/CExperimentSettings.h>
+#include <Data/experiment/CMazeExplorationResult.h>
 #include <Data/CScanResults.h>
 #include <Maze/maze.h>
 #include <Data/CMazeKnowlegdeBase.h>
@@ -19,7 +19,7 @@ public:
 	~CExperiment(void);
 	void on_set_maze_data(const maze & xMazeSource);
 	maze& getMazeData();
-	void setExperimentSettings(const CExperimentSettings & xExperimentSettings);
+	void setExperimentSettings(const experiment_settings & xExperimentSettings);
 	void startExperiment();
 	//////////////////////////////////////////////////////////////////////////
 	void operator=(const CExperiment & experimentDest);
@@ -48,9 +48,9 @@ protected:
 	unsigned int m_iExplorationSucces;		//how many time exploration was successful
 	unsigned int m_iExplorationFails;		//how many time exploration was failure
 	maze						m_stMazeData;
-	CExperimentSettings			m_stExperimentSettings;
+	experiment_settings			m_stExperimentSettings;
 	CEnviroment * 				m_ptrEnviroment;
-	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka¿dego przejœcia w ramach danego eksperymentu
+	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla kaï¿½dego przejï¿½cia w ramach danego eksperymentu
 	CMazeKnowlegdeBase			m_cKnowledgeBase;
-	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla ka¿dego przejœcia w ramach danego eksperymentu
+	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla kaï¿½dego przejï¿½cia w ramach danego eksperymentu
 };

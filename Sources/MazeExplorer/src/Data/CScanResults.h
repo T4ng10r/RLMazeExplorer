@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <Maze/location.h>
-#include <Data/Experiment/EnviromentVariables.h>
+#include <Data/experiment/EnviromentVariables.h>
 #include <Data/CRobotPostion.h>
 using namespace std;
 //wyniki skanowaia lokacji przez robota

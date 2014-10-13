@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(MazeExplorer)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+SetWindowsPolicies()
 
   #to get log4qt folder
 include_directories (${RLME_include_SOURCE_DIR}

@@ -1,12 +1,12 @@
 #include "CEnviroment.h"
 #include <QFile>
-#include <Data/Experiment/CRobot.h>
+#include <Data/Experiment/robot.h>
 #include <KnowledgeBase/CKnowlegdeBase.h>
 #include <Tools/loggers.h>
 
 CEnviroment::CEnviroment(void) : m_ptrRobot(NULL), m_ptrKnowledgeBase(NULL),currentScanResults(NULL)
 {
-    m_ptrRobot = new CRobot;
+    m_ptrRobot = new robot;
     m_iRobotPos=QPoint(0,0);
 
     Q_CHECK_PTR(m_ptrRobot);
@@ -17,7 +17,7 @@ CEnviroment::CEnviroment(void) : m_ptrRobot(NULL), m_ptrKnowledgeBase(NULL),curr
 	Q_ASSERT(bResult);
     bResult = connect(m_ptrRobot,SIGNAL(robotScans(CScanResults *)),SLOT(onRobotScan(CScanResults *)));
 	Q_ASSERT(bResult);
-    bResult = connect(m_ptrRobot,SIGNAL(checkIfInExit(bool &)),SLOT(onRobotIfInExit(bool &)));
+    bResult = connect(m_ptrRobot,SIGNAL(is_in_exit(bool &)),SLOT(onRobotIfInExit(bool &)));
 	Q_ASSERT(bResult);
 	bResult = connect(m_ptrRobot,SIGNAL(robotBeforeMove(CScanResults *)),SIGNAL(robotBeforeMove(CScanResults *)));
 	Q_ASSERT(bResult);
@@ -44,7 +44,7 @@ void CEnviroment::startSingleExploring()
     setRobotToStart();
     m_ptrRobot->setKnowledgeBase(m_ptrKnowledgeBase); //pod³¹czamy agenta do KB
     //actual exploration process
-    m_ptrRobot->robotStartExploring();
+    m_ptrRobot->start_exploring();
     afterFinishedExploration();
 
 	Q_EMIT robotFinished(m_stExplorationResult);
@@ -272,6 +272,11 @@ void CEnviroment::onRobotIfInExit(bool &bIfInExit)
         }
     }
 }
+void CEnviroment::setMaze(const maze &val) 
+{ 
+	m_stMaze = val; 
+}
+
 //void CEnviroment::onStartExperiment(CExperimentSettings &m_ExperimentSettings)
 //{
     ////TODO kazdy eksperyment moze zaczynac sie utworzeniem nowej bazy wiedzy lub pozostawieniem poprzedniej

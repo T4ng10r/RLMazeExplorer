@@ -289,8 +289,8 @@ void experiment_parameters_dlg::processExperiment()
 	pimpl->progress_bar->setMaximum(cExperimentSettings.repeatingQuantity);
 	pimpl->progress_bar->reset();
 
-	cExperimentSettings.sLoadKBPath = pimpl->lineEditLoadKBPath->text();
-	cExperimentSettings.sSaveKBPath = pimpl->lineEditSaveKBPath->text();
+	//cExperimentSettings.sLoadKBPath = pimpl->lineEditLoadKBPath->text();
+	//cExperimentSettings.sSaveKBPath = pimpl->lineEditSaveKBPath->text();
 
 	//////////////////////////////////////////////////////////////////////////
     Q_EMIT startExperiment(cExperimentSettings);

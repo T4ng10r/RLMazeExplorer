@@ -35,9 +35,9 @@ class graphics_maze_scene_private
 {
 public:
 	graphics_maze_scene_private(graphics_maze_scene * pub);
-	void add_maze_locations(const maze_interface_type& maze_data);
-	void fit_into_view ();
 	void reset();
+	void fit_into_view();
+	void add_maze_locations(const maze_interface_type maze_data);
 public:
 	graphics_maze_scene * public_;
 	MapCoords2Location m_mCords2Locations;
@@ -75,7 +75,7 @@ void graphics_maze_scene_private::reset()
 		public_->removeItem(iterLocs->second);
 	m_mCords2Locations.clear();
 }
-void graphics_maze_scene_private::add_maze_locations(const maze_interface_type& maze_data)
+void graphics_maze_scene_private::add_maze_locations(const maze_interface_type maze_data)
 {
 	int size_x = maze_data->get_size_x();
 	int size_y = maze_data->get_size_y();
@@ -117,10 +117,10 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 		return;
 	}
 	pimpl->reset();
-	add_maze_locations(maze_data);
+	pimpl->add_maze_locations(maze_data);
 	pimpl->main_grid_layout->activate();
 
-	fit_into_view ();
+	pimpl->fit_into_view();
 	pimpl->iterCords2LocStart = pimpl->m_mCords2Locations.begin();
 	pimpl->iterCords2LocEnd = pimpl->m_mCords2Locations.end();
 	pimpl->start_point = pimpl->empty_point;

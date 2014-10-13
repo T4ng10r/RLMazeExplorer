@@ -8,7 +8,7 @@
 #include <Data/Experiment/CExperimentSettings.h>
 #define DEBUG_INFO
 
-class CRobot;
+class robot;
 class CMazeKnowlegdeBase;
 
 //Class which will monitor agent position and movement in maze
@@ -23,7 +23,7 @@ public:
 	CMazeExplorationResult getExplorationResults() { return m_stExplorationResult; }
 	void setExperimentSettings(CExperimentSettings val) { m_stExperimentSettings = val; }
 	void setKnowlegdeBase(CMazeKnowlegdeBase * ptrKB)		{ m_ptrKnowledgeBase = ptrKB;	}
-	void setMaze(const maze &val) { m_stMaze = val; }
+	void setMaze(const maze &val);
 	//////////////////////////////////////////////////////////////////////////
 	// exploration methods
     void startSingleExploring();
@@ -65,7 +65,7 @@ protected:
 	//experiment settings - like robot start position, end points and maze params
 	CExperimentSettings		m_stExperimentSettings;
 	//robot/agent - he will perform experiment
-	CRobot	*				m_ptrRobot;
+	robot	*				m_ptrRobot;
 	//location in which robot is currently
     location				m_stCurrentLocation;
 	//current robot directions facing

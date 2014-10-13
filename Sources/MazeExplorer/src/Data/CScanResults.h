@@ -19,8 +19,7 @@ public:
     QString translateLocID(const LocationDirs &xLocDirs);
 
 	LocationDirs translateScanResultsToBitArray();
-
-
+public:
     LocationDirs		locDirs;
     LocationDirs		unrotatedLocDirs;
     directions			robotChosenDir;

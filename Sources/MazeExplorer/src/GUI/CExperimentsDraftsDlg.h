@@ -21,7 +21,7 @@
 #define EXPLORATION_TITLE "Eksploracja nr"
 #define PATH_TEXT "Sciezka"
 #define CROSS_TEXT "Skrzyzowania"
-class CExperiment;
+class experiment;
 
 /*
 class CExperimentsDraftsDlg : public QWidget

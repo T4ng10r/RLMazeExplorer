@@ -10,19 +10,21 @@
 using namespace std;
 class CEnviroment;
 
+class experiment_private;
+
 //////////////////////////////////////////////////////////////////////////
-class CExperiment : public QObject
+class experiment : public QObject
 {
 	Q_OBJECT
 public:
-	CExperiment(void);
-	~CExperiment(void);
+	experiment(void);
+	~experiment(void);
 	void on_set_maze_data(const maze & xMazeSource);
 	maze& getMazeData();
 	void setExperimentSettings(const experiment_settings & xExperimentSettings);
 	void startExperiment();
 	//////////////////////////////////////////////////////////////////////////
-	void operator=(const CExperiment & experimentDest);
+	//void operator=(const experiment & experimentDest);
 	//////////////////////////////////////////////////////////////////////////
 	void increseSuccessCounter();
 	void increseFailsCounter();
@@ -44,13 +46,5 @@ Q_SIGNALS:
 public Q_SLOTS:
 	void onnext_robot_move();
 protected:
-	time_t	experimentDuration;
-	unsigned int m_iExplorationSucces;		//how many time exploration was successful
-	unsigned int m_iExplorationFails;		//how many time exploration was failure
-	maze						m_stMazeData;
-	experiment_settings			m_stExperimentSettings;
-	CEnviroment * 				m_ptrEnviroment;
-	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
-	CMazeKnowlegdeBase			m_cKnowledgeBase;
-	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
+	std::unique_ptr<experiment_private> pimpl;
 };

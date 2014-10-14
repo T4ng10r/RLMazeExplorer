@@ -2,7 +2,7 @@
 #define EXPERIMENT_MANAGER_HPP
 
 #include <list>
-#include <Data/experiment/CExperiment.h>
+#include <Data/experiment/experiment.h>
 
 //Manages experiments
 class CExperimentManager
@@ -11,8 +11,8 @@ public:
     CExperimentManager(void);
     ~CExperimentManager(void);
 
-	CExperiment	& getCurrentExperiment();
-	CExperiment	stExperiment;
+	experiment	& getCurrentExperiment();
+	experiment	stExperiment;
 
 	maze		m_stCurrentMaze;
 

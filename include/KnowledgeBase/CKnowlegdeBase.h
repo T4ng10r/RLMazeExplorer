@@ -49,7 +49,7 @@ public:
 	{
 		static unsigned int before=1;
 		double			probability;
-		ActionID		result;
+		//ActionID		result;
 
 		unsigned int seed = (unsigned)time( NULL );
 		seed =seed+seed%before++;

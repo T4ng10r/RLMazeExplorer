@@ -148,7 +148,7 @@ void maze_generator_prim_private::join_locations(unsigned int start_id, unsigned
 }
 void maze_generator_prim_private::generate_maze()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	//initial cell
 	unsigned int cell_id(make_id(size_x/2, size_y/2));
 	do 

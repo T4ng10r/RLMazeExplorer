@@ -88,7 +88,7 @@ void maze_generator_kruskal_private::generate_edges()
 				edges_sets.push_back(edge_id);
 			}
 		}
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	std::random_shuffle(edges_sets.begin(), edges_sets.end());
 }
 void maze_generator_kruskal_private::generate_maze()

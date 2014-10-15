@@ -150,7 +150,7 @@ void single_robot_move_dlg::on_NextMoveButton_clicked(bool checked)
     	blockSignals(false);*/
 
 }
-void single_robot_move_dlg::onRobotBeforeMove(CScanResults *scanResult)
+void single_robot_move_dlg::onRobotBeforeMove(scan_results *scanResult)
 {
 	if (!scanResult)	return;
 	QString strVal = QString::number(scanResult->robotPos.posX)+","+QString::number(scanResult->robotPos.posY);

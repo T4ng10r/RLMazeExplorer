@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(RL_MazeExplorer)
 
-cmake_policy(VERSION 3.0)
+cmake_policy(VERSION 2.8.12)
 IF (WIN32)
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0043 NEW)

@@ -7,11 +7,11 @@
 #include <map>
 #include <string>
 
-class CMazeKnowlegdeBase : public CKnowlegdeBase<LocationDirs, directions>
+class maze_knowlegde_base : public CKnowlegdeBase<LocationDirs, directions>
 {
 public:
-    CMazeKnowlegdeBase(void);
-    ~CMazeKnowlegdeBase(void);
+    maze_knowlegde_base(void);
+    ~maze_knowlegde_base(void);
 	//resets entire KB (quantities and KBRoot)
     void ResetKB();
 	//sets current node to RootNode 
@@ -83,3 +83,5 @@ protected:
     unsigned int m_iExplorationSucces;		//ilosc przejsc robota
     unsigned int m_iExplorationFails;		//ilosc przejsc robota
 };
+
+typedef std::shared_ptr<maze_knowlegde_base> maze_knowlegde_base_handle;

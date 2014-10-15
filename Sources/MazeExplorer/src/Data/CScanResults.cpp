@@ -1,18 +1,18 @@
 #include "CScanResults.h"
 #include <QString>
 
-CScanResults::CScanResults(void):locDirs(LOCATION_EMPTY),robotChosenDir(FRONT_DIR),bCrossRoad(false)
+scan_results::scan_results(void):locDirs(LOCATION_EMPTY),robotChosenDir(FRONT_DIR),bCrossRoad(false)
 {
     clear();
 }
-void CScanResults::clear()
+void scan_results::clear()
 {
     vFrontDir.clear();
     vLeftDir.clear();
     vRightDir.clear();
     vBackDir.clear();
 }
-int CScanResults::exitsCount()
+int scan_results::exitsCount()
 {
     int count = 0;
     if (vFrontDir.size())
@@ -25,7 +25,7 @@ int CScanResults::exitsCount()
         count++;
     return count;
 }
-void CScanResults::Rotate(bool bRight)
+void scan_results::Rotate(bool bRight)
 {
     vector<location>		vTemporary;
 
@@ -47,7 +47,7 @@ void CScanResults::Rotate(bool bRight)
     }
 }
 
-void CScanResults::getScanResult(directions dir,bool &bPassage)
+void scan_results::getScanResult(directions dir,bool &bPassage)
 {
     bPassage=false;
     switch(dir)
@@ -72,7 +72,7 @@ void CScanResults::getScanResult(directions dir,bool &bPassage)
         break;
     }
 }
-void CScanResults::getFrontScanResult(directions &dir)
+void scan_results::getFrontScanResult(directions &dir)
 {
     vector<directions>	exitsDir;
 
@@ -88,7 +88,7 @@ void CScanResults::getFrontScanResult(directions &dir)
     else
         dir = exitsDir.back();
 }
-int CScanResults::getExitsCount(bool bBackScan)
+int scan_results::getExitsCount(bool bBackScan)
 {
     int count=0;
     if (vFrontDir.size()) count++;
@@ -98,7 +98,7 @@ int CScanResults::getExitsCount(bool bBackScan)
 
     return count;
 }
-QString CScanResults::translateLocID(const LocationDirs &xLocDirs)
+QString scan_results::translateLocID(const LocationDirs &xLocDirs)
 {
     QString name;
     switch(xLocDirs)
@@ -136,7 +136,7 @@ QString CScanResults::translateLocID(const LocationDirs &xLocDirs)
     }
     return "";
 }
-vector<directions> CScanResults::getVActions()
+vector<directions> scan_results::getVActions()
 {
     bool bPassage;
     vector<directions> vActions;
@@ -151,7 +151,7 @@ vector<directions> CScanResults::getVActions()
     return vActions;
 }
 
-LocationDirs CScanResults::translateScanResultsToBitArray()
+LocationDirs scan_results::translateScanResultsToBitArray()
 {
 	int				result=0;
 	bool			bPassage=false;

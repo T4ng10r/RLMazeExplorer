@@ -10,8 +10,8 @@ class experiment_maze_params_dlg : public QWidget
 {
     Q_OBJECT
 public:
-    experiment_maze_params_dlg(QWidget *parent = 0);
-    ~experiment_maze_params_dlg();
+	experiment_maze_params_dlg(QWidget *parent = 0);
+	~experiment_maze_params_dlg();
 	void set_maze_settings(maze_settings & stMazeSettings);
 	void get_maze_settings(maze_settings & stMazeSettings);
 

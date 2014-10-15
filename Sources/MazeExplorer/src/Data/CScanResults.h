@@ -1,33 +1,35 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include <Maze/location.h>
 #include <Data/experiment/EnviromentVariables.h>
 #include <Data/CRobotPostion.h>
 using namespace std;
 //wyniki skanowaia lokacji przez robota
-class CScanResults
+class scan_results
 {
 public:
-    CScanResults(void);
-    void clear();
-    void Rotate(bool bRight);
-    void getScanResult(directions dir,bool &bPassage);
-    void getFrontScanResult(directions &dir);
-    vector<directions> getVActions();
-    int exitsCount();
-    int getExitsCount(bool bBackScan);
-    QString translateLocID(const LocationDirs &xLocDirs);
+	scan_results(void);
+	void clear();
+	void Rotate(bool bRight);
+	void getScanResult(directions dir,bool &bPassage);
+	void getFrontScanResult(directions &dir);
+	vector<directions> getVActions();
+	int exitsCount();
+	int getExitsCount(bool bBackScan);
+	QString translateLocID(const LocationDirs &xLocDirs);
 
 	LocationDirs translateScanResultsToBitArray();
 public:
-    LocationDirs		locDirs;
-    LocationDirs		unrotatedLocDirs;
-    directions			robotChosenDir;
-    bool				bCrossRoad;
+	LocationDirs		locDirs;
+	LocationDirs		unrotatedLocDirs;
+	directions			robotChosenDir;
+	bool				bCrossRoad;
 
 	vector<location>		vFrontDir;
 	vector<location>		vLeftDir;
 	vector<location>		vRightDir;
 	vector<location>		vBackDir;
-    CRobotPostion			robotPos;
+	CRobotPostion			robotPos;
 };
+typedef std::shared_ptr<scan_results> scan_results_handle;

@@ -3,7 +3,7 @@
 #define DEBUG_INFO
 #include <Tools/loggers.h>
 
-CMazeKnowlegdeBase::CMazeKnowlegdeBase(void)
+maze_knowlegde_base::maze_knowlegde_base(void)
 {
 #ifdef DEBUG_INFO
 	//Log4Qt::Logger::logger("MazeKB")->setLevel(Log4Qt::Level::ALL_INT);
@@ -14,8 +14,8 @@ CMazeKnowlegdeBase::CMazeKnowlegdeBase(void)
     currentMethodOfChoosingExits=treeOfLastDecisionPoints;
     ResetKB();
 }
-CMazeKnowlegdeBase::~CMazeKnowlegdeBase(void) {}
-void CMazeKnowlegdeBase::ResetKB()
+maze_knowlegde_base::~maze_knowlegde_base(void) {}
+void maze_knowlegde_base::ResetKB()
 {
     m_iExplorationQuantity=0;
     m_iExplorationSucces=0;
@@ -24,11 +24,11 @@ void CMazeKnowlegdeBase::ResetKB()
     m_ptrCurrentNode = &m_stKBRoot;
     m_stKBRoot.setStateID(LOCATION_EMPTY);
 }
-void CMazeKnowlegdeBase::ResetRootNode()
+void maze_knowlegde_base::ResetRootNode()
 {
     m_ptrCurrentNode=&m_stKBRoot;
 }
-CMazeKnowlegdeBase::CKBTreeNode * CMazeKnowlegdeBase::getCurrentNode()
+maze_knowlegde_base::CKBTreeNode * maze_knowlegde_base::getCurrentNode()
 {
 	return m_ptrCurrentNode;
 }
@@ -47,7 +47,7 @@ CMazeKnowlegdeBase::CKBTreeNode * CMazeKnowlegdeBase::getCurrentNode()
 //}
 //void CKnowlegdeBase::NewExperiment(CExperimentSettings & expSeting)
 //{
-//    //jeœli mamy ju¿ jakieœ wczeœniejsze eksploracje - zapamietaj KB
+//    //jeï¿½li mamy juï¿½ jakieï¿½ wczeï¿½niejsze eksploracje - zapamietaj KB
 //    CExperiment experiment;
 //    experiment.setExperimentSettings(&expSeting);
 //    vectorOfExperiments.push_back(experiment);
@@ -59,7 +59,7 @@ CMazeKnowlegdeBase::CKBTreeNode * CMazeKnowlegdeBase::getCurrentNode()
 //
 //}
 ////*******************************************************************//
-void CMazeKnowlegdeBase::teach(double value,bool bReward)
+void maze_knowlegde_base::teach(double value,bool bReward)
 {
     Q_CHECK_PTR(m_ptrCurrentExplorationResult);
     Q_ASSERT(m_ptrCurrentExplorationResult!=NULL);
@@ -115,13 +115,13 @@ void CMazeKnowlegdeBase::teach(double value,bool bReward)
 //{
 //
 //}
-void CMazeKnowlegdeBase::treeLearningPolicy(CExplorationResult<LocationDirs,directions> *lastExplorationResult, double value, bool bReward)
+void maze_knowlegde_base::treeLearningPolicy(CExplorationResult<LocationDirs,directions> *lastExplorationResult, double value, bool bReward)
 {
     CKBTreeNode	*	ptNode, * ptCurrentNode;
 
     //first we need to check if this path exist in KB tree
-    vector<CScanResults> listCrossRoads; //lista skrzyzowan - punktow decyzyjnych
-    CScanResults	scanResult,nextScanResult;
+    vector<scan_results> listCrossRoads; //lista skrzyzowan - punktow decyzyjnych
+    scan_results	scanResult,nextScanResult;
 
 	
 	CMazeExplorationResult * ptrExplorationResult = dynamic_cast<CMazeExplorationResult *>(lastExplorationResult);
@@ -165,7 +165,7 @@ void CMazeKnowlegdeBase::treeLearningPolicy(CExplorationResult<LocationDirs,dire
     double finalValue,discount = delta;//,discountedValue = delta;
 
     //crossRoadCounts=0;
-    vector<CScanResults>::iterator iterCross;
+    vector<scan_results>::iterator iterCross;
 
     ptCurrentNode = &m_stKBRoot;
     m_ptrCurrentNode = &m_stKBRoot;
@@ -283,7 +283,7 @@ void CMazeKnowlegdeBase::treeLearningPolicy(CExplorationResult<LocationDirs,dire
     //storeKBTreeData();
 };
 //////////////////////////////////////////////////////////////////////////
-directions CMazeKnowlegdeBase::chooseExit(LocationDirs stateID)
+directions maze_knowlegde_base::chooseExit(LocationDirs stateID)
 {
     static unsigned int before=1;
     double			probability;
@@ -318,13 +318,13 @@ directions CMazeKnowlegdeBase::chooseExit(LocationDirs stateID)
 
     return result;
 }
-directions CMazeKnowlegdeBase::chooseExitFromTree(LocationDirs stateID,double probability )
+directions maze_knowlegde_base::chooseExitFromTree(LocationDirs stateID,double probability )
 {
     directions		choosenDir;
     CKBTreeNode * ptNewNode;
     Q_ASSERT(m_ptrCurrentNode!=NULL);
     QString strlocID;
-	CScanResults scan;
+	scan_results scan;
 	if (m_ptrCurrentNode->getStateID() == LOCATION_EMPTY)
     {
         //bool bPassage;

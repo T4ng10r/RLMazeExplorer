@@ -8,7 +8,7 @@
 #include <QObject>
 
 using namespace std;
-class CEnviroment;
+class enviroment;
 
 class experiment_private;
 
@@ -41,7 +41,7 @@ public:
 	//CKBTree & getArchiveKBTree(int nr);
 	//void addKBTree(CKBTree & treeNode);
 Q_SIGNALS:
-	void robotBeforeMove(CScanResults *scanResult);
+	void robotBeforeMove(scan_results *scanResult);
 	void robotNextMove();
 public Q_SLOTS:
 	void onnext_robot_move();

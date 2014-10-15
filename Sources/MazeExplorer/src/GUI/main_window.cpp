@@ -9,7 +9,7 @@
 #include <Tools/loggers.h>
 
 #include <Data/data_thread.h>
-#include <Data/experiment/CEnviroment.h>
+#include <Data/experiment/enviroment.h>
 #include <Data/experiment/experiment.h>
 #include <Data/experiment/COneExplorationResultDlg.h>
 #include <GUI/experiment_parameters/experiment_parameters_dlg.h>

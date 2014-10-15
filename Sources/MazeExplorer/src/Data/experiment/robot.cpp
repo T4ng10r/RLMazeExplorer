@@ -6,20 +6,21 @@ class robot_private
 public:
 	robot_private(robot * pub);
 	void	scanLocation();
-	void	onOneExit();			//robot mo¿e iœc tylko w jedn¹ stronê
-	void	onChooseExit();			//robot mo¿e dokonaæ wyboru
-	int		howManyExits();			//ile wyjœæ z danej lokacji
+	void	onOneExit();			//robot moï¿½e iï¿½c tylko w jednï¿½ stronï¿½
+	void	onChooseExit();			//robot moï¿½e dokonaï¿½ wyboru
+	int		howManyExits();			//ile wyjï¿½ï¿½ z danej lokacji
 public:
 	robot * public_;
 
 	bool	bOneStep;
 	//	QList<int >				sectorExits;			//wynik skanowania lokacji
-	CMazeKnowlegdeBase			* pKB;				//baza wiedzy
-	CScanResults			currentScanResult;
+	maze_knowlegde_base			* pKB;				//baza wiedzy
+	scan_results_handle  currentScanResult;
 };
 
 robot_private::robot_private(robot * pub) : public_(pub)
 {
+	currentScanResult.reset(new scan_results);
 	bOneStep = false;
 	pKB = NULL;
 }
@@ -35,7 +36,7 @@ int robot_private::howManyExits()
 void robot_private::onOneExit()
 {
 	directions dir;
-	currentScanResult.getFrontScanResult(dir);
+	currentScanResult->getFrontScanResult(dir);
 	if (dir == ERROR_DIR)
 	{
 		Q_ASSERT(0);
@@ -43,39 +44,39 @@ void robot_private::onOneExit()
 	}
 	else if (dir == LEFT_DIR)
 	{
-		Q_EMIT public_->robotRotate(false, false);
+		Q_EMIT public_->rotate(false, false);
 	}
 	else if (dir == RIGHT_DIR)
 	{
-		Q_EMIT public_->robotRotate(true, false);
+		Q_EMIT public_->rotate(true, false);
 	}
 	else if (dir == BACK_DIR)
 		//to mamy wyjscie za pleceami - czyli klasyczny slepy zaulek
 		return;
-	currentScanResult.robotChosenDir = dir;
-	Q_EMIT public_->robotBeforeMove(&currentScanResult);
-	Q_EMIT public_->robotMoved();
+	currentScanResult->robotChosenDir = dir;
+	Q_EMIT public_->robotBeforeMove(currentScanResult);
+	Q_EMIT public_->move_forward();
 }
 void robot_private::onChooseExit()
 {
 	directions dir = ERROR_DIR;
-	dir = pKB->chooseExit(currentScanResult.locDirs);
+	dir = pKB->chooseExit(currentScanResult->locDirs);
 	if (dir == LEFT_DIR)
 	{
-		Q_EMIT public_->robotRotate(false, false);
+		Q_EMIT public_->rotate(false, false);
 	}
 	else if (dir == RIGHT_DIR)
 	{
-		Q_EMIT public_->robotRotate(true, false);
+		Q_EMIT public_->rotate(true, false);
 	}
-	currentScanResult.robotChosenDir = dir;
-	Q_EMIT public_->robotBeforeMove(&currentScanResult);
-	Q_EMIT public_->robotMoved();
+	currentScanResult->robotChosenDir = dir;
+	Q_EMIT public_->robotBeforeMove(currentScanResult);
+	Q_EMIT public_->move_forward();
 }
 void robot_private::scanLocation()
 {
-	currentScanResult.clear();
-	Q_EMIT public_->robotScans(&currentScanResult);
+	currentScanResult->clear();
+	Q_EMIT public_->robotScans(currentScanResult);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -85,7 +86,7 @@ void robot::setOneStep(bool bOne)
 { 
 	pimpl->bOneStep = bOne; 
 }
-void robot::setKnowledgeBase(CMazeKnowlegdeBase * KnowlegdeBase)
+void robot::setKnowledgeBase(maze_knowlegde_base * KnowlegdeBase)
 { 
 	pimpl->pKB = KnowlegdeBase;
 }
@@ -98,7 +99,7 @@ void robot::start_exploring()
 		return;
     do
     {
-        //sprawdzamy czy dotarliœmy ju¿ do wyjœcia
+        //sprawdzamy czy dotarliï¿½my juï¿½ do wyjï¿½cia
         Q_EMIT is_in_exit(in_exit);
 		if (in_exit)
         {
@@ -106,11 +107,11 @@ void robot::start_exploring()
             break;
         }
 		pimpl->scanLocation();
-		nExits = pimpl->currentScanResult.getExitsCount(SCAN_BACK_DIR);
+		nExits = pimpl->currentScanResult->getExitsCount(SCAN_BACK_DIR);
         if (nExits == 1)
         {
-            //sprawdzamy czy to nie jest œlepy zau³ek
-			pimpl->currentScanResult.getFrontScanResult(dir);
+            //sprawdzamy czy to nie jest ï¿½lepy zauï¿½ek
+			pimpl->currentScanResult->getFrontScanResult(dir);
             if (dir != BACK_DIR && dir != ERROR_DIR)
 				pimpl->onOneExit();
             else

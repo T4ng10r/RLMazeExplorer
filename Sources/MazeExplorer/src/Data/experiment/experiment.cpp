@@ -1,5 +1,5 @@
 ﻿#include <Data/experiment/experiment.h>
-#include <Data/experiment/CEnviroment.h>
+#include <Data/experiment/enviroment.h>
 #include <Maze/maze_generator.h>
 
 class experiment_private
@@ -11,16 +11,18 @@ public:
 	time_t  experimentDuration;
 	maze  m_stMazeData;
 	experiment_settings  m_stExperimentSettings;
-	std::shared_ptr<CEnviroment>  m_ptrEnviroment;
+	std::shared_ptr<enviroment>  m_ptrEnviroment;
 	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
-	CMazeKnowlegdeBase			m_cKnowledgeBase;
+	maze_knowlegde_base_handle			m_cKnowledgeBase;
 	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
 	unsigned int exploration_succeses;		//how many time exploration was successful
 	unsigned int exploration_fails;		//how many time exploration was failure
 };
 
-experiment_private::experiment_private(): exploration_succeses(0), exploration_fails(0), m_ptrEnviroment(NULL)
+experiment_private::experiment_private(): exploration_succeses(0), exploration_fails(0),
+		m_ptrEnviroment(NULL), m_cKnowledgeBase(new maze_knowlegde_base)
 {
+
 
 }
 experiment_private::~experiment_private()
@@ -74,14 +76,14 @@ void experiment::onnext_robot_move()
 }
 void experiment::startExperiment()
 {
-	pimpl->m_ptrEnviroment.reset(new CEnviroment);
+	pimpl->m_ptrEnviroment.reset(new enviroment);
 
-	connect(pimpl->m_ptrEnviroment.get(), SIGNAL(robotBeforeMove(CScanResults*)), SIGNAL(robotBeforeMove(CScanResults*)));
+	connect(pimpl->m_ptrEnviroment.get(), SIGNAL(robotBeforeMove(scan_results*)), SIGNAL(robotBeforeMove(scan_results*)));
 	//connect(m_ptrEnviroment,SIGNAL(robotNextMove()),SLOT(robotNextMove()));
 
 	pimpl->m_ptrEnviroment->setExperimentSettings(pimpl->m_stExperimentSettings);
 	pimpl->m_ptrEnviroment->setMaze(pimpl->m_stMazeData);
-	pimpl->m_ptrEnviroment->setKnowlegdeBase(&pimpl->m_cKnowledgeBase);
+	pimpl->m_ptrEnviroment->setKnowlegdeBase(pimpl->m_cKnowledgeBase);
 
 	for (int index = 0; index<pimpl->m_stExperimentSettings.repeat_count; index++)
 	{
@@ -120,7 +122,7 @@ CMazeExplorationResult & experiment::getLastExplorationResult()
 //}
 bool experiment::getExplorationResult(uint nr, CMazeExplorationResult & lastExplorationResult)
 {
-    QList<CScanResults>::iterator	posIter;
+    QList<scan_results>::iterator	posIter;
 	if (nr >= pimpl->explorationResults.size())
         return false;
 	lastExplorationResult = pimpl->explorationResults[nr];

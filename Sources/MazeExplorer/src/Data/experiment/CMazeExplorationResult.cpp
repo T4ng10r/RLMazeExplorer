@@ -13,18 +13,18 @@ void CMazeExplorationResult::clear()
 	CExplorationResult::clear();
     lPositions.clear();
 }
-void CMazeExplorationResult::addRobotPosition(CScanResults scanResult)
+void CMazeExplorationResult::addRobotPosition(scan_results_handle scanResult)
 {
-    if (scanResult.getExitsCount(SCAN_BACK_DIR)>1)
+	if (scanResult->getExitsCount(SCAN_BACK_DIR)>1)
 	{
-		m_vDecisions.push_back(std::make_pair(scanResult.locDirs,scanResult.robotChosenDir));
-        scanResult.bCrossRoad=true;
+		m_vDecisions.push_back(std::make_pair(scanResult->locDirs,scanResult->robotChosenDir));
+		scanResult->bCrossRoad=true;
 	}
-    lPositions.push_back(scanResult);
+	lPositions.push_back(*scanResult);
 }
-bool CMazeExplorationResult::getRobotPosition(unsigned int nr,CScanResults & scanResult)
+bool CMazeExplorationResult::getRobotPosition(unsigned int nr,scan_results & scanResult)
 {
-    list<CScanResults>::iterator	posIter;
+    list<scan_results>::iterator	posIter;
     int index=0;
     if (nr>=lPositions.size())
         return false;
@@ -45,7 +45,7 @@ int CMazeExplorationResult::getPositionsCount()
 }
 int CMazeExplorationResult::getCrossRoadsCount()
 {
-    CScanResults	scanResult;
+    scan_results	scanResult;
     int count = lPositions.size();
     int crossRoadsCount=0;
     for(int index = 0; index<count-1; index++)
@@ -61,9 +61,9 @@ int CMazeExplorationResult::getCrossRoadsCount()
     }
     return crossRoadsCount;
 }
-void CMazeExplorationResult::prepareCrossRoadsList(vector<CScanResults> & listCrossRoads)
+void CMazeExplorationResult::prepareCrossRoadsList(vector<scan_results> & listCrossRoads)
 {
-    CScanResults	scanResult;
+    scan_results	scanResult;
     listCrossRoads.clear();
     int count = lPositions.size();
     for(int index = 0; index<count-1; index++)
@@ -82,14 +82,14 @@ void CMazeExplorationResult::prepareCrossRoadsList(vector<CScanResults> & listCr
 }
 void CMazeExplorationResult::saveExploration(QTextStream *pStream)
 {
-    list<CScanResults>::iterator  iterPos;
+    list<scan_results>::iterator  iterPos;
     (*pStream)<<"EXPLORATION\n  ";
 
     for(iterPos=lPositions.begin(); iterPos!=lPositions.end(); iterPos++)
     {
         if (iterPos!=lPositions.begin())
             (*pStream)<<"|";
-        CScanResults	result = *iterPos;
+        scan_results	result = *iterPos;
         (*pStream)<<result.locDirs<<"-"<<result.robotChosenDir<<"-";
         (*pStream)<<result.robotPos.posX<<"-"<<result.robotPos.posY<<"-"<<result.robotPos.dir;
     }
@@ -98,7 +98,7 @@ void CMazeExplorationResult::saveExploration(QTextStream *pStream)
 void CMazeExplorationResult::loadExploration(QTextStream *pStream)
 {
     QString			strLine;
-    CScanResults	newResult;
+    scan_results	newResult;
     char			letter;
     int				value;
     while(true)

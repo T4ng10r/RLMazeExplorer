@@ -120,7 +120,7 @@ void maze_knowlegde_base::treeLearningPolicy(CExplorationResult<LocationDirs,dir
     CKBTreeNode	*	ptNode, * ptCurrentNode;
 
     //first we need to check if this path exist in KB tree
-    vector<scan_results> listCrossRoads; //lista skrzyzowan - punktow decyzyjnych
+    std::vector<scan_results> listCrossRoads; //lista skrzyzowan - punktow decyzyjnych
     scan_results	scanResult,nextScanResult;
 
 	
@@ -165,7 +165,7 @@ void maze_knowlegde_base::treeLearningPolicy(CExplorationResult<LocationDirs,dir
     double finalValue,discount = delta;//,discountedValue = delta;
 
     //crossRoadCounts=0;
-    vector<scan_results>::iterator iterCross;
+    std::vector<scan_results>::iterator iterCross;
 
     ptCurrentNode = &m_stKBRoot;
     m_ptrCurrentNode = &m_stKBRoot;
@@ -182,7 +182,7 @@ void maze_knowlegde_base::treeLearningPolicy(CExplorationResult<LocationDirs,dir
             bool bPassage;
             //scanResult.locDirs;
             m_ptrCurrentNode->setStateID(scanResult.locDirs);
-            vector<directions> vActions;
+            std::vector<directions> vActions;
             //ustalamy liste dostepnych akcji
             scanResult.getScanResult(FRONT_DIR,bPassage);
             if (bPassage)	vActions.push_back(FRONT_DIR);

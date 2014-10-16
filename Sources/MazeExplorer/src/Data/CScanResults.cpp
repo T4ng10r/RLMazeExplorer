@@ -12,22 +12,24 @@ void scan_results::clear()
     vRightDir.clear();
     vBackDir.clear();
 }
-int scan_results::exitsCount()
+int scan_results::exitsCount(bool back_scan)
 {
-    int count = 0;
+    int count(0);
     if (vFrontDir.size())
         count++;
     if (vLeftDir.size())
         count++;
     if (vRightDir.size())
         count++;
-    if (vBackDir.size())
+    if (back_scan && vBackDir.size())
         count++;
+
     return count;
 }
+
 void scan_results::Rotate(bool bRight)
 {
-    vector<location>		vTemporary;
+    std::vector<location>		vTemporary;
 
     if (bRight)
     {
@@ -74,7 +76,7 @@ void scan_results::getScanResult(directions dir,bool &bPassage)
 }
 void scan_results::getFrontScanResult(directions &dir)
 {
-    vector<directions>	exitsDir;
+	std::vector<directions>	exitsDir;
 
     if (vFrontDir.size())
         exitsDir.push_back(FRONT_DIR);
@@ -87,16 +89,6 @@ void scan_results::getFrontScanResult(directions &dir)
         dir=ERROR_DIR;
     else
         dir = exitsDir.back();
-}
-int scan_results::getExitsCount(bool bBackScan)
-{
-    int count=0;
-    if (vFrontDir.size()) count++;
-    if (vRightDir.size()) count++;
-    if (vLeftDir.size())  count++;
-    if (bBackScan && vBackDir.size()) count++;
-
-    return count;
 }
 QString scan_results::translateLocID(const LocationDirs &xLocDirs)
 {
@@ -136,10 +128,10 @@ QString scan_results::translateLocID(const LocationDirs &xLocDirs)
     }
     return "";
 }
-vector<directions> scan_results::getVActions()
+std::vector<directions> scan_results::getVActions()
 {
     bool bPassage;
-    vector<directions> vActions;
+    std::vector<directions> vActions;
 
     getScanResult(FRONT_DIR,bPassage);
     if (bPassage)	vActions.push_back(FRONT_DIR);

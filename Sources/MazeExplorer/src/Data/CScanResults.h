@@ -3,8 +3,8 @@
 #include <memory>
 #include <Maze/location.h>
 #include <Data/experiment/EnviromentVariables.h>
-#include <Data/CRobotPostion.h>
-using namespace std;
+#include <Data/robot_postion.h>
+
 //wyniki skanowaia lokacji przez robota
 class scan_results
 {
@@ -14,9 +14,8 @@ public:
 	void Rotate(bool bRight);
 	void getScanResult(directions dir,bool &bPassage);
 	void getFrontScanResult(directions &dir);
-	vector<directions> getVActions();
-	int exitsCount();
-	int getExitsCount(bool bBackScan);
+	std::vector<directions> getVActions();
+	int exitsCount(bool back_scan = false);
 	QString translateLocID(const LocationDirs &xLocDirs);
 
 	LocationDirs translateScanResultsToBitArray();
@@ -26,10 +25,10 @@ public:
 	directions			robotChosenDir;
 	bool				bCrossRoad;
 
-	vector<location>		vFrontDir;
-	vector<location>		vLeftDir;
-	vector<location>		vRightDir;
-	vector<location>		vBackDir;
-	CRobotPostion			robotPos;
+	std::vector<location>		vFrontDir;
+	std::vector<location>		vLeftDir;
+	std::vector<location>		vRightDir;
+	std::vector<location>		vBackDir;
+	robot_postion			robotPos;
 };
 typedef std::shared_ptr<scan_results> scan_results_handle;

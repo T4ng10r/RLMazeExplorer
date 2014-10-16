@@ -17,12 +17,12 @@ public:
     int		getPositionsCount();		//how many locations robot had visited in this exploration
     int		getCrossRoadsCount();		//how many crossroad/decision points was in remembered path
     bool	getRobotPosition(unsigned int nr,scan_results & scanResult);
-    void	prepareCrossRoadsList(vector<scan_results> & listCrossRoads);
+    void	prepareCrossRoadsList(std::vector<scan_results> & listCrossRoads);
     void	loadExploration(QTextStream *pStream);
     void	saveExploration(QTextStream *pStream);
 
     bool	bExplorationSuccessful;
 protected:
-    list<scan_results>			lPositions;
+    std::list<scan_results>			lPositions;
 };
 #endif //_MAZE_EXPLORATION_RESULTS_INCLUDE

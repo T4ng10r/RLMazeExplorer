@@ -1,16 +1,16 @@
 #pragma once
 #include <Data/experiment/EnviromentVariables.h>
 #include <QPoint>
-class CRobotPostion
+class robot_postion
 {
 public:
-	CRobotPostion(void)
+	robot_postion(void)
 	{
 		posX=0;
 		posY=0;
 		dir=ROBOT_NORTH_DIR;
 	}
-	CRobotPostion(QPoint pos)
+	robot_postion(QPoint pos)
 	{
 		posX=pos.x();
 		posY=pos.y();

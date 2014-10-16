@@ -92,42 +92,39 @@ void robot::setKnowledgeBase(maze_knowlegde_base * KnowlegdeBase)
 }
 void robot::start_exploring()
 {
-    directions dir;
-    int		nExits=0;
+	directions dir;
+	int		nExits=0;
 	bool	in_exit = false;
 	if (pimpl->pKB == NULL)
 		return;
-    do
-    {
-        //sprawdzamy czy dotarli�my ju� do wyj�cia
-        Q_EMIT is_in_exit(in_exit);
+	do
+	{
+		//sprawdzamy czy dotarli�my ju� do wyj�cia
+		Q_EMIT is_in_exit(in_exit);
 		if (in_exit)
-        {
+		{
 			//Log4Qt::Logger::logger("")->info();
-            break;
-        }
+			break;
+		}
 		pimpl->scanLocation();
-		nExits = pimpl->currentScanResult->getExitsCount(SCAN_BACK_DIR);
-        if (nExits == 1)
-        {
-            //sprawdzamy czy to nie jest �lepy zau�ek
+		nExits = pimpl->currentScanResult->exitsCount(SCAN_BACK_DIR);
+		if (nExits == 1)
+		{
+			//sprawdzamy czy to nie jest �lepy zau�ek
 			pimpl->currentScanResult->getFrontScanResult(dir);
-            if (dir != BACK_DIR && dir != ERROR_DIR)
+			if (dir != BACK_DIR && dir != ERROR_DIR)
 				pimpl->onOneExit();
-            else
-            {
-                break;
-            }
-        }
-        else if (nExits>1)
-        {
+			else
+				break;
+		}
+		else if (nExits>1)
+		{
 			pimpl->onChooseExit();
-        }
-        else
-        {
-            break;
-        }
-
-    }
-    while(1);
+		}
+		else
+		{
+			break;
+		}
+	}
+	while(1);
 };

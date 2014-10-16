@@ -3,7 +3,7 @@
 #include <list>
 #include <QtCore/QPoint>
 #include <QtCore/QString>
-#include <Data/CRobotPostion.h>
+#include <Data/robot_postion.h>
 #include <Maze/maze_settings.h>
 
 //stores list of parameters about experiment - used to initialize 
@@ -17,7 +17,7 @@ public:
 public:
 	int					repeat_count;
 	maze_settings		mazeSettings;
-	CRobotPostion		startPosition;
+	robot_postion		startPosition;
 	std::list<QPoint>	lFinishPositions;
 	double				fPenaltyValue;
 	double				fPriceValue;

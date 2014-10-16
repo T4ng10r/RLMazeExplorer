@@ -15,7 +15,7 @@ void CMazeExplorationResult::clear()
 }
 void CMazeExplorationResult::addRobotPosition(scan_results_handle scanResult)
 {
-	if (scanResult->getExitsCount(SCAN_BACK_DIR)>1)
+	if (scanResult->exitsCount(SCAN_BACK_DIR)>1)
 	{
 		m_vDecisions.push_back(std::make_pair(scanResult->locDirs,scanResult->robotChosenDir));
 		scanResult->bCrossRoad=true;
@@ -24,7 +24,7 @@ void CMazeExplorationResult::addRobotPosition(scan_results_handle scanResult)
 }
 bool CMazeExplorationResult::getRobotPosition(unsigned int nr,scan_results & scanResult)
 {
-    list<scan_results>::iterator	posIter;
+	std::list<scan_results>::iterator	posIter;
     int index=0;
     if (nr>=lPositions.size())
         return false;
@@ -54,14 +54,14 @@ int CMazeExplorationResult::getCrossRoadsCount()
         {
             return 0;
         }
-        if(scanResult.getExitsCount(SCAN_BACK_DIR)==1)
+        if(scanResult.exitsCount(SCAN_BACK_DIR)==1)
             continue;
         else
             crossRoadsCount++;
     }
     return crossRoadsCount;
 }
-void CMazeExplorationResult::prepareCrossRoadsList(vector<scan_results> & listCrossRoads)
+void CMazeExplorationResult::prepareCrossRoadsList(std::vector<scan_results> & listCrossRoads)
 {
     scan_results	scanResult;
     listCrossRoads.clear();
@@ -72,7 +72,7 @@ void CMazeExplorationResult::prepareCrossRoadsList(vector<scan_results> & listCr
         {
             break;
         }
-        if(scanResult.getExitsCount(SCAN_BACK_DIR)==1)
+        if(scanResult.exitsCount(SCAN_BACK_DIR)==1)
             continue;
         else
         {
@@ -82,7 +82,7 @@ void CMazeExplorationResult::prepareCrossRoadsList(vector<scan_results> & listCr
 }
 void CMazeExplorationResult::saveExploration(QTextStream *pStream)
 {
-    list<scan_results>::iterator  iterPos;
+	std::list<scan_results>::iterator  iterPos;
     (*pStream)<<"EXPLORATION\n  ";
 
     for(iterPos=lPositions.begin(); iterPos!=lPositions.end(); iterPos++)

@@ -28,7 +28,7 @@ experiment_settings::~experiment_settings(void)
 void experiment_settings::reset()
 {
 	repeat_count = constants::repeat_count;
-	CRobotPostion robotPos;
+	robot_postion robotPos;
 	mazeSettings.size_x = constants::maze_size_x;
 	mazeSettings.size_y = constants::maze_size_y;
 	mazeSettings.bMazePerfect = constants::maze_perfect;

@@ -41,7 +41,7 @@ public:
 	//CKBTree & getArchiveKBTree(int nr);
 	//void addKBTree(CKBTree & treeNode);
 Q_SIGNALS:
-	void robotBeforeMove(scan_results *scanResult);
+	void robotBeforeMove(scan_results_handle scanResult);
 	void robotNextMove();
 public Q_SLOTS:
 	void onnext_robot_move();

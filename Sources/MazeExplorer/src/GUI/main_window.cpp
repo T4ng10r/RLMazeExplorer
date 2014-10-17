@@ -110,8 +110,8 @@ void main_window_private::set_connections()
 	bool bResult = false;
 	set_connections_for_dlgs();
 
-	bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(CScanResults *)), single_robot_move,
-					  SLOT(onRobotBeforeMove(CScanResults *)));
+	bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(scan_results_handle )), single_robot_move,
+					  SLOT(onRobotBeforeMove(scan_results_handle)));
 	Q_ASSERT(bResult == true);
 	bResult = QObject::connect(single_robot_move, SIGNAL(next_robot_move()), &m_stExperiment,
 					  SLOT(onnext_robot_move()));

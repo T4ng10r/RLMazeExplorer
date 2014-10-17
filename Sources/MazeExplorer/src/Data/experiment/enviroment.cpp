@@ -61,8 +61,7 @@ void enviroment_private::set_connections()
 void	enviroment_private::set_robot_to_startup_position()
 {
 	robot_direction = m_stExperimentSettings.startPosition.dir;
-	robot_position.setX(m_stExperimentSettings.startPosition.posX);
-	robot_position.setY(m_stExperimentSettings.startPosition.posY);
+	robot_position = QPoint(m_stExperimentSettings.startPosition.pos_x, m_stExperimentSettings.startPosition.pos_x);
 }
 void enviroment_private::afterFinishedExploration()
 {
@@ -293,21 +292,17 @@ void enviroment::onRobotRotated(bool bRight,bool /*bBack*/)
         }
     }
 }
-void enviroment::onRobotIfInExit(bool &bIfInExit)
+void enviroment::onRobotIfInExit(bool &is_in_exit)
 {
-	std::list<QPoint>::iterator	iterFinishPos;
-    bIfInExit=false;
-    for(iterFinishPos=pimpl->m_stExperimentSettings.lFinishPositions.begin();
-            iterFinishPos!=pimpl->m_stExperimentSettings.lFinishPositions.end();
-            iterFinishPos++)
-    {
-        QPoint pos =*iterFinishPos;
-        if ( pimpl->robot_position==pos )
-        {
-            bIfInExit=true;
-            return;
-        }
-    }
+	is_in_exit=false;
+	for(std::pair<unsigned int,unsigned int> point : pimpl->m_stExperimentSettings.target_positions)
+	{
+		if (pimpl->robot_position == QPoint(point.first, point.second))
+		{
+			is_in_exit=true;
+			return;
+		}
+	}
 }
 void enviroment::setMaze(const maze &val) 
 { 

@@ -317,8 +317,8 @@ void experiment_positions_parameters_dlg::setExperimentSettings(experiment_setti
 	pimpl->spinStartX->blockSignals(true);
 	pimpl->spinStartY->blockSignals(true);
 
-	pimpl->spinStartX->setValue(cExperimentSettings.startPosition.posX);
-	pimpl->spinStartY->setValue(cExperimentSettings.startPosition.posY);
+	pimpl->spinStartX->setValue(cExperimentSettings.startPosition.pos_x);
+	pimpl->spinStartY->setValue(cExperimentSettings.startPosition.pos_y);
 
 	std::list<QPoint>::const_iterator iterFinishPos = cExperimentSettings.lFinishPositions.begin();
 	pimpl->modelFinishPos->setRowCount(cExperimentSettings.lFinishPositions.size());
@@ -339,8 +339,8 @@ void experiment_positions_parameters_dlg::getExperimentSettings(experiment_setti
 	QPoint pos;
 	int rowCount = pimpl->modelFinishPos->rowCount();
 	cExperimentSettings.repeat_count = pimpl->spinRepeatQuantity->value();
-	cExperimentSettings.startPosition.posX = pimpl->spinStartX->value();
-	cExperimentSettings.startPosition.posY = pimpl->spinStartY->value();
+	cExperimentSettings.startPosition.pos_x = pimpl->spinStartX->value();
+	cExperimentSettings.startPosition.pos_y = pimpl->spinStartY->value();
 	cExperimentSettings.lFinishPositions.clear();
 	for(int i =0; i<rowCount; i++)
 	{

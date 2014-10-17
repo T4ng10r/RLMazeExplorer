@@ -16,8 +16,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDockWidget>
-
-class scan_results;
+#include <Data/CScanResults.h>
 
 class single_robot_move_dlg : public QDockWidget
 {
@@ -30,7 +29,7 @@ Q_SIGNALS:
     void next_robot_move();
 public Q_SLOTS:
 	//robot is ready to perform next move - it show what he sees
-	void onRobotBeforeMove(scan_results *scanResult);
+	void onRobotBeforeMove(scan_results_handle scanResult);
 	void on_NextMoveButton_clicked(bool checked);
 protected:
     void setup_ui();

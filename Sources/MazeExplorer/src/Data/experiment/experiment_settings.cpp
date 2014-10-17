@@ -34,14 +34,16 @@ void experiment_settings::reset()
 	mazeSettings.bMazePerfect = constants::maze_perfect;
 	mazeSettings.mazeType = constants::maze_type;
 
-	robotPos.posX = constants::robot_pos_x;
-	robotPos.posY = constants::robot_pos_y;
+	robotPos.pos_x = constants::robot_pos_x;
+	robotPos.pos_y = constants::robot_pos_y;
 	startPosition = robotPos;
 
 	QPoint pos;
 
 	pos.setX(constants::end_pos_x);
 	pos.setY(constants::end_pos_y);
+	target_positions.clear();
+	target_positions.push_back(std::make_pair(constants::end_pos_x, constants::end_pos_y));
 	lFinishPositions.clear();
 	lFinishPositions.push_back(pos);
 	fPenaltyValue = constants::penalty_value;

@@ -23,7 +23,6 @@ experiment_private::experiment_private(): exploration_succeses(0), exploration_f
 		m_ptrEnviroment(NULL), m_cKnowledgeBase(new maze_knowlegde_base)
 {
 
-
 }
 experiment_private::~experiment_private()
 {
@@ -31,7 +30,7 @@ experiment_private::~experiment_private()
 
 //////////////////////////////////////////////////////////////////////////
 experiment::experiment(void) : pimpl(new experiment_private())
-{}
+{	}
 experiment::~experiment(void)
 {
 }
@@ -122,31 +121,32 @@ CMazeExplorationResult & experiment::getLastExplorationResult()
 //}
 bool experiment::getExplorationResult(uint nr, CMazeExplorationResult & lastExplorationResult)
 {
-    QList<scan_results>::iterator	posIter;
+	QList<scan_results>::iterator	posIter;
 	if (nr >= pimpl->explorationResults.size())
-        return false;
+		return false;
 	lastExplorationResult = pimpl->explorationResults[nr];
-    return false;
+	return false;
 }
 void experiment::saveExperiment(QTextStream *pStream)
 {
-    vector<CMazeExplorationResult>::iterator	iterExploration;
+	vector<CMazeExplorationResult>::iterator	iterExploration;
 	std::list<QPoint>::iterator		iterPoints;
-    (*pStream)<<"EXPERIMENT_DATA\n";
+	(*pStream)<<"EXPERIMENT_DATA\n";
 	(*pStream) << "Quantity   " << pimpl->m_stExperimentSettings.repeat_count << "\n";
-	(*pStream) << "StartPos   " << pimpl->m_stExperimentSettings.startPosition.posX << " " << pimpl->m_stExperimentSettings.startPosition.posY << " " << (int)pimpl->m_stExperimentSettings.startPosition.dir << "\n";
-	for (iterPoints = pimpl->m_stExperimentSettings.lFinishPositions.begin();
-		 iterPoints != pimpl->m_stExperimentSettings.lFinishPositions.end(); iterPoints++)
-    {
-        (*pStream)<<"FinishPos   "<<iterPoints->x()<<" "<<iterPoints->x()<<"\n";
-    }
+	(*pStream) << "StartPos   " << pimpl->m_stExperimentSettings.startPosition.pos_x << " " << pimpl->m_stExperimentSettings.startPosition.pos_y << " " << (int)pimpl->m_stExperimentSettings.startPosition.dir << "\n";
+	for(std::pair<unsigned int,unsigned int> point : pimpl->m_stExperimentSettings.target_positions)
+	//	for (iterPoints = pimpl->m_stExperimentSettings.lFinishPositions.begin();
+	//		 iterPoints != pimpl->m_stExperimentSettings.lFinishPositions.end(); iterPoints++)
+	{
+		(*pStream)<<"FinishPos   "<<point.first<<" "<<point.second<<"\n";
+	}
 	(*pStream) << "Penalty    " << pimpl->m_stExperimentSettings.fPenaltyValue << "\n";;
 	(*pStream) << "Reward     " << pimpl->m_stExperimentSettings.fPriceValue << "\n";;
 	for (iterExploration = pimpl->explorationResults.begin(); iterExploration != pimpl->explorationResults.end(); iterExploration++)
-    {
-        iterExploration->saveExploration(pStream);
-    }
-    (*pStream)<<"EXPERIMENT_DATA_END\n";
+	{
+		iterExploration->saveExploration(pStream);
+	}
+	(*pStream)<<"EXPERIMENT_DATA_END\n";
 }
 QString experiment::loadExperiment(QTextStream *pStream)
 {

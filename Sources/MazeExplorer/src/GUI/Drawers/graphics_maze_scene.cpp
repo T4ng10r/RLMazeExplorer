@@ -129,8 +129,8 @@ void graphics_maze_scene::setMaze(maze_interface_type maze_data)
 }
 void graphics_maze_scene::on_experiment_settings_changed(const experiment_settings & xExperimentSettings)
 {
-	if (xExperimentSettings.startPosition.posX != pimpl->start_point.first ||
-		xExperimentSettings.startPosition.posY != pimpl->start_point.second)
+	if (xExperimentSettings.startPosition.pos_x != pimpl->start_point.first ||
+		xExperimentSettings.startPosition.pos_y != pimpl->start_point.second)
 	{
 		if (pimpl->start_point != pimpl->empty_point)
 		{
@@ -138,7 +138,7 @@ void graphics_maze_scene::on_experiment_settings_changed(const experiment_settin
 			pimpl->m_mCords2Locations[pimpl->start_point]->setPathData(ROBOT_NONE_DIR);
 			pimpl->m_mCords2Locations[pimpl->start_point]->update();
 		}
-		pimpl->start_point = std::make_pair(xExperimentSettings.startPosition.posX - 1, xExperimentSettings.startPosition.posY - 1);
+		pimpl->start_point = std::make_pair(xExperimentSettings.startPosition.pos_x - 1, xExperimentSettings.startPosition.pos_y - 1);
 		pimpl->m_mCords2Locations[pimpl->start_point]->setExitStartLocation(true);
 		//m_mCords2Locations[m_pStartPoint]->setPathData(xExperimentSettings.startPosition.dir);
 	}

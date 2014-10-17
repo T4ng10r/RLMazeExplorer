@@ -150,10 +150,10 @@ void single_robot_move_dlg::on_NextMoveButton_clicked(bool checked)
     	blockSignals(false);*/
 
 }
-void single_robot_move_dlg::onRobotBeforeMove(scan_results *scanResult)
+void single_robot_move_dlg::onRobotBeforeMove(scan_results_handle scanResult)
 {
 	if (!scanResult)	return;
-	QString strVal = QString::number(scanResult->robotPos.posX)+","+QString::number(scanResult->robotPos.posY);
+	QString strVal = QString::number(scanResult->robotPos.pos_x)+","+QString::number(scanResult->robotPos.pos_y);
 	m_ptrRobotPoslineEdit->setText(strVal);
 
 	//CExperimentSettings expSettings;

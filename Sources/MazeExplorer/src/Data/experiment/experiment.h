@@ -17,12 +17,14 @@ class experiment : public QObject
 {
 	Q_OBJECT
 public:
-	experiment(void);
-	~experiment(void);
-	void on_set_maze_data(const maze & xMazeSource);
-	maze& getMazeData();
+	experiment();
+	experiment(experiment_settings & settings, maze_interface_type maze_);
+	~experiment();
+	void on_set_maze_data(maze_interface_type maze_source);
+
+	//maze_interface_type getMazeData();
 	void setExperimentSettings(const experiment_settings & xExperimentSettings);
-	void startExperiment();
+	void start();
 	//////////////////////////////////////////////////////////////////////////
 	//void operator=(const experiment & experimentDest);
 	//////////////////////////////////////////////////////////////////////////
@@ -44,7 +46,10 @@ Q_SIGNALS:
 	void robotBeforeMove(scan_results_handle scanResult);
 	void robotNextMove();
 public Q_SLOTS:
-	void onnext_robot_move();
+	void on_next_robot_move();
 protected:
 	std::unique_ptr<experiment_private> pimpl;
 };
+
+typedef std::shared_ptr<experiment> experiment_type;
+

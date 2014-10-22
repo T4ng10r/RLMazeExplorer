@@ -80,8 +80,8 @@ void main_window_private::setup_ui()
 	maze_draw_view = new QGraphicsView(public_);
 	maze_draw_view->setScene(maze_scene);
 	public_->setCentralWidget(maze_draw_view);
-
 }
+
 void main_window_private::setup_dock_widgets()
 {
 	public_->setDockNestingEnabled(true);
@@ -139,7 +139,7 @@ void main_window_private::set_connections()
 	//	Q_ASSERT(bResult==true);
 
 	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(startExperiment(experiment_settings &)),
-					  public_, SLOT(onStartExploring(experiment_settings &)));
+					  gDataThread.get(), SLOT(on_start_experiment(experiment_settings &)));
 	Q_ASSERT(bResult == true);
 
 	//bResult=connect(pEnviroment,SIGNAL(nextExplorationInExperiment()),
@@ -153,7 +153,7 @@ void main_window_private::set_connections_for_dlgs()
 	//	bResult=connect(cExperimentParamsDlg,SIGNAL(getMazeData(CMaze &)),cMazeDraw,SLOT(on_set_maze_data(CMaze &)));
 	//	Q_ASSERT(bResult==true);
 	//perform generation
-	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(generate_maze(maze_settings)), gDataThread.get(), SLOT(onPerformMazeGeneration(maze_settings)));
+	bResult = QObject::connect(m_ptrExperimentParamsDlg, SIGNAL(generate_maze(maze_settings)), gDataThread.get(), SLOT(on_maze_generated(maze_settings)));
 	Q_ASSERT(bResult == true);
 	bResult = QObject::connect(gDataThread.get(), SIGNAL(maze_generated()), public_, SLOT(on_maze_generated()));
 	Q_ASSERT(bResult == true);
@@ -275,10 +275,7 @@ void main_window::onRobotPosChanged()
 }
 void	main_window::onStartExploring(experiment_settings & xExpSettings)
 {
-	pimpl->m_stExperiment.setExperimentSettings(xExpSettings);
-	pimpl->m_stExperiment.startExperiment();
-	//m_stExperimentManager.getCurrentExperiment().startExperiment();
-    //pEnviroment->startExploring();
+	
 }
 void main_window::mousePressEvent(QMouseEvent * e)
 {

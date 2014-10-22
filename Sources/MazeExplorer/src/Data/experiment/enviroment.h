@@ -4,7 +4,7 @@
 //#include <QtGui/QTableWidget>
 #include <memory>
 #include <QtDebug>
-#include <Maze/maze.h>
+#include <Maze/maze_interface.h>
 #include <Data/experiment/experiment_settings.h>
 #include <Data/experiment/CMazeExplorationResult.h>
 #include <Data/CMazeKnowlegdeBase.h>
@@ -20,13 +20,13 @@ class enviroment : public QObject
 {
     Q_OBJECT
 public:
-	enviroment(void);
+	enviroment(experiment_settings settings, maze_interface_type maze, maze_knowlegde_base_handle kb);
 	~enviroment(void);
 
 	CMazeExplorationResult getExplorationResults();
-	void setExperimentSettings(experiment_settings val);
-	void setKnowlegdeBase(maze_knowlegde_base_handle ptrKB);
-	void setMaze(const maze &val);
+	//void setExperimentSettings(experiment_settings val);
+	//void setKnowlegdeBase(maze_knowlegde_base_handle ptrKB);
+	//void setMaze(const maze &val);
 	//////////////////////////////////////////////////////////////////////////
 	// exploration methods
 	void startSingleExploring();

@@ -6,34 +6,42 @@ class experiment_private
 {
 public:
 	experiment_private();
-	~experiment_private();
+	void reset_enviroment();
 public:
-	time_t  experimentDuration;
-	maze  m_stMazeData;
-	experiment_settings  m_stExperimentSettings;
-	std::shared_ptr<enviroment>  m_ptrEnviroment;
-	vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
-	maze_knowlegde_base_handle			m_cKnowledgeBase;
+	time_t  duration_in_msec;
+	maze_interface_type maze_data;
+	experiment_settings  settings;
+	std::shared_ptr<enviroment>  enviroment_;
+	std::vector<CMazeExplorationResult>	explorationResults;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
+	maze_knowlegde_base_handle			knowledge_base;
 	//   vector<CKBTree>	            explorationsKBTree;	//lista pozycji robota dla ka�dego przej�cia w ramach danego eksperymentu
 	unsigned int exploration_succeses;		//how many time exploration was successful
 	unsigned int exploration_fails;		//how many time exploration was failure
 };
 
-experiment_private::experiment_private(): exploration_succeses(0), exploration_fails(0),
-		m_ptrEnviroment(NULL), m_cKnowledgeBase(new maze_knowlegde_base)
+experiment_private::experiment_private(): duration_in_msec(0), knowledge_base(new maze_knowlegde_base),
+    exploration_succeses(0), exploration_fails(0)
 {
-
 }
-experiment_private::~experiment_private()
+void experiment_private::reset_enviroment()
 {
+	enviroment_.reset(new enviroment(settings, maze_data, knowledge_base));
+	//enviroment_->setExperimentSettings(settings);
+	//enviroment_->setMaze(maze_data);
+	//enviroment_->setKnowlegdeBase(knowledge_base);
 }
 
 //////////////////////////////////////////////////////////////////////////
-experiment::experiment(void) : pimpl(new experiment_private())
+experiment::experiment() : pimpl(new experiment_private())
 {	}
-experiment::~experiment(void)
+experiment::experiment(experiment_settings & settings_, maze_interface_type maze_) :
+    pimpl(new experiment_private())
 {
+	pimpl->maze_data = maze_;
+	pimpl->settings = settings_;
 }
+experiment::~experiment()
+{ }
 //////////////////////////////////////////////////////////////////////////
 void experiment::increseSuccessCounter()
 {
@@ -56,38 +64,35 @@ int experiment::getExplorationsCount()
 	return pimpl->explorationResults.size();
 }
 //////////////////////////////////////////////////////////////////////////
-void experiment::on_set_maze_data(const maze & xMazeSource)
+void experiment::on_set_maze_data(maze_interface_type maze_source)
 {
-	pimpl->m_stMazeData = xMazeSource;
+	pimpl->maze_data = maze_source;
 }
-maze& experiment::getMazeData()
+/*maze_interface_type experiment::getMazeData()
 {
-	return pimpl->m_stMazeData;
-}
+	return pimpl->maze_data;
+}*/
 void experiment::setExperimentSettings(const experiment_settings & xExperimentSettings)
 {
-	pimpl->m_stExperimentSettings = xExperimentSettings;
+	pimpl->settings = xExperimentSettings;
 }
 //////////////////////////////////////////////////////////////////////////
-void experiment::onnext_robot_move()
+void experiment::on_next_robot_move()
 {
 	Q_EMIT robotNextMove();
 }
-void experiment::startExperiment()
+void experiment::start()
 {
-	pimpl->m_ptrEnviroment.reset(new enviroment);
+	pimpl->reset_enviroment();
 
-	connect(pimpl->m_ptrEnviroment.get(), SIGNAL(robotBeforeMove(scan_results*)), SIGNAL(robotBeforeMove(scan_results*)));
-	//connect(m_ptrEnviroment,SIGNAL(robotNextMove()),SLOT(robotNextMove()));
+	connect(pimpl->enviroment_.get(), SIGNAL(robotBeforeMove(scan_results*)), SIGNAL(robotBeforeMove(scan_results*)));
+	//connect(enviroment_,SIGNAL(robotNextMove()),SLOT(robotNextMove()));
 
-	pimpl->m_ptrEnviroment->setExperimentSettings(pimpl->m_stExperimentSettings);
-	pimpl->m_ptrEnviroment->setMaze(pimpl->m_stMazeData);
-	pimpl->m_ptrEnviroment->setKnowlegdeBase(pimpl->m_cKnowledgeBase);
 
-	for (int index = 0; index<pimpl->m_stExperimentSettings.repeat_count; index++)
+	for (int index = 0; index<pimpl->settings.repeat_count; index++)
 	{
-		pimpl->m_ptrEnviroment->startSingleExploring();
-		addExplorationResult(pimpl->m_ptrEnviroment->getExplorationResults());
+		pimpl->enviroment_->startSingleExploring();
+		addExplorationResult(pimpl->enviroment_->getExplorationResults());
 	    //emit nextExplorationInExperiment();
 	}
 	//emit setExploredKnowlegdeBase(m_ptrKnowledgeBase);	//we're giving control over KB existence to display widget
@@ -115,8 +120,8 @@ CMazeExplorationResult & experiment::getLastExplorationResult()
 //{
 //	pimpl->exploration_succeses = experimentDest.getSuccessCounter();
 //	pimpl->exploration_fails = experimentDest.getFailsCounter();
-//	pimpl->m_stMazeData = experimentDest.getMazeData();
-//	pimpl->m_stExperimentSettings = experimentDest.m_stExperimentSettings;
+//	pimpl->maze_data = experimentDest.getMazeData();
+//	pimpl->settings = experimentDest.settings;
 //	pimpl->explorationResults = experimentDest.explorationResults;
 //}
 bool experiment::getExplorationResult(uint nr, CMazeExplorationResult & lastExplorationResult)
@@ -132,16 +137,16 @@ void experiment::saveExperiment(QTextStream *pStream)
 	vector<CMazeExplorationResult>::iterator	iterExploration;
 	std::list<QPoint>::iterator		iterPoints;
 	(*pStream)<<"EXPERIMENT_DATA\n";
-	(*pStream) << "Quantity   " << pimpl->m_stExperimentSettings.repeat_count << "\n";
-	(*pStream) << "StartPos   " << pimpl->m_stExperimentSettings.startPosition.pos_x << " " << pimpl->m_stExperimentSettings.startPosition.pos_y << " " << (int)pimpl->m_stExperimentSettings.startPosition.dir << "\n";
-	for(std::pair<unsigned int,unsigned int> point : pimpl->m_stExperimentSettings.target_positions)
-	//	for (iterPoints = pimpl->m_stExperimentSettings.lFinishPositions.begin();
-	//		 iterPoints != pimpl->m_stExperimentSettings.lFinishPositions.end(); iterPoints++)
+	(*pStream) << "Quantity   " << pimpl->settings.repeat_count << "\n";
+	(*pStream) << "StartPos   " << pimpl->settings.startPosition.pos_x << " " << pimpl->settings.startPosition.pos_y << " " << (int)pimpl->settings.startPosition.dir << "\n";
+	for(std::pair<unsigned int,unsigned int> point : pimpl->settings.target_positions)
+	//	for (iterPoints = pimpl->settings.lFinishPositions.begin();
+	//		 iterPoints != pimpl->settings.lFinishPositions.end(); iterPoints++)
 	{
 		(*pStream)<<"FinishPos   "<<point.first<<" "<<point.second<<"\n";
 	}
-	(*pStream) << "Penalty    " << pimpl->m_stExperimentSettings.fPenaltyValue << "\n";;
-	(*pStream) << "Reward     " << pimpl->m_stExperimentSettings.fPriceValue << "\n";;
+	(*pStream) << "Penalty    " << pimpl->settings.fPenaltyValue << "\n";;
+	(*pStream) << "Reward     " << pimpl->settings.fPriceValue << "\n";;
 	for (iterExploration = pimpl->explorationResults.begin(); iterExploration != pimpl->explorationResults.end(); iterExploration++)
 	{
 		iterExploration->saveExploration(pStream);

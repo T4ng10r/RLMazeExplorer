@@ -3,6 +3,7 @@
 #include <Data/experiment/robot.h>
 #include <KnowledgeBase/CKnowlegdeBase.h>
 #include <Tools/loggers.h>
+#include <Maze/maze_interface.h>
 
 class enviroment_private
 {
@@ -16,7 +17,7 @@ public:
 	void	createRobotRouteInfo();
 public:
 	enviroment * public_part;
-	maze					m_stMaze;
+	maze_interface_type maze_;
 	//experiment settings - like robot start position, end points and maze params
 	experiment_settings		m_stExperimentSettings;
 	//robot/agent - he will perform experiment
@@ -176,8 +177,10 @@ void enviroment_private::rotateScanResults(scan_results_handle scanResult,eRobot
 #endif
 }
 ////////////////////////////////////////////////////////////////////////////////
-enviroment::enviroment(void) : pimpl(new enviroment_private(this))
+enviroment::enviroment(experiment_settings settings, maze_interface_type maze_,
+		maze_knowlegde_base_handle kb) : pimpl(new enviroment_private(this))
 {
+	pimpl->maze_ = maze_;
 }
 enviroment::~enviroment(void)
 {
@@ -203,7 +206,7 @@ void enviroment::startSingleExploring()
 //////////////////////////////////////////////////////////////////////////
 void enviroment::onRobotScan(scan_results_handle scanResult)
 {
-	boost::optional<location> loc = pimpl->m_stMaze.get_location(pimpl->robot_position.x()-1, pimpl->robot_position.y()-1);
+	boost::optional<location> loc = pimpl->maze_->get_location(pimpl->robot_position.x()-1, pimpl->robot_position.y()-1);
 	pimpl->m_stCurrentLocation = loc.get();
 
 	int size = !pimpl->m_stCurrentLocation.is_wall(NORTH_DIR);
@@ -304,11 +307,6 @@ void enviroment::onRobotIfInExit(bool &is_in_exit)
 		}
 	}
 }
-void enviroment::setMaze(const maze &val) 
-{ 
-	pimpl->m_stMaze = val;
-}
-
 //void CEnviroment::onStartExperiment(CExperimentSettings &m_ExperimentSettings)
 //{
     ////TODO kazdy eksperyment moze zaczynac sie utworzeniem nowej bazy wiedzy lub pozostawieniem poprzedniej
@@ -346,7 +344,7 @@ void enviroment::setMaze(const maze &val)
 //
 //    QTextStream pStream( &pFile );
 //    pStream.setCodec("latin2");
-//    m_stMaze.saveMaze(&pStream);
+//    maze_.saveMaze(&pStream);
 //    m_ptrKnowledgeBase->saveKnowledgeBase(&pStream);
 //    pFile.close();
 //}
@@ -357,7 +355,7 @@ void enviroment::setMaze(const maze &val)
 //
 //    QTextStream pStream( &pFile );
 //    pStream.setCodec("latin2");
-//    m_stMaze.loadMaze(&pStream);
+//    maze_.loadMaze(&pStream);
 //    emit redrawMaze();
 //    m_ptrKnowledgeBase->loadKnowledgeBase(&pStream);
 //    pFile.close();
@@ -368,8 +366,8 @@ void enviroment::debugPrintMaze()
 	location	loc;
 	QString mazeLine;
 	QString mazeLine1;
-	int maxX=pimpl->m_stMaze.get_size_x();
-	int maxY=pimpl->m_stMaze.get_size_y();
+	int maxX=pimpl->maze_->get_size_x();
+	int maxY=pimpl->maze_->get_size_y();
 	int indexX,indexY;
 
 	mazeLine="-";
@@ -382,7 +380,7 @@ void enviroment::debugPrintMaze()
 		for(indexX=0; indexX<maxX; indexX++)
 		{
 			loc.reset();
-			loc = pimpl->m_stMaze.get_location(indexX, indexY).get();
+			loc = pimpl->maze_->get_location(indexX, indexY).get();
 			if (loc.is_wall(WEST_DIR))
 				mazeLine+="|";
 			else
@@ -409,12 +407,12 @@ CMazeExplorationResult enviroment::getExplorationResults()
 {
 	return pimpl->m_stExplorationResult;
 }
-void enviroment::setExperimentSettings(experiment_settings val)
+/*void enviroment::setExperimentSettings(experiment_settings val)
 {
 	pimpl->m_stExperimentSettings = val;
 }
 void enviroment::setKnowlegdeBase(maze_knowlegde_base_handle knowledge_base_)
 {
 	pimpl->knowledge_base = knowledge_base_;
-}
+}*/
 //////////////////////////////////////////////////////////////////////////

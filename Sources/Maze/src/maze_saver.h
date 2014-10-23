@@ -3,8 +3,8 @@
 class maze_saver
 {
 public:
-	maze_saver(maze * maze_data);
+	maze_saver(const maze * const maze_data);
 	void save(const std::string& file_path);
 protected:
-	maze *	maze_data;
+	const maze * const	maze_data;
 };

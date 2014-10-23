@@ -1,5 +1,7 @@
-#include "maze.h"
+#include <Maze/maze.h>
 #include <Tools/loggers.h>
+#include "maze_saver.h"
+#include "maze_loader.h"
 
 maze::maze():size_x(0),size_y(0),maze_type(E_MT_NONE) {}
 int maze::get_size_x() const
@@ -23,16 +25,18 @@ location & maze::get_xlocation(int x, int y)
 	return m_vvMapa[x][y];
 }
 
-void maze::save_maze(std::ofstream stream)
+void maze::save_maze(const std::string& file_path)
 {
-	stream << "MAZE_DATA" << std::endl;
+	maze_saver saver(this);
+	saver.save(file_path);
+	/*stream << "MAZE_DATA" << std::endl;
 	stream << size_x << " " << size_y << "\n";
 	for(int Y=0; Y<size_y; Y++)
 	{
 		for(int X=0; X<size_x; X++)
 		{
 			int dir=0;
-			boost::optional<location>	location_ = get_location(X+1, Y+1);
+			boost::optional<location> location_ = get_location(X+1, Y+1);
 			if (!location_)
 				continue;;
 			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
@@ -43,11 +47,13 @@ void maze::save_maze(std::ofstream stream)
 		}
 		stream << "\n";
 	}
-	stream << "END_MAZE_DATA\n";
+	stream << "END_MAZE_DATA\n";*/
 }
-bool maze::load_maze(std::ifstream stream)
+bool maze::load_maze(const std::string& file_path)
 {
-int sizeX,sizeY;
+	maze_loader loader(this);
+	loader.load(file_path);
+/*int sizeX,sizeY;
 std::string strText;
 location	location;
 	stream >> strText;
@@ -86,7 +92,7 @@ if (strText!="MAZE_DATA")
 		printLog(eDebug, eErrorLogLevel, "Loading maze data failed (END_MAZE_DATA tag doesn't exist)");
 		return false;
 	}
-	preset_maze_edges();
+	preset_maze_edges();*/
 	return true;
 }
 void maze::operator=(const maze & mazeSource)

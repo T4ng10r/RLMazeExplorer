@@ -1,6 +1,7 @@
 #pragma once
 #include <Data/experiment/EnviromentVariables.h>
 #include <QPoint>
+
 class robot_postion
 {
 public:

@@ -2,7 +2,6 @@ cmake_policy(SET CMP0020 NEW )
 
 find_package(Qt5Widgets)
 find_package(Qt5Core)
-find_package(Qt5Xml)
 find_package(Qt5Test)
 find_package(Qt5PrintSupport)
 

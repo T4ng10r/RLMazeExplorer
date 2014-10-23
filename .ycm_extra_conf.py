@@ -35,13 +35,13 @@ flags = [
 '-I', './include',
 '-I', './Sources/gmock/include',
 '-I', './Sources/gmock/gtest/include',
-'-I', '/usr/include/i386-linux-gnu/qt5/QtPrintSupport',
-'-I', '/usr/include/i386-linux-gnu/qt5/QtWidgets',
-'-I', '/usr/include/i386-linux-gnu/qt5/QtXml',
-'-I', '/usr/include/i386-linux-gnu/qt5/QtTest',
-'-I', '/usr/include/i386-linux-gnu/qt5/QtCore',
-'-I', './Sources/MazeExplorer/src'
+'-I', './Sources/MazeExplorer/src',
 #add QT directiories includes
+'-I', '/usr/include/i386-linux-gnu/qt5/QtCore/',
+'-I', '/usr/include/i386-linux-gnu/qt5/QtWidgets/',
+'-I', '/usr/include/i386-linux-gnu/qt5/QtTest/',
+'-I', '/usr/include/i386-linux-gnu/qt5/QtPrintSupport/',
+'-I', '/usr/include/i386-linux-gnu/qt5/QtXml/'
 ]
 
 

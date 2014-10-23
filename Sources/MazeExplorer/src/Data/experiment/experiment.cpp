@@ -32,8 +32,8 @@ void experiment_private::reset_enviroment()
 }
 
 //////////////////////////////////////////////////////////////////////////
-experiment::experiment() : pimpl(new experiment_private())
-{	}
+//experiment::experiment() : pimpl(new experiment_private())
+//{	}
 experiment::experiment(experiment_settings & settings_, maze_interface_type maze_) :
     pimpl(new experiment_private())
 {
@@ -64,10 +64,6 @@ int experiment::getExplorationsCount()
 	return pimpl->explorationResults.size();
 }
 //////////////////////////////////////////////////////////////////////////
-void experiment::on_set_maze_data(maze_interface_type maze_source)
-{
-	pimpl->maze_data = maze_source;
-}
 /*maze_interface_type experiment::getMazeData()
 {
 	return pimpl->maze_data;

@@ -1,5 +1,4 @@
-#ifndef EXPERIMENT_MANAGER_HPP
-#define EXPERIMENT_MANAGER_HPP
+#pragma once
 
 #include <list>
 #include <Data/experiment/experiment.h>
@@ -11,10 +10,9 @@ public:
     CExperimentManager(void);
     ~CExperimentManager(void);
 
-	experiment	& getCurrentExperiment();
-	experiment	stExperiment;
+	//experiment	& getCurrentExperiment();
+	//experiment	stExperiment;
 
-	maze		m_stCurrentMaze;
+	//maze		m_stCurrentMaze;
 
 };
-#endif	/*EXPERIMENT_MANAGER_HPP*/

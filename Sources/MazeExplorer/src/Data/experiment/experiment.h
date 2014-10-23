@@ -8,7 +8,7 @@
 #include <QObject>
 
 using namespace std;
-class enviroment;
+//class enviroment;
 
 class experiment_private;
 
@@ -17,10 +17,9 @@ class experiment : public QObject
 {
 	Q_OBJECT
 public:
-	experiment();
+	//experiment();
 	experiment(experiment_settings & settings, maze_interface_type maze_);
 	~experiment();
-	void on_set_maze_data(maze_interface_type maze_source);
 
 	//maze_interface_type getMazeData();
 	void setExperimentSettings(const experiment_settings & xExperimentSettings);

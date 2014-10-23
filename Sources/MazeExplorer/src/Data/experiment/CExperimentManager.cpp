@@ -3,7 +3,7 @@
 CExperimentManager::CExperimentManager(void)
 {}
 CExperimentManager::~CExperimentManager(void){}
-experiment	& CExperimentManager::getCurrentExperiment()
-{
-	return stExperiment;
-};
+//experiment	& CExperimentManager::getCurrentExperiment()
+//{
+//	return stExperiment;
+//};

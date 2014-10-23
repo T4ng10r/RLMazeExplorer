@@ -53,7 +53,7 @@ public:
 
 	COneExplorationResultDlg *		cRobotOneExplorationResult;
 	//CExperimentManager				m_stExperimentManager;
-	experiment m_stExperiment;
+	//experiment m_stExperiment;
 	//CEnviroment *	pEnviroment;
 	QComboBox   * ctrlCombo;
 	experiment_parameters_dlg *			m_ptrExperimentParamsDlg;
@@ -110,12 +110,12 @@ void main_window_private::set_connections()
 	bool bResult = false;
 	set_connections_for_dlgs();
 
-	bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(scan_results_handle )), single_robot_move,
-					  SLOT(onRobotBeforeMove(scan_results_handle)));
-	Q_ASSERT(bResult == true);
-	bResult = QObject::connect(single_robot_move, SIGNAL(next_robot_move()), &m_stExperiment,
-					  SLOT(onnext_robot_move()));
-	Q_ASSERT(bResult == true);
+	//bResult = QObject::connect(&m_stExperiment, SIGNAL(robotBeforeMove(scan_results_handle )), single_robot_move,
+	//				  SLOT(onRobotBeforeMove(scan_results_handle)));
+	//Q_ASSERT(bResult == true);
+	//bResult = QObject::connect(single_robot_move, SIGNAL(next_robot_move()), &m_stExperiment,
+	//				  SLOT(onnext_robot_move()));
+	//Q_ASSERT(bResult == true);
 
 	//////////////////////////////////////////////////////////////////////////
 	//    bResult=connect(pEnviroment,SIGNAL(robotFinished(CExplorationResult &)),
@@ -256,7 +256,7 @@ void main_window::on_maze_generated()
 }
 void main_window::on_experiment_settings_changed(const experiment_settings & xExpSettings)
 {
-	pimpl->m_stExperiment.setExperimentSettings(xExpSettings);
+	//pimpl->m_stExperiment.setExperimentSettings(xExpSettings);
 	//m_stExperimentManager.getCurrentExperiment().setExperimentSettings(xExpSettings);
 }
 

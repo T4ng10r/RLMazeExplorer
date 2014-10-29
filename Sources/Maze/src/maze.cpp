@@ -3,7 +3,7 @@
 #include "maze_saver.h"
 #include "maze_loader.h"
 
-maze::maze():size_x(0),size_y(0),maze_type(E_MT_NONE) {}
+maze::maze():size_x(0),size_y(0),type(E_MT_NONE) {}
 int maze::get_size_x() const
 {
 	return size_x;
@@ -101,7 +101,7 @@ void maze::operator=(const maze & mazeSource)
 
 	size_x = mazeSource.size_x;
 	size_y = mazeSource.size_y;
-	maze_type = mazeSource.maze_type;
+	type = mazeSource.type;
 }
 //////////////////////////////////////////////////////////////////////////
 void maze::preset_maze_edges()

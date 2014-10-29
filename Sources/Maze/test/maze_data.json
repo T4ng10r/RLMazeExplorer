@@ -1,0 +1,10 @@
+{
+   "size_x" : "5",
+   "size_y" : "5",
+	 "type" : "PRIM",
+	 "locations" : {
+		 "row" : {
+			 "location" : "1"
+		 }
+	 }
+}

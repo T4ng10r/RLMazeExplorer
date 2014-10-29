@@ -29,6 +29,6 @@ public:
 	int size_x;
 	int size_y;
 	//type of maze generation algorithm used to generate
-	EMazeTypes maze_type;
+	EMazeTypes type;
 	location empty_location;
 };

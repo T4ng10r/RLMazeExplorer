@@ -12,7 +12,7 @@ int maze::get_size_y() const
 {
 	return size_y;
 };
-boost::optional<location> maze::get_location(int x, int y) const
+boost::optional<location> maze::get_location(unsigned int x, unsigned  int y) const
 {
 	boost::optional<location> result;
 	if (x >= size_x || y >= size_y || x < 0 || y < 0)
@@ -20,7 +20,7 @@ boost::optional<location> maze::get_location(int x, int y) const
 
 	return m_vvMapa[x][y];
 };
-location & maze::get_xlocation(int x, int y)
+location & maze::get_xlocation(unsigned int x, unsigned int y)
 {
 	return m_vvMapa[x][y];
 }
@@ -53,46 +53,6 @@ bool maze::load_maze(const std::string& file_path)
 {
 	maze_loader loader(this);
 	loader.load(file_path);
-/*int sizeX,sizeY;
-std::string strText;
-location	location;
-	stream >> strText;
-if (strText!="MAZE_DATA")
-{
-		printLog(eDebug, eErrorLogLevel, "Loading maze data failed (MAZE_DATA tag doesn't exist)");
-		return false;
-}
-	stream >> sizeX;
-	stream >> sizeY;
-
-	//////////////////////////////////////////////////////////////////////////
-	//przygotowujemy i alokujemy pamiec na tablice labiryntu
-	m_vvMapa.resize(sizeX);
-	for(int i=0; i<sizeX; i++)
-	m_vvMapa[i].resize(sizeY);
-	
-	for(int Y=0; Y<size_y; Y++)
-	{
-		for(int X=0; X<size_x; X++)
-		{
-			int dir=0;
-			stream >> dir;
-			location.reset();
-			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
-			{
-				if (dir & (1 << i))
-					location.set_wall(NORTH_DIR);
-			}
-			m_vvMapa[X][Y]=location;
-		}
-	}
-	stream >> strText;
-	if (strText!="END_MAZE_DATA")
-	{
-		printLog(eDebug, eErrorLogLevel, "Loading maze data failed (END_MAZE_DATA tag doesn't exist)");
-		return false;
-	}
-	preset_maze_edges();*/
 	return true;
 }
 void maze::operator=(const maze & mazeSource)

@@ -26,17 +26,17 @@ void maze_saver::save(const std::string& file_path)
 	writer.writeEndElement();
 
 	writer.writeStartElement("content");
-	for(int i=0;i<maze_data->size_y;i++)
+	for(unsigned int i=0;i<maze_data->size_y;i++)
 	{
 		writer.writeStartElement("row");
-		for(int j=0;j<maze_data->size_x;j++)
+		for (unsigned int j = 0; j<maze_data->size_x; j++)
 		{
 			writer.writeStartElement("cell");
 			int dir=0;
 			boost::optional<location> location_ = maze_data->get_location(j+1, i+1);
 			if (location_)
 			{
-				for (int k = NORTH_DIR; k != COUNT_DIR; k++)
+				for (unsigned int k = NORTH_DIR; k != COUNT_DIR; k++)
 					dir |= 1<<k;
 				writer.writeCharacters(QString::number(dir));
 			}

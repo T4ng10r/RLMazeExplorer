@@ -38,8 +38,32 @@ TEST_F(ut_maze_loader_test, maze_sizes)
 	EXPECT_EQ(maze_data.type, constants::maze_type);
 }
 
-TEST_F(ut_maze_loader_test, maze_locations)
+TEST_F(ut_maze_loader_test, maze_row_locations)
 {
 	maze_data.load_maze(constants::file_path_json);
-	ASSERT_EQ(maze_data.get_location(0,0).get(), location(true,false,false,false));
+	ASSERT_EQ(maze_data.get_location(0, 0).get(), location(true, false, false, true));
+	ASSERT_EQ(maze_data.get_location(1, 0).get(), location(true, false, false, true));
+	ASSERT_EQ(maze_data.get_location(2, 0).get(), location(true, true, false, false));
+	ASSERT_EQ(maze_data.get_location(3, 0).get(), location(true, false, false, true));
+	ASSERT_EQ(maze_data.get_location(4, 0).get(), location(true, true, false, true));
+}
+
+TEST_F(ut_maze_loader_test, maze_two_row_locations)
+{
+	maze_data.load_maze(constants::file_path_json);
+	ASSERT_EQ(maze_data.get_location(0, 1).get(), location(true, true, false, true));
+	ASSERT_EQ(maze_data.get_location(1, 1).get(), location(false, false, true, true));
+	ASSERT_EQ(maze_data.get_location(2, 1).get(), location(true, true, false, false));
+	ASSERT_EQ(maze_data.get_location(3, 1).get(), location(true, false, true, false));
+	ASSERT_EQ(maze_data.get_location(4, 1).get(), location(false, true, true, false));
+}
+
+TEST_F(ut_maze_loader_test, maze_three_row_locations)
+{
+	maze_data.load_maze(constants::file_path_json);
+	ASSERT_EQ(maze_data.get_location(0, 2).get(), location(true, false, true, true));
+	ASSERT_EQ(maze_data.get_location(1, 2).get(), location(true, true, true, false));
+	ASSERT_EQ(maze_data.get_location(2, 2).get(), location(false, true, true, true));
+	ASSERT_EQ(maze_data.get_location(3, 2).get(), location(true, true, true, true));
+	ASSERT_EQ(maze_data.get_location(4, 2).get(), location(true, true, false, true));
 }

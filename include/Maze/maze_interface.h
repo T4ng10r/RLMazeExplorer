@@ -13,7 +13,7 @@ public:
 	virtual void save_maze(const std::string& file_path) = 0;
 	virtual bool load_maze(const std::string& file_path) = 0;
 
-	virtual boost::optional<location> get_location(int X, int Y) const = 0;
+	virtual boost::optional<location> get_location(unsigned int X, unsigned int Y) const = 0;
 };
 
 typedef std::shared_ptr<maze_interface> maze_interface_type;

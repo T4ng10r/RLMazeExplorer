@@ -18,10 +18,10 @@ struct maze_settings
 
 enum EDirections
 {
-	NORTH_DIR = 0,
-	WEST_DIR,
-	EAST_DIR,
-	SOUTH_DIR,
+	NORTH_DIR = 0, //1
+	WEST_DIR = 1,  //2
+	EAST_DIR = 2,  //4
+	SOUTH_DIR = 3, //8
 	NONE_DIR,
 	COUNT_DIR = NONE_DIR
 };

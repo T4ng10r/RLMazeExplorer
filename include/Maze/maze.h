@@ -20,16 +20,16 @@ public:
 	void reset_locations();
 	void resize();
 
-	boost::optional<location> get_location(int x, int y) const;
-	location & get_xlocation(int x, int y);
+	boost::optional<location> get_location(unsigned int x, unsigned int y) const;
+	location & get_xlocation(unsigned int x, unsigned int y);
 	//////////////////////////////////////////////////////////////////////////
 	void preset_maze_edges();
 public:
 	//first index is column
 	//second index is row
 	std::vector< std::vector<location> > m_vvMapa;
-	int size_x;
-	int size_y;
+	unsigned int size_x;
+	unsigned int size_y;
 	//type of maze generation algorithm used to generate
 	EMazeTypes type;
 	location empty_location;

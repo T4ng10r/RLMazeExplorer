@@ -42,6 +42,7 @@ void maze_loader_private::load(const QJsonObject & object)
 	maze_data->resize();
 	maze_data->reset_locations();
 	load_locations(object);
+	maze_data->preset_maze_edges();
 }
 void maze_loader_private::load_locations(const QJsonObject & object)
 {

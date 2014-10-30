@@ -3,7 +3,7 @@
 #include "maze_saver.h"
 #include "maze_loader.h"
 
-maze::maze():size_x(0),size_y(0),maze_type(E_MT_NONE) {}
+maze::maze():size_x(0),size_y(0),type(E_MT_NONE) {}
 int maze::get_size_x() const
 {
 	return size_x;
@@ -101,7 +101,7 @@ void maze::operator=(const maze & mazeSource)
 
 	size_x = mazeSource.size_x;
 	size_y = mazeSource.size_y;
-	maze_type = mazeSource.maze_type;
+	type = mazeSource.type;
 }
 //////////////////////////////////////////////////////////////////////////
 void maze::preset_maze_edges()
@@ -120,4 +120,17 @@ void maze::preset_maze_edges()
 		m_vvMapa[0][index].set_wall(WEST_DIR);
 		m_vvMapa[X-1][index].set_wall(EAST_DIR);
 	}
+}
+
+void maze::resize()
+{
+	m_vvMapa.resize(size_x);
+	for (unsigned int index = 0; index < size_x; index++)
+		m_vvMapa[index].resize(size_y);
+}
+void maze::reset_locations()
+{
+	for (unsigned int index1 = 0; index1 < size_x; index1++)
+		for (unsigned int index2 = 0; index2 < size_y; index2++)
+			m_vvMapa[index1][index2].reset();
 }

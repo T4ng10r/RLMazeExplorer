@@ -17,6 +17,8 @@ public:
 	int get_size_y() const;
 	void save_maze(const std::string& file_path);
 	bool load_maze(const std::string& file_path);
+	void reset_locations();
+	void resize();
 
 	boost::optional<location> get_location(int x, int y) const;
 	location & get_xlocation(int x, int y);
@@ -29,6 +31,6 @@ public:
 	int size_x;
 	int size_y;
 	//type of maze generation algorithm used to generate
-	EMazeTypes maze_type;
+	EMazeTypes type;
 	location empty_location;
 };

@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QString>
 #include <Tools/loggers.h>
 #include <boost/format.hpp>
@@ -44,9 +45,29 @@ void maze_loader_private::load(const QJsonObject & object)
 }
 void maze_loader_private::load_locations(const QJsonObject & object)
 {
-	QJsonObject locations = object.value(constants::locations);
-	//petla po obiektach row
-
+	int x(0);
+	int y(0);
+	QJsonArray locations = object[constants::locations].toArray();
+	for (const QJsonValue & single_row : locations)
+	{
+		QJsonArray rows = single_row.toObject()["row"].toArray();
+		for (const QJsonValue & single_cell : rows)
+		{
+			QJsonObject cell_obj = single_cell.toObject();
+			int dir =  cell_obj["cell"].toString().toInt();
+			location &location_data = maze_data->get_xlocation(x, y);
+			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
+			{
+				if (dir & (1 << i))
+					location_data.set_wall((EDirections)i);
+				else
+					location_data.set_passage((EDirections)i);
+			}
+			++x;
+		}
+		x = 0;
+		++y;
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////
 maze_loader::maze_loader(maze * maze_) : pimpl(new maze_loader_private())
@@ -66,4 +87,3 @@ void maze_loader::load(const std::string& file_path)
 	file.close();
 	pimpl->load(document.object());
 }
-

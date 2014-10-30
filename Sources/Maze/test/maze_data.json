@@ -2,9 +2,15 @@
    "size_x" : "5",
    "size_y" : "5",
 	 "type" : "PRIM",
-	 "locations" : {
-		 "row" : {
-			 "location" : "1"
-		 }
-	 }
+	 "locations" : [
+	 {
+		 "row" : [
+		 { "cell" : "1" },
+		 { "cell" : "2" },
+		 { "cell" : "4" },
+		 { "cell" : "3" },
+		 { "cell" : "6" }
+		 ]		 
+	}
+	]
 }

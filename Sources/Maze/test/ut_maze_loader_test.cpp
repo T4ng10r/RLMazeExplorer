@@ -41,6 +41,5 @@ TEST_F(ut_maze_loader_test, maze_sizes)
 TEST_F(ut_maze_loader_test, maze_locations)
 {
 	maze_data.load_maze(constants::file_path_json);
-	ASSERT_EQ(maze_data.get_location(0,0).get(), location(false,false,false,false));
-
+	ASSERT_EQ(maze_data.get_location(0,0).get(), location(true,false,false,false));
 }

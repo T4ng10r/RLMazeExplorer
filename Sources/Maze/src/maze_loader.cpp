@@ -16,11 +16,44 @@ namespace constants
 	const QString type_prim("PRIM");
 	const QString type_kruskal("KRUSKAL");
 	const QString type_recursive("RECURSIVE");
+	const QString locations("locations");
 };
 
-maze_loader::maze_loader(maze * maze_) : maze_data(maze_)
-{}
+struct maze_loader_private
+{
+public:
+	void load(const QJsonObject & object);
+	void load_locations(const QJsonObject & object);
+	maze * maze_data;
+};
 
+void maze_loader_private::load(const QJsonObject & object)
+{
+	maze_data->size_x = object.value(constants::size_x).toString().toLong();
+	maze_data->size_y = object.value(constants::size_y).toString().toLong();
+	QString type = object.value(constants::type).toString();
+	if (type == constants::type_prim)
+		maze_data->type = E_MT_PRIM;
+	else if (type == constants::type_kruskal)
+		maze_data->type = E_MT_KRUSKAL;
+	else if (type == constants::type_recursive)
+		maze_data->type = E_MT_RECURSIVE;
+	maze_data->resize();
+	maze_data->reset_locations();
+	load_locations(object);
+}
+void maze_loader_private::load_locations(const QJsonObject & object)
+{
+	QJsonObject locations = object.value(constants::locations);
+	//petla po obiektach row
+
+}
+////////////////////////////////////////////////////////////////////////////////
+maze_loader::maze_loader(maze * maze_) : pimpl(new maze_loader_private())
+{
+	pimpl->maze_data = maze_;
+}
+maze_loader::~maze_loader(){}
 void maze_loader::load(const std::string& file_path)
 {
 	QFile file(file_path.c_str());
@@ -31,14 +64,6 @@ void maze_loader::load(const std::string& file_path)
 	}
 	QJsonDocument document(QJsonDocument::fromJson(file.readAll()));
 	file.close();
-	QJsonObject object = document.object();
-	maze_data->size_x = object.value(constants::size_x).toString().toLong();
-	maze_data->size_y = object.value(constants::size_y).toString().toLong();
-	QString type = object.value(constants::type).toString();
-	if (type == constants::type_prim)
-		maze_data->type = E_MT_PRIM;
-	else if (type == constants::type_kruskal)
-		maze_data->type = E_MT_KRUSKAL;
-	else if (type == constants::type_recursive)
-		maze_data->type = E_MT_RECURSIVE;
+	pimpl->load(document.object());
 }
+

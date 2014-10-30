@@ -121,3 +121,16 @@ void maze::preset_maze_edges()
 		m_vvMapa[X-1][index].set_wall(EAST_DIR);
 	}
 }
+
+void maze::resize()
+{
+	m_vvMapa.resize(size_x);
+	for (unsigned int index = 0; index < size_x; index++)
+		m_vvMapa[index].resize(size_y);
+}
+void maze::reset_locations()
+{
+	for (unsigned int index1 = 0; index1 < size_x; index1++)
+		for (unsigned int index2 = 0; index2 < size_y; index2++)
+			m_vvMapa[index1][index2].reset();
+}

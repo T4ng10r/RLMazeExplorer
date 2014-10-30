@@ -7,9 +7,17 @@ class location	//jesli dany kierunek jest prawda - tam jest sciana
 {
 public:
 	location()
-    {
+	{
 		reset();
-    }
+	}
+	location(bool north_wall, bool east_wall, bool south_wall, bool west_wall)
+	{
+		reset();
+		directions[NORTH_DIR] = north_wall;
+		directions[EAST_DIR] = east_wall; 
+		directions[SOUTH_DIR] = south_wall;
+		directions[WEST_DIR] = west_wall;
+	}
 	void set_wall(EDirections dir)
 	{
 		directions[dir] = true;
@@ -29,6 +37,12 @@ public:
 	void reset()
 	{
 		directions = std::vector<bool>(4, true);
+	}
+	bool operator==(const location & other) const
+	{
+		if (directions == other.directions)
+			return true;
+		return false;
 	}
 public:
 	//bit set if their's wall, otherwise it's false

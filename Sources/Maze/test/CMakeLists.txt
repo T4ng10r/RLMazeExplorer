@@ -12,6 +12,7 @@ SET ( SOURCES_TESTS
 	ut_maze_prim_test.cpp 
 	ut_maze_recursive_test.cpp 
 	ut_maze_loader_test.cpp
+	ut_maze_saver_test.cpp
 	)
 
 SET ( SOURCES_MAIN

@@ -30,9 +30,9 @@ public:
 
 void maze_loader_private::load(const QJsonObject & object)
 {
-	maze_data->size_x = object.value(constants::size_x).toString().toLong();
-	maze_data->size_y = object.value(constants::size_y).toString().toLong();
-	QString type = object.value(constants::type).toString();
+	maze_data->size_x = object[constants::size_x].toInt();
+	maze_data->size_y = object[constants::size_y].toInt();
+	QString type = object[constants::type].toString();
 	if (type == constants::type_prim)
 		maze_data->type = E_MT_PRIM;
 	else if (type == constants::type_kruskal)
@@ -55,7 +55,7 @@ void maze_loader_private::load_locations(const QJsonObject & object)
 		for (const QJsonValue & single_cell : rows)
 		{
 			QJsonObject cell_obj = single_cell.toObject();
-			int dir =  cell_obj["cell"].toString().toInt();
+			int dir =  cell_obj["cell"].toInt();
 			location &location_data = maze_data->get_xlocation(x, y);
 			for (int i = NORTH_DIR; i != COUNT_DIR; i++)
 			{

@@ -15,7 +15,7 @@ int maze::get_size_y() const
 boost::optional<location> maze::get_location(unsigned int x, unsigned  int y) const
 {
 	boost::optional<location> result;
-	if (x >= size_x || y >= size_y || x < 0 || y < 0)
+	if (x >= size_x || y >= size_y)
 		return result;
 
 	return m_vvMapa[x][y];

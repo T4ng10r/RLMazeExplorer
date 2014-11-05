@@ -3,32 +3,26 @@
    "size_y" : 5,
 	 "type" : "PRIM",
 	 "locations" : [
-	 {
-		 "row" : [
+		 [
 		 { "cell" : 1 },
 		 { "cell" : 2 },
 		 { "cell" : 4 },
 		 { "cell" : 3 },
 		 { "cell" : 6 }
-		 ]		 
-	},
-	 {
-		 "row" : [
+		 ],
+		 [
 		 { "cell" : 7 },
 		 { "cell" : 10 },
 		 { "cell" : 5 },
 		 { "cell" : 9 },
 		 { "cell" : 12 }
-		 ]		 
-	},
-	{
-		 "row" : [
+		 ],
+		 [
 		 { "cell" : 11 },
 		 { "cell" : 13 },
 		 { "cell" : 14 },
 		 { "cell" : 15 },
 		 { "cell" : 7 }
-		 ]		 
-	}
+		 ]
 	]
 }

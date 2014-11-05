@@ -34,6 +34,19 @@ public:
 	{
 		return std::count(directions.begin(), directions.end(), wall);
 	}
+	int get_cell_value()
+	{
+		int result(0);
+		if (directions[NORTH_DIR])
+			result |= 1 << NORTH_DIR;
+		if (directions[EAST_DIR])
+			result |= 1 << EAST_DIR;
+		if (directions[SOUTH_DIR])
+			result |= 1 << SOUTH_DIR;
+		if (directions[WEST_DIR])
+			result |= 1 << WEST_DIR;
+		return result;
+	}
 	void reset()
 	{
 		directions = std::vector<bool>(4, true);

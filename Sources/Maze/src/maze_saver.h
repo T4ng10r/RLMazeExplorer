@@ -1,7 +1,7 @@
 #include <Maze/maze.h>
 #include <memory>
 
-class maze_saver_private;
+struct maze_saver_private;
 
 class maze_saver
 {

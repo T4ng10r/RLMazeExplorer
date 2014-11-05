@@ -12,7 +12,7 @@ int maze::get_size_y() const
 {
 	return size_y;
 };
-boost::optional<location> maze::get_location(unsigned int x, unsigned  int y) const
+boost::optional<location> maze::get_location(int x, int y) const
 {
 	boost::optional<location> result;
 	if (x >= size_x || y >= size_y)
@@ -20,7 +20,7 @@ boost::optional<location> maze::get_location(unsigned int x, unsigned  int y) co
 
 	return m_vvMapa[x][y];
 };
-location & maze::get_xlocation(unsigned int x, unsigned int y)
+location & maze::get_xlocation(int x, int y)
 {
 	return m_vvMapa[x][y];
 }
@@ -85,12 +85,12 @@ void maze::preset_maze_edges()
 void maze::resize()
 {
 	m_vvMapa.resize(size_x);
-	for (unsigned int index = 0; index < size_x; index++)
+	for (int index = 0; index < size_x; index++)
 		m_vvMapa[index].resize(size_y);
 }
 void maze::reset_locations()
 {
-	for (unsigned int index1 = 0; index1 < size_x; index1++)
-		for (unsigned int index2 = 0; index2 < size_y; index2++)
+	for (int index1 = 0; index1 < size_x; index1++)
+		for (int index2 = 0; index2 < size_y; index2++)
 			m_vvMapa[index1][index2].reset();
 }

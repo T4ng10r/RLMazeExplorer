@@ -1,6 +1,7 @@
 #include "maze_saver.h"
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QFile>
 #include <QString>
 #include <Tools/loggers.h>
@@ -14,6 +15,7 @@ namespace constants
 	const QString type_kruskal("KRUSKAL");
 	const QString type_recursive("RECURSIVE");
 	const QString locations("locations");
+	const QString cell("cell");
 };
 
 struct maze_saver_private
@@ -21,7 +23,7 @@ struct maze_saver_private
 public:
 	maze_saver_private(const maze * const maze_);
 	void save(QJsonObject& object);
-	void ssve_locations(const QJsonObject & object);
+	void save_locations(QJsonArray & array);
 	const maze * const maze_data;
 };
 
@@ -44,12 +46,32 @@ void maze_saver_private::save(QJsonObject& object)
 		default: break;
 	};
 	object[constants::type] = maze_type_val;
+	QJsonArray locations;
+	save_locations(locations);
+	object[constants::locations] = locations;
 }
+void maze_saver_private::save_locations(QJsonArray & array)
+{
+	for (int y = 0; y < maze_data->get_size_y(); y++)
+	{
+		QJsonArray row;
+		for (int x = 0; x < maze_data->get_size_x(); x++)
+		{
+			QJsonObject cell;
+			boost::optional<location> location_ = maze_data->get_location(x, y);
+			if (!location_)
+				continue;;
+			int dir = location_->get_cell_value();
+			cell[constants::cell] = dir;
+			row.append(cell);
+		}
+		array.append(row);
+	}
 
+}
 ////////////////////////////////////////////////////////////////////////////////
 maze_saver::maze_saver(const maze * const maze_) : pimpl(new maze_saver_private(maze_))
-{
-}
+{}
 
 maze_saver::~maze_saver(){}
 

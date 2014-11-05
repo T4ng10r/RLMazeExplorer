@@ -51,7 +51,7 @@ void maze_loader_private::load_locations(const QJsonObject & object)
 	QJsonArray locations = object[constants::locations].toArray();
 	for (const QJsonValue & single_row : locations)
 	{
-		QJsonArray rows = single_row.toObject()["row"].toArray();
+		QJsonArray rows = single_row.toArray();
 		for (const QJsonValue & single_cell : rows)
 		{
 			QJsonObject cell_obj = single_cell.toObject();

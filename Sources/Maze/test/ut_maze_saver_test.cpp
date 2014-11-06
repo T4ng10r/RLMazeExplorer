@@ -34,10 +34,22 @@ public:
 		golden_maze.get_xlocation(2, 0) = location(false, true, true, true);
 		golden_maze.get_xlocation(3, 0) = location(true, true, true, true);
 		golden_maze.get_xlocation(4, 0) = location(true, true, false, true);
+
+		golden_maze.get_xlocation(0, 1) = location(true, true, false, true);
+		golden_maze.get_xlocation(1, 1) = location(false, false, true, true);
+		golden_maze.get_xlocation(2, 1) = location(true, true, false, false);
+		golden_maze.get_xlocation(3, 1) = location(true, false, true, false);
+		golden_maze.get_xlocation(4, 1) = location(false, true, true, false);
+
+		golden_maze.get_xlocation(0, 2) = location(true, false, true, true);
+		golden_maze.get_xlocation(1, 2) = location(true, true, true, false);
+		golden_maze.get_xlocation(2, 2) = location(false, true, true, true);
+		golden_maze.get_xlocation(3, 2) = location(true, true, true, true);
+		golden_maze.get_xlocation(4, 2) = location(true, true, false, true);
 	}
 };
 
-TEST_F(ut_maze_saver_test, maze_sizes)
+TEST_F(ut_maze_saver_test, maze_sizesfalse)
 {
 	golden_maze.save_maze(constants::file_path_json);
 	maze_data.load_maze(constants::file_path_json);
@@ -50,9 +62,31 @@ TEST_F(ut_maze_saver_test, maze_first_row)
 {
 	golden_maze.save_maze(constants::file_path_json);
 	maze_data.load_maze(constants::file_path_json);
-	EXPECT_EQ(golden_maze.get_location(0, 0).get(), location(true, false, true, true));
-	EXPECT_EQ(golden_maze.get_location(1, 0).get(), location(true, true, true, false));
-	EXPECT_EQ(golden_maze.get_location(2, 0).get(), location(false, true, true, true));
-	EXPECT_EQ(golden_maze.get_location(3, 0).get(), location(true, true, true, true));
-	EXPECT_EQ(golden_maze.get_location(4, 0).get(), location(true, true, false, true));
+	EXPECT_EQ(maze_data.get_location(0, 0).get(), location(true, false, true, true));
+	EXPECT_EQ(maze_data.get_location(1, 0).get(), location(true, true, true, false));
+	EXPECT_EQ(maze_data.get_location(2, 0).get(), location(true, true, true, true));
+	EXPECT_EQ(maze_data.get_location(3, 0).get(), location(true, true, true, true));
+	EXPECT_EQ(maze_data.get_location(4, 0).get(), location(true, true, false, true));
+}
+
+TEST_F(ut_maze_saver_test, maze_second_row)
+{
+	golden_maze.save_maze(constants::file_path_json);
+	maze_data.load_maze(constants::file_path_json);
+	EXPECT_EQ(maze_data.get_location(0, 1).get(), location(true, true, false, true));
+	EXPECT_EQ(maze_data.get_location(1, 1).get(), location(false, false, true, true));
+	EXPECT_EQ(maze_data.get_location(2, 1).get(), location(true, true, false, false));
+	EXPECT_EQ(maze_data.get_location(3, 1).get(), location(true, false, true, false));
+	EXPECT_EQ(maze_data.get_location(4, 1).get(), location(false, true, true, false));
+}
+
+TEST_F(ut_maze_saver_test, maze_third_row)
+{
+	golden_maze.save_maze(constants::file_path_json);
+	maze_data.load_maze(constants::file_path_json);
+	EXPECT_EQ(maze_data.get_location(0, 2).get(), location(true, false, true, true));
+	EXPECT_EQ(maze_data.get_location(1, 2).get(), location(true, true, true, false));
+	EXPECT_EQ(maze_data.get_location(2, 2).get(), location(false, true, true, true));
+	EXPECT_EQ(maze_data.get_location(3, 2).get(), location(true, true, true, true));
+	EXPECT_EQ(maze_data.get_location(4, 2).get(), location(true, true, false, true));
 }

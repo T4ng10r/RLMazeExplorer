@@ -295,7 +295,8 @@ void experiment_maze_params_dlg::on_generate_maze(bool)
 }
 void experiment_maze_params_dlg::on_load_maze(bool)
 {
-	QString filename = QFileDialog::getOpenFileName(this, tr("Load maze"), "", tr("Maze files (*.json, *.xml)"));
+	QString filename = QFileDialog::getOpenFileName(this, tr("Load maze"), "",
+			tr("Maze files (*.json *.xml)"));
 }
 void experiment_maze_params_dlg::on_save_maze(bool)
 {

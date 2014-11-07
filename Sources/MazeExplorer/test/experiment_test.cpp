@@ -3,6 +3,7 @@
 
 namespace constants
 {
+	const std::string maze_path("");
 	const int repeat_count(0);
 	const int maze_size_x(10);
 	const int maze_size_y(10);

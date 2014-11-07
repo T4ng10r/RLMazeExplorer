@@ -1,5 +1,5 @@
-#include <QApplication>
 #include "experiment_maze_params_dlg.h"
+#include <QApplication>
 #include <QGroupBox>
 #include <QLabel>
 #include <QSpinBox>
@@ -8,43 +8,61 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QLineEdit>
+#include <QFileDialog>
 
 class experiment_maze_params_dlg_private
 {
 public:
 	experiment_maze_params_dlg_private(experiment_maze_params_dlg * pub);
-    void setup_ui();
-    void setupStochasticMazeChanges();
-    void retranslate_ui();
-    void setConnections();
+	void setup_ui();
+	void setupStochasticMazeChanges();
+	void setup_ui_load_maze();
+	void setup_ui_save_maze();
+	void retranslate_ui();
+	void setConnections();
 	EMazeTypes getMazeGenerationMethod();
 	void setMazeGenerationMethod(EMazeTypes eType);
+	void enable_save_widgets(bool enable = true);
 
 public:
 	experiment_maze_params_dlg * public_;
-    QGridLayout *		mainLayout;
+	QGridLayout *		mainLayout;
 
-    QLabel		*	labelSizeX;
-    QSpinBox	*	spinSizeX;
-    QLabel		*	labelSizeY;
-    QSpinBox	*	spinSizeY;
-    QLabel		*	labelMazeGenMethod;
-    QComboBox	*	comboGenerationMethod;
-    QPushButton *   button_generate_maze;
-    QCheckBox	*	checkBoxMazeIsPerfect;
+	QLabel		*	labelSizeX;
+	QSpinBox	*	spinSizeX;
+	QLabel		*	labelSizeY;
+	QSpinBox	*	spinSizeY;
+	QLabel		*	labelMazeGenMethod;
+	QComboBox	*	comboGenerationMethod;
+	QPushButton *   button_generate_maze;
+	QCheckBox	*	checkBoxMazeIsPerfect;
 
-    QGroupBox *		groupStochasticMazeChanges;
-    QGridLayout *		gboxMazeStochasticLayout;
-    QLabel		*	labelRandomnessValue;
-    QSpinBox	*	spinRandomnessValue;
-    QCheckBox *		checkBoxCumulativeRandomness;
+	QGroupBox *		groupStochasticMazeChanges;
+	QGridLayout *		gboxMazeStochasticLayout;
+	QLabel		*	labelRandomnessValue;
+	QSpinBox	*	spinRandomnessValue;
+	QCheckBox *		checkBoxCumulativeRandomness;
+
+	QPushButton * load_maze_button;
+	QPushButton * load_maze_browse_button;
+	QLabel * load_maze_label;
+	QLineEdit * load_maze_edit;
+
+	QPushButton * save_maze_button;
+	QPushButton * save_maze_browse_button;
+	QLabel * save_maze_label;
+	QLineEdit * save_maze_edit;
 };
 
 experiment_maze_params_dlg_private::experiment_maze_params_dlg_private(experiment_maze_params_dlg * pub) : public_(pub)
 {
     setup_ui();
+		setup_ui_load_maze();
+		setup_ui_save_maze();
     retranslate_ui();
     setConnections();
+		enable_save_widgets(false);
 }
 void experiment_maze_params_dlg_private::setup_ui()
 {
@@ -92,10 +110,9 @@ void experiment_maze_params_dlg_private::setup_ui()
     //setupStochasticMazeChanges();
 
 
-//	button_generate_maze = new QPushButton;
-    button_generate_maze=new QPushButton(public_);
+    button_generate_maze = new QPushButton(public_);
     button_generate_maze->setObjectName(QString::fromUtf8("buttonBrowseLoadKBPath"));
-    mainLayout->addWidget(button_generate_maze,5,0,1,1);
+    mainLayout->addWidget(button_generate_maze,7,0,1,1);
 
 //	QCheckBox	*	checkBoxMazeIsPerfect;
     checkBoxMazeIsPerfect = new QCheckBox(public_);
@@ -153,6 +170,40 @@ void experiment_maze_params_dlg_private::setupStochasticMazeChanges()
     gboxMazeStochasticLayout->addWidget(checkBoxCumulativeRandomness,1,0,1,2);
 
 }
+void experiment_maze_params_dlg_private::setup_ui_load_maze()
+{
+	QHBoxLayout * load_layout = new QHBoxLayout;
+
+	load_maze_label = new QLabel;
+	load_layout->addWidget(load_maze_label);
+
+	load_maze_edit = new QLineEdit;
+	load_layout->addWidget(load_maze_edit);
+	load_maze_browse_button = new QPushButton;
+	load_maze_browse_button->setMaximumWidth(25);
+	load_layout->addWidget(load_maze_browse_button);
+	load_maze_button = new QPushButton;
+	load_layout->addWidget(load_maze_button);
+
+  mainLayout->addLayout(load_layout,5,0,1,2);
+}
+void experiment_maze_params_dlg_private::setup_ui_save_maze()
+{
+	QHBoxLayout * save_layout = new QHBoxLayout;
+
+	save_maze_label = new QLabel;
+	save_layout->addWidget(save_maze_label);
+
+	save_maze_edit = new QLineEdit;
+	save_layout->addWidget(save_maze_edit);
+	save_maze_browse_button = new QPushButton;
+	save_maze_browse_button->setMaximumWidth(25);
+	save_layout->addWidget(save_maze_browse_button);
+	save_maze_button = new QPushButton;
+	save_layout->addWidget(save_maze_button);
+
+  mainLayout->addLayout(save_layout,6,0,1,2);
+}
 void experiment_maze_params_dlg_private::retranslate_ui()
 {
     labelSizeX->setText(QApplication::translate("Dialog", "Size X", 0));
@@ -166,12 +217,26 @@ void experiment_maze_params_dlg_private::retranslate_ui()
     groupStochasticMazeChanges->setTitle("Maze probability");
     checkBoxCumulativeRandomness->setText("Accumulate\nprobability");
     labelRandomnessValue->setText(QApplication::translate("Dialog", "Probability", 0));
+		load_maze_label->setText(QApplication::translate("Dialog","Load path",0));
+		load_maze_button->setText(QApplication::translate("Dialog","Load",0));
+		load_maze_browse_button->setText(QApplication::translate("Dialog","...",0));
+		save_maze_label->setText(QApplication::translate("Dialog","Save path",0));
+		save_maze_button->setText(QApplication::translate("Dialog","Save",0));
+		save_maze_browse_button->setText(QApplication::translate("Dialog","...",0));
 }
 void experiment_maze_params_dlg_private::setConnections()
 {
-    bool bResult=false;
-    bResult=QObject::connect(button_generate_maze,SIGNAL(clicked(bool)), public_, SLOT(on_generate_maze(bool)));
-    Q_ASSERT(bResult==true);
+    bool connection_result = false;
+    connection_result = QObject::connect(button_generate_maze,SIGNAL(clicked(bool)), public_, SLOT(on_generate_maze(bool)));
+    Q_ASSERT(connection_result == true);
+		connection_result = QObject::connect(load_maze_button, SIGNAL(clicked(bool)), public_, SLOT(on_load_maze(bool)));
+    Q_ASSERT(connection_result == true);
+		connection_result = QObject::connect(load_maze_browse_button, SIGNAL(clicked(bool)), public_, SLOT(on_load_maze_browse(bool)));
+    Q_ASSERT(connection_result == true);
+		connection_result = QObject::connect(save_maze_button, SIGNAL(clicked(bool)), public_, SLOT(on_save_maze(bool)));
+    Q_ASSERT(connection_result == true);
+		connection_result = QObject::connect(save_maze_browse_button, SIGNAL(clicked(bool)), public_, SLOT(on_save_maze_browse(bool)));
+    Q_ASSERT(connection_result == true);
 }
 EMazeTypes experiment_maze_params_dlg_private::getMazeGenerationMethod()
 {
@@ -196,6 +261,12 @@ void experiment_maze_params_dlg_private::setMazeGenerationMethod(EMazeTypes eTyp
 
 	comboGenerationMethod->blockSignals(false);
 }
+void experiment_maze_params_dlg_private::enable_save_widgets(bool enable)
+{
+	save_maze_edit->setEnabled(enable);
+	save_maze_button->setEnabled(enable);
+	save_maze_browse_button->setEnabled(enable);
+}
 ////////////////////////////////////////////////////////////////////////////////
 experiment_maze_params_dlg::experiment_maze_params_dlg(QWidget *parent) : QWidget(parent), pimpl(new experiment_maze_params_dlg_private(this))
 {}
@@ -219,5 +290,19 @@ void experiment_maze_params_dlg::on_generate_maze(bool)
 	qRegisterMetaType<maze_settings>("maze_settings");
 	maze_settings mazeSettings;
 	get_maze_settings(mazeSettings);
-    Q_EMIT generate_maze(mazeSettings);
+  Q_EMIT generate_maze(mazeSettings);
+	pimpl->enable_save_widgets();
 }
+void experiment_maze_params_dlg::on_load_maze(bool)
+{
+	QString filename = QFileDialog::getOpenFileName(this, tr("Load maze"), "", tr("Maze files (*.json, *.xml)"));
+}
+void experiment_maze_params_dlg::on_save_maze(bool)
+{
+}
+void experiment_maze_params_dlg::on_load_maze_browse(bool)
+{
+}
+void experiment_maze_params_dlg::on_save_maze_browse(bool)
+{
+} 

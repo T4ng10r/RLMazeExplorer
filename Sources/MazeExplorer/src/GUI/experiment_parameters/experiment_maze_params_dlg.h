@@ -20,6 +20,10 @@ Q_SIGNALS:
 protected Q_SLOTS:
 	//reaction on Generate Maze button click
 	void on_generate_maze(bool);
+	void on_load_maze(bool);
+	void on_save_maze(bool);
+	void on_load_maze_browse(bool);
+	void on_save_maze_browse(bool);
 protected:
 	std::unique_ptr<experiment_maze_params_dlg_private> pimpl;
 };
